@@ -64,9 +64,6 @@
     "vue-tsc": "^2.1.10",
     "zod": "^3.23.8"
   },
-  "resolutions": {
-    "@nuxt/ui-pro": "workspace:*"
-  },
   "trustedDependencies": [
     "@parcel/watcher"
   ]
