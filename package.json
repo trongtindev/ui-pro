@@ -3,10 +3,10 @@
   "description": "Ship beautiful web applications at the speed of light with Nuxt UI Pro.",
   "type": "module",
   "version": "1.5.0",
-  "packageManager": "pnpm@9.12.3",
+  "packageManager": "bun@1.1.34",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nuxt/ui-pro.git"
+    "url": "git+https://github.com/trongtindev/ui-pro.git"
   },
   "main": "./nuxt.config.ts",
   "files": [
@@ -22,10 +22,6 @@
     "nuxt.config.ts",
     "tailwind.config.ts"
   ],
-  "theme": {
-    "env": "NUXT_UI_PRO_LICENSE",
-    "link": "https://ui.nuxt.com/pro/pricing"
-  },
   "scripts": {
     "dev": "DEV=true nuxi dev .docs",
     "build": "DEV=true nuxi generate .docs",
