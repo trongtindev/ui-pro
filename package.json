@@ -32,14 +32,16 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxt/ui": "^2.19.2",
     "@vueuse/core": "^11.3.0",
-    "defu": "^6.1.4",
-    "tailwind-merge": "^2.5.5",
-    "vue3-smooth-dnd": "^0.0.6"
+    "vue3-smooth-dnd": "^0.0.6",
+    "@nuxt/content": "^2.13.4"
   },
   "devDependencies": {
-    "@nuxt/content": "^2.13.4",
+    "defu": "^6.1.4",
+    "tailwind-merge": "^2.5.5",
+    "@nuxt/ui": "^2.19.2",
+    "@nuxt/image": "^1.8.1",
+    "@nuxt/kit": "^3.14.1592",
     "@nuxt/eslint-config": "^0.6.2",
     "eslint": "^9.16.0",
     "nuxt": "^3.14.1592",
