@@ -23,8 +23,8 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "typecheck": "nuxi typecheck",
-    "postinstall": "nuxt prepare"
+    "typecheck": "npx nuxi typecheck",
+    "postinstall": "npx nuxt prepare"
   },
   "dependencies": {
     "@nuxt/content": "^2.13.4",
