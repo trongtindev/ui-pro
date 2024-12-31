@@ -43,7 +43,7 @@
 
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import type { Badge, DeepPartial } from '#ui/types'
+import type { Badge, BadgeColor, BadgeSize, BadgeVariant, DeepPartial } from '#ui/types'
 
 const config = {
   wrapper: 'h-[--header-height] flex-shrink-0 flex items-center border-b border-gray-200 dark:border-gray-800 px-4 gap-x-4 min-w-0',
@@ -53,9 +53,9 @@ const config = {
   badge: {
     wrapper: 'inline-flex items-center',
     base: '',
-    size: 'xs' as const,
-    color: 'primary' as const,
-    variant: 'subtle' as const
+    size: 'xs' as BadgeSize,
+    color: 'primary' as BadgeColor,
+    variant: 'subtle' as BadgeVariant
   },
   center: 'hidden lg:flex',
   right: 'flex items-stretch flex-shrink-0 gap-1.5'

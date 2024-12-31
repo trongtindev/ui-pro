@@ -65,7 +65,7 @@ import type { PropType } from 'vue'
 import { twJoin } from 'tailwind-merge'
 import { getSlotChildrenText } from '../../lib/slots'
 import { nuxtLinkProps, getNuxtLinkProps } from '#ui/utils'
-import type { Avatar, Badge, DeepPartial } from '#ui/types'
+import type { Avatar, AvatarSize, Badge, DeepPartial } from '#ui/types'
 import type { NuxtLinkProps } from '#app'
 
 defineOptions({
@@ -142,7 +142,7 @@ const config = computed(() => {
       wrapper: 'relative flex items-center gap-x-3 mt-4',
       avatar: {
         base: 'relative ring-1 lg:hover:scale-105 lg:hover:ring-primary-500 dark:lg:hover:ring-primary-400 transition-transform',
-        size: 'xs' as const
+        size: 'xs' as AvatarSize
       }
     }
   }

@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
 import type { slideover as slideoverConfig } from '#ui/ui.config'
-import type { Button, DeepPartial } from '#ui/types'
+import type { Button, ButtonColor, ButtonVariant, ButtonSize, DeepPartial } from '#ui/types'
 
 const appConfig = useAppConfig()
 
@@ -46,9 +46,9 @@ const config = computed(() => ({
   default: {
     closeButton: {
       icon: appConfig.ui.icons.close,
-      color: 'gray' as const,
-      variant: 'ghost' as const,
-      size: 'sm' as const
+      color: 'gray' as ButtonColor,
+      variant: 'ghost' as ButtonVariant,
+      size: 'sm' as ButtonSize
     }
   }
 }))

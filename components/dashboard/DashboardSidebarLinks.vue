@@ -112,7 +112,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel, provideUseId } from '@he
 // @ts-ignore
 import { twMerge, twJoin } from 'tailwind-merge'
 import { getULinkProps } from '#ui/utils'
-import type { ChipColor, Strategy, DeepPartial } from '#ui/types'
+import type { AvatarSize, ChipColor, ChipSize, BadgeColor, BadgeVariant, BadgeSize, Strategy, DeepPartial } from '#ui/types'
 import type { DashboardSidebarLink } from '#ui-pro/types'
 import { useId } from '#imports'
 
@@ -138,17 +138,17 @@ const config = computed(() => ({
   },
   avatar: {
     base: 'flex-shrink-0',
-    size: '2xs' as const
+    size: '2xs' as AvatarSize
   },
   chip: {
     base: 'flex-shrink-0 mx-2.5',
-    size: 'sm' as const
+    size: 'sm' as ChipSize
   },
   badge: {
     base: 'flex-shrink-0 ml-auto relative rounded',
-    color: 'gray' as const,
-    variant: 'solid' as const,
-    size: 'xs' as const
+    color: 'gray' as BadgeColor,
+    variant: 'solid' as BadgeVariant,
+    size: 'xs' as BadgeSize
   },
   label: 'text-sm truncate relative',
   dot: {

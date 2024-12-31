@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
 import { getNuxtLinkProps } from '#ui/utils'
-import type { Avatar, DeepPartial } from '#ui/types'
+import type { Avatar, AvatarSize, DeepPartial } from '#ui/types'
 import type { card as cardConfig } from '#ui/ui.config'
 import { NuxtLink } from '#components'
 import type { NuxtLinkProps } from '#app'
@@ -107,7 +107,7 @@ const config = computed(() => {
       description: 'text-gray-500 dark:text-gray-400 text-sm',
       avatar: {
         base: '',
-        size: 'md' as const
+        size: 'md' as AvatarSize
       }
     }
   }

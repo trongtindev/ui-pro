@@ -67,7 +67,7 @@ const config = computed(() => ({
   },
   default: {
     popover: {
-      mode: 'hover' as const,
+      mode: 'hover' as 'click' | 'hover',
       openDelay: 0,
       ui: {
         width: 'max-w-[16rem]'

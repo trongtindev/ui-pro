@@ -99,7 +99,7 @@ import { ref, reactive, computed } from 'vue'
 import type { PropType } from 'vue'
 import { twJoin } from 'tailwind-merge'
 import { omit } from '#ui/utils'
-import type { Button, FormError, FormEventType, FormGroupSize, DeepPartial } from '#ui/types'
+import type { Button, ButtonColor, ButtonVariant, FormError, FormEventType, FormGroupSize, DeepPartial } from '#ui/types'
 
 defineOptions({
   inheritAttrs: false
@@ -210,8 +210,8 @@ const config = computed(() => {
         label: 'Continue'
       },
       passwordToggle: {
-        color: 'gray' as const,
-        variant: 'link' as const
+        color: 'gray' as ButtonColor,
+        variant: 'link' as ButtonVariant
       }
     }
   }

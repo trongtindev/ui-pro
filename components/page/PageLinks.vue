@@ -35,7 +35,7 @@
 import type { PropType } from 'vue'
 import { twMerge } from 'tailwind-merge'
 import { getULinkProps } from '#ui/utils'
-import type { DeepPartial } from '#ui/types'
+import type { AvatarSize, DeepPartial } from '#ui/types'
 import type { PageLink } from '#ui-pro/types'
 
 const appConfig = useAppConfig()
@@ -52,7 +52,7 @@ const config = computed(() => ({
   },
   avatar: {
     base: 'self-center',
-    size: '2xs' as const
+    size: '2xs' as AvatarSize
   },
   externalIcon: {
     name: appConfig.ui.icons.external,

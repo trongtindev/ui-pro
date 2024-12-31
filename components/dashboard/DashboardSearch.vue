@@ -24,7 +24,7 @@ import type { PropType } from 'vue'
 import { defu } from 'defu'
 import { useBreakpoints, breakpointsTailwind } from '@vueuse/core'
 import type { UseFuseOptions } from '@vueuse/integrations/useFuse'
-import type { Group, Command, DeepPartial } from '#ui/types'
+import type { Group, Command, ButtonColor, ButtonVariant, ButtonSize, DeepPartial } from '#ui/types'
 
 defineOptions({
   inheritAttrs: false
@@ -59,9 +59,9 @@ const config = computed(() => ({
   default: {
     closeButton: {
       icon: appConfig.ui.icons.close,
-      color: 'gray' as const,
-      variant: 'ghost' as const,
-      size: 'sm' as const
+      color: 'gray' as ButtonColor,
+      variant: 'ghost' as ButtonVariant,
+      size: 'sm' as ButtonSize
     }
   }
 }))

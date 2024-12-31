@@ -50,7 +50,7 @@ import type { PropType } from 'vue'
 import { useBreakpoints, breakpointsTailwind } from '@vueuse/core'
 import { twMerge } from 'tailwind-merge'
 import type { modal as modalConfig } from '#ui/ui.config'
-import type { Button, DeepPartial } from '#ui/types'
+import type { Button, ButtonColor, ButtonVariant, ButtonSize, DeepPartial } from '#ui/types'
 
 const appConfig = useAppConfig()
 const slots = useSlots()
@@ -83,9 +83,9 @@ const config = computed(() => ({
   default: {
     closeButton: {
       icon: appConfig.ui.icons.close,
-      color: 'gray' as const,
-      variant: 'ghost' as const,
-      size: 'sm' as const
+      color: 'gray' as ButtonColor,
+      variant: 'ghost' as ButtonVariant,
+      size: 'sm' as ButtonSize
     }
   }
 }))
