@@ -1,7 +1,7 @@
 <template>
   <UAccordion
     :key="route.path"
-    :items="(items as AccordionItem[])"
+    :items="items as AccordionItem[]"
     :multiple="multiple"
     :ui="ui"
     v-bind="attrs"
@@ -19,7 +19,10 @@
         <UIcon
           v-if="!item.disabled"
           :name="ui.button.trailingIcon.name"
-          :class="[ui.button.trailingIcon.base, open ? ui.button.trailingIcon.active : ui.button.trailingIcon.inactive]"
+          :class="[
+            ui.button.trailingIcon.base,
+            open ? ui.button.trailingIcon.active : ui.button.trailingIcon.inactive
+          ]"
         />
       </ULink>
     </template>
@@ -38,24 +41,25 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { twJoin } from 'tailwind-merge'
-import type { AccordionItem, DeepPartial } from '#ui/types'
-import type { NavigationTree } from '#ui-pro/types'
-import type { accordion as accordionConfig } from '#ui/ui.config'
+import type { PropType } from 'vue';
+import { twJoin } from 'tailwind-merge';
+import type { AccordionItem, DeepPartial } from '#ui/types';
+import type { NavigationTree } from '#ui-pro/types';
+import type { accordion as accordionConfig } from '#ui/ui.config';
 
-const appConfig = useAppConfig()
+const appConfig = useAppConfig();
 
 const config = computed(() => {
   const wrapper: string = twJoin(
     'space-y-3',
-    props.level > 0 && 'border-l border-gray-200 dark:border-gray-800 -ml-px hover:border-gray-300 dark:hover:border-gray-700'
-  )
+    props.level > 0 &&
+      'border-l border-gray-200 dark:border-gray-800 -ml-px hover:border-gray-300 dark:hover:border-gray-700'
+  );
 
   const tree: string = twJoin(
     'border-l border-gray-200 dark:border-gray-800',
     props.level > 0 ? 'ml-6' : 'ml-2.5'
-  )
+  );
 
   return {
     wrapper,
@@ -76,18 +80,19 @@ const config = computed(() => {
         name: appConfig.ui.icons.chevron,
         base: 'w-5 h-5 ms-auto transform transition-transform duration-200 flex-shrink-0 mr-1.5',
         active: 'text-gray-700 dark:text-gray-200',
-        inactive: 'text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200 -rotate-90'
+        inactive:
+          'text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200 -rotate-90'
       },
       label: 'text-sm/6 font-semibold truncate'
     },
     tree,
     links: {}
-  }
-})
+  };
+});
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   level: {
@@ -114,23 +119,34 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config.value & typeof accordionConfig>>,
     default: () => ({})
   }
-})
+});
 
-const route = useRoute()
-const { ui, attrs } = useUI('navigation.accordion', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const route = useRoute();
+const { ui, attrs } = useUI(
+  'navigation.accordion',
+  toRef(props, 'ui'),
+  config,
+  toRef(props, 'class'),
+  true
+);
 
 // Computed
 
-const items = computed(() => props.links?.map((link) => {
-  const defaultOpen = !props.defaultOpen || (typeof props.defaultOpen === 'number' && props.level < props.defaultOpen) || (link.to && route.path.startsWith(link.to.toString()))
+const items = computed(() =>
+  props.links?.map((link) => {
+    const defaultOpen =
+      !props.defaultOpen ||
+      (typeof props.defaultOpen === 'number' && props.level < props.defaultOpen) ||
+      (link.to && route.path.startsWith(link.to.toString()));
 
-  return {
-    label: link.label,
-    icon: link.icon,
-    slot: link.label.toLowerCase(),
-    disabled: link.disabled,
-    defaultOpen,
-    children: link.children
-  }
-}))
+    return {
+      label: link.label,
+      icon: link.icon,
+      slot: link.label.toLowerCase(),
+      disabled: link.disabled,
+      defaultOpen,
+      children: link.children
+    };
+  })
+);
 </script>

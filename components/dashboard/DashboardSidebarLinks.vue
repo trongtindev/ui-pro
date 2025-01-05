@@ -3,7 +3,9 @@
     :is="draggable && Container ? Container : 'ul'"
     :class="ui.wrapper"
     v-bind="{
-      ...(draggable ? { orientation: 'vertical', behaviour: 'contain', lockAxis: 'y', tag: 'ul' } : {}),
+      ...(draggable
+        ? { orientation: 'vertical', behaviour: 'contain', lockAxis: 'y', tag: 'ul' }
+        : {}),
       ...attrs
     }"
     @drag-start="isDragging = true"
@@ -11,8 +13,19 @@
     @drop="onDrop"
     @touchend="fixActionRestriction"
   >
-    <component :is="draggable && Draggable ? Draggable : 'li'" v-for="(link, index) in links" :key="index" tag="li" :class="ui.container">
-      <component :is="link.children?.length ? Disclosure : 'div'" v-slot="slotProps" :default-open="link.defaultOpen === undefined ? true : link.defaultOpen" as="div">
+    <component
+      :is="draggable && Draggable ? Draggable : 'li'"
+      v-for="(link, index) in links"
+      :key="index"
+      tag="li"
+      :class="ui.container"
+    >
+      <component
+        :is="link.children?.length ? Disclosure : 'div'"
+        v-slot="slotProps"
+        :default-open="link.defaultOpen === undefined ? true : link.defaultOpen"
+        as="div"
+      >
         <component :is="link.children?.length ? DisclosureButton : 'div'" as="template">
           <UTooltip
             class="flex"
@@ -23,10 +36,18 @@
           >
             <ULink
               v-slot="{ isActive }"
-              v-bind="link.children?.length && link.collapsible !== false ? { disabled: link.disabled } : getULinkProps(link)"
+              v-bind="
+                link.children?.length && link.collapsible !== false
+                  ? { disabled: link.disabled }
+                  : getULinkProps(link)
+              "
               :class="[ui.base, isDragging && 'pointer-events-none']"
               :active-class="ui.active"
-              :inactive-class="(!link.to && link.collapsible === false && level === 0 && link.children?.length) ? ui.static : ui.inactive"
+              :inactive-class="
+                !link.to && link.collapsible === false && level === 0 && link.children?.length
+                  ? ui.static
+                  : ui.inactive
+              "
               draggable="false"
               @click="link.click"
             >
@@ -34,7 +55,22 @@
                 <UIcon
                   v-if="link.icon"
                   :name="link.icon"
-                  :class="twMerge(twJoin(ui.icon.base, isActive ? ui.icon.active : (!link.to && link.collapsible === false && level === 0 && link.children?.length) ? ui.static : ui.icon.inactive), link.iconClass)"
+                  :class="
+                    twMerge(
+                      twJoin(
+                        ui.icon.base,
+                        isActive
+                          ? ui.icon.active
+                          : !link.to &&
+                              link.collapsible === false &&
+                              level === 0 &&
+                              link.children?.length
+                            ? ui.static
+                            : ui.icon.inactive
+                      ),
+                      link.iconClass
+                    )
+                  "
                 />
                 <UAvatar
                   v-else-if="link.avatar"
@@ -48,27 +84,37 @@
                   v-else-if="link.chip"
                   v-bind="{
                     size: ui.chip.size,
-                    ...(typeof link.chip === 'string' ? { color: (link.chip as ChipColor) } : link.chip)
+                    ...(typeof link.chip === 'string'
+                      ? { color: link.chip as ChipColor }
+                      : link.chip)
                   }"
                   :class="twMerge(twJoin(ui.chip.base), link.chipClass)"
                 />
 
-                <span v-else-if="level > 0" :class="[ui.dot.wrapper, index < links.length - 1 && ui.dot.after]">
+                <span
+                  v-else-if="level > 0"
+                  :class="[ui.dot.wrapper, index < links.length - 1 && ui.dot.after]"
+                >
                   <span :class="[ui.dot.base, isActive ? ui.dot.active : ui.dot.inactive]" />
                 </span>
               </slot>
 
               <slot :link="link" :is-active="isActive">
                 <span v-if="link.label" :class="twMerge(ui.label, link.labelClass)">
-                  <span v-if="isActive" class="sr-only">
-                    Current page:
-                  </span>
+                  <span v-if="isActive" class="sr-only"> Current page: </span>
 
                   {{ link.label }}
                 </span>
               </slot>
 
-              <UIcon v-if="link.children?.length && link.collapsible !== false" :name="ui.trailingIcon.name" :class="[ui.trailingIcon.base, slotProps?.open ? ui.trailingIcon.active : ui.trailingIcon.inactive]" />
+              <UIcon
+                v-if="link.children?.length && link.collapsible !== false"
+                :name="ui.trailingIcon.name"
+                :class="[
+                  ui.trailingIcon.base,
+                  slotProps?.open ? ui.trailingIcon.active : ui.trailingIcon.inactive
+                ]"
+              />
 
               <slot name="badge" :link="link" :is-active="isActive">
                 <UBadge
@@ -77,7 +123,9 @@
                     size: ui.badge.size,
                     color: ui.badge.color,
                     variant: ui.badge.variant,
-                    ...((typeof link.badge === 'string' || typeof link.badge === 'number') ? { label: link.badge } : link.badge)
+                    ...(typeof link.badge === 'string' || typeof link.badge === 'number'
+                      ? { label: link.badge }
+                      : link.badge)
                   }"
                   :class="ui.badge.base"
                 />
@@ -93,8 +141,18 @@
           @before-leave="onBeforeLeave"
           @leave="onLeave"
         >
-          <DisclosurePanel v-if="link.children?.length && (slotProps?.open || link.collapsible === false)" static as="template">
-            <UDashboardSidebarLinks :level="level + 1" :links="link.children" :draggable="link.draggable" :ui="ui" @update:links="emit('update:links', $event)">
+          <DisclosurePanel
+            v-if="link.children?.length && (slotProps?.open || link.collapsible === false)"
+            static
+            as="template"
+          >
+            <UDashboardSidebarLinks
+              :level="level + 1"
+              :links="link.children"
+              :draggable="link.draggable"
+              :ui="ui"
+              @update:links="emit('update:links', $event)"
+            >
               <template v-for="(_, name) in $slots" #[name]="slotData: any">
                 <slot :name="name" v-bind="slotData" />
               </template>
@@ -107,28 +165,39 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { Disclosure, DisclosureButton, DisclosurePanel, provideUseId } from '@headlessui/vue'
+import type { PropType } from 'vue';
+import { Disclosure, DisclosureButton, DisclosurePanel, provideUseId } from '@headlessui/vue';
 // @ts-ignore
-import { twMerge, twJoin } from 'tailwind-merge'
-import { getULinkProps } from '#ui/utils'
-import type { AvatarSize, ChipColor, ChipSize, BadgeColor, BadgeVariant, BadgeSize, Strategy, DeepPartial } from '#ui/types'
-import type { DashboardSidebarLink } from '#ui-pro/types'
-import { useId } from '#imports'
+import { twMerge, twJoin } from 'tailwind-merge';
+import { getULinkProps } from '#ui/utils';
+import type {
+  AvatarSize,
+  ChipColor,
+  ChipSize,
+  BadgeColor,
+  BadgeVariant,
+  BadgeSize,
+  Strategy,
+  DeepPartial
+} from '#ui/types';
+import type { DashboardSidebarLink } from '#ui-pro/types';
+import { useId } from '#imports';
 
-const appConfig = useAppConfig()
+const appConfig = useAppConfig();
 
 const config = computed(() => ({
   wrapper: 'relative !min-h-[auto] !min-w-[auto]',
   container: '!overflow-visible',
   base: 'group relative flex items-center gap-1.5 px-2.5 py-1.5 w-full rounded-md font-medium text-sm focus:outline-none focus-visible:outline-none dark:focus-visible:outline-none focus-visible:before:ring-inset focus-visible:before:ring-2 focus-visible:before:ring-primary-500 dark:focus-visible:before:ring-primary-400 before:absolute before:inset-px before:rounded-md disabled:cursor-not-allowed disabled:opacity-75',
   active: 'text-gray-900 dark:text-white before:bg-gray-100 dark:before:bg-gray-800',
-  inactive: 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:before:bg-gray-50 dark:hover:before:bg-gray-800/50',
+  inactive:
+    'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:before:bg-gray-50 dark:hover:before:bg-gray-800/50',
   static: 'text-gray-900 dark:text-white cursor-auto',
   icon: {
     base: 'flex-shrink-0 w-5 h-5 relative',
     active: 'text-gray-900 dark:text-white',
-    inactive: 'text-gray-400 dark:text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-200'
+    inactive:
+      'text-gray-400 dark:text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-200'
   },
   trailingIcon: {
     name: appConfig.ui.icons.chevron,
@@ -153,7 +222,8 @@ const config = computed(() => ({
   label: 'text-sm truncate relative',
   dot: {
     wrapper: 'w-px h-full mx-[9.5px] bg-gray-200 dark:bg-gray-700 relative',
-    after: 'after:absolute after:z-[1] after:w-px after:h-full after:bg-gray-200 after:dark:bg-gray-700 after:transform after:translate-y-full after:inset-x-0',
+    after:
+      'after:absolute after:z-[1] after:w-px after:h-full after:bg-gray-200 after:dark:bg-gray-700 after:transform after:translate-y-full after:inset-x-0',
     base: 'w-1 h-1 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2',
     active: 'bg-gray-900 dark:bg-white',
     inactive: 'bg-gray-400 dark:bg-gray-500 group-hover:bg-gray-700 dark:group-hover:bg-gray-200'
@@ -173,11 +243,11 @@ const config = computed(() => ({
     enterActiveClass: 'overflow-hidden transition-[height] duration-200 ease-out',
     leaveActiveClass: 'overflow-hidden transition-[height] duration-200 ease-out'
   }
-}))
+}));
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   draggable: {
@@ -200,79 +270,84 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config.value>>,
     default: () => ({})
   }
-})
+});
 
-const emit = defineEmits(['update:links'])
+const emit = defineEmits(['update:links']);
 
-let Container: any
-let Draggable: any
+let Container: any;
+let Draggable: any;
 
 if (props.draggable) {
-  await import('vue3-smooth-dnd' as string).then(({ Container: _Container, Draggable: _Draggable }) => {
-    Container = _Container
-    Draggable = _Draggable
-  }).catch()
+  await import('vue3-smooth-dnd' as string)
+    .then(({ Container: _Container, Draggable: _Draggable }) => {
+      Container = _Container;
+      Draggable = _Draggable;
+    })
+    .catch();
 }
 
-const isDragging = ref(false)
+const isDragging = ref(false);
 
-const { ui, attrs } = useUI('dashboard.sidebar.links', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI(
+  'dashboard.sidebar.links',
+  toRef(props, 'ui'),
+  config,
+  toRef(props, 'class'),
+  true
+);
 
 function onEnter(_el: Element, done: () => void) {
-  const el = _el as HTMLElement
-  el.style.height = '0'
+  const el = _el as HTMLElement;
+  el.style.height = '0';
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  el.offsetHeight // Trigger a reflow, flushing the CSS changes
-  el.style.height = el.scrollHeight + 'px'
+  el.offsetHeight; // Trigger a reflow, flushing the CSS changes
+  el.style.height = el.scrollHeight + 'px';
 
-  el.addEventListener('transitionend', done, { once: true })
+  el.addEventListener('transitionend', done, { once: true });
 }
 
 function onBeforeLeave(_el: Element) {
-  const el = _el as HTMLElement
-  el.style.height = el.scrollHeight + 'px'
+  const el = _el as HTMLElement;
+  el.style.height = el.scrollHeight + 'px';
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  el.offsetHeight // Trigger a reflow, flushing the CSS changes
+  el.offsetHeight; // Trigger a reflow, flushing the CSS changes
 }
 
 function onAfterEnter(_el: Element) {
-  const el = _el as HTMLElement
-  el.style.height = 'auto'
+  const el = _el as HTMLElement;
+  el.style.height = 'auto';
 }
 
 function onLeave(_el: Element, done: () => void) {
-  const el = _el as HTMLElement
-  el.style.height = '0'
+  const el = _el as HTMLElement;
+  el.style.height = '0';
 
-  el.addEventListener('transitionend', done, { once: true })
+  el.addEventListener('transitionend', done, { once: true });
 }
 
-function onDrop(results: { removedIndex: number, addedIndex: number, payload: any }) {
-  const { removedIndex, addedIndex, payload } = results
-  const links = [...props.links]
+function onDrop(results: { removedIndex: number; addedIndex: number; payload: any }) {
+  const { removedIndex, addedIndex, payload } = results;
+  const links = [...props.links];
 
   if (removedIndex === null && addedIndex === null) {
-    return
+    return;
   }
 
-  let itemToAdd = payload
+  let itemToAdd = payload;
 
   if (removedIndex !== null) {
-    itemToAdd = links.splice(removedIndex, 1)[0]
+    itemToAdd = links.splice(removedIndex, 1)[0];
   }
   if (addedIndex !== null) {
-    links.splice(addedIndex, 0, itemToAdd)
+    links.splice(addedIndex, 0, itemToAdd);
   }
 
-  emit('update:links', links)
+  emit('update:links', links);
 }
 
 function fixActionRestriction() {
-  document.body.classList.remove(
-    'smooth-dnd-no-user-select',
-    'smooth-dnd-disable-touch-action'
-  )
+  document.body.classList.remove('smooth-dnd-no-user-select', 'smooth-dnd-disable-touch-action');
 }
 
-provideUseId(() => useId() as string)
+provideUseId(() => useId() as string);
 </script>

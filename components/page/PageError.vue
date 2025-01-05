@@ -7,7 +7,11 @@
       {{ error?.name || error?.statusMessage || name }}
     </h1>
     <p :class="ui.message">
-      {{ error?.message && error.message !== (error.name || error.statusMessage || name) ? error.message : message }}
+      {{
+        error?.message && error.message !== (error.name || error.statusMessage || name)
+          ? error.message
+          : message
+      }}
     </p>
     <div :class="ui.links">
       <UButton v-bind="{ ...ui.default.clearButton, ...clearButton }" @click="handleError" />
@@ -16,9 +20,9 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import type { NuxtError } from '#app'
-import type { Button, ButtonColor, ButtonSize, DeepPartial } from '#ui/types'
+import type { PropType } from 'vue';
+import type { NuxtError } from '#app';
+import type { Button, ButtonColor, ButtonSize, DeepPartial } from '#ui/types';
 
 const config = {
   wrapper: 'min-h-[calc(100vh-var(--header-height))] flex flex-col items-center justify-center',
@@ -33,11 +37,11 @@ const config = {
       size: 'lg' as ButtonSize
     }
   }
-}
+};
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   error: {
@@ -54,7 +58,7 @@ const props = defineProps({
   },
   message: {
     type: String,
-    default: 'This is not the page you\'re looking for.'
+    default: "This is not the page you're looking for."
   },
   clearButton: {
     type: Object as PropType<Button & { click?: (...args: any[]) => void }>,
@@ -68,9 +72,9 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config>>,
     default: () => ({})
   }
-})
+});
 
-const { ui, attrs } = useUI('page.error', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI('page.error', toRef(props, 'ui'), config, toRef(props, 'class'), true);
 
-const handleError = () => clearError({ redirect: '/' })
+const handleError = () => clearError({ redirect: '/' });
 </script>

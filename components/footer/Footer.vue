@@ -27,9 +27,9 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import type { DeepPartial } from '#ui/types'
-import type { FooterLink } from '#ui-pro/types'
+import type { PropType } from 'vue';
+import type { DeepPartial } from '#ui/types';
+import type { FooterLink } from '#ui-pro/types';
 
 const config = {
   wrapper: 'relative',
@@ -44,11 +44,11 @@ const config = {
     center: 'mt-3 lg:mt-0 lg:order-2 flex items-center justify-center',
     right: 'lg:flex-1 flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3'
   }
-}
+};
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   links: {
@@ -63,7 +63,7 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config>>,
     default: () => ({})
   }
-})
+});
 
-const { ui, attrs } = useUI('footer', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI('footer', toRef(props, 'ui'), config, toRef(props, 'class'), true);
 </script>

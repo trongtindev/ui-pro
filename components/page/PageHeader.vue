@@ -9,7 +9,7 @@
     <div class="flex flex-col lg:flex-row items-start gap-6">
       <div v-if="icon || $slots.icon" :class="ui.icon.wrapper">
         <slot name="icon">
-          <UIcon :name="(icon as string)" :class="ui.icon.base" />
+          <UIcon :name="icon as string" :class="ui.icon.base" />
         </slot>
       </div>
 
@@ -46,8 +46,8 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import type { Button, DeepPartial } from '#ui/types'
+import type { PropType } from 'vue';
+import type { Button, DeepPartial } from '#ui/types';
 
 const config = {
   wrapper: 'relative border-b border-gray-200 dark:border-gray-800 py-8',
@@ -60,11 +60,11 @@ const config = {
     base: 'w-10 h-10 flex-shrink-0 text-primary'
   },
   links: 'flex flex-wrap items-center gap-1.5 mt-4 lg:mt-0'
-}
+};
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   headline: {
@@ -95,7 +95,7 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config>>,
     default: () => ({})
   }
-})
+});
 
-const { ui, attrs } = useUI('page.header', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI('page.header', toRef(props, 'ui'), config, toRef(props, 'class'), true);
 </script>

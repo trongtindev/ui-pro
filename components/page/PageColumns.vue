@@ -5,16 +5,16 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import type { DeepPartial } from '#ui/types'
+import type { PropType } from 'vue';
+import type { DeepPartial } from '#ui/types';
 
 const config = {
   wrapper: 'column-1 md:columns-2 lg:columns-3 gap-8 space-y-8'
-}
+};
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   class: {
@@ -25,7 +25,13 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config>>,
     default: () => ({})
   }
-})
+});
 
-const { ui, attrs } = useUI('page.columns', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI(
+  'page.columns',
+  toRef(props, 'ui'),
+  config,
+  toRef(props, 'class'),
+  true
+);
 </script>

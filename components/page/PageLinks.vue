@@ -17,13 +17,25 @@
           :inactive-class="ui.inactive"
           @click="link.click"
         >
-          <UIcon v-if="link.icon" :name="link.icon" :class="twMerge(ui.icon.base, link.iconClass)" />
-          <UAvatar v-if="link.avatar" v-bind="{ size: ui.avatar.size, ...link.avatar }" :class="twMerge(ui.avatar.base, link.avatarClass)" />
+          <UIcon
+            v-if="link.icon"
+            :name="link.icon"
+            :class="twMerge(ui.icon.base, link.iconClass)"
+          />
+          <UAvatar
+            v-if="link.avatar"
+            v-bind="{ size: ui.avatar.size, ...link.avatar }"
+            :class="twMerge(ui.avatar.base, link.avatarClass)"
+          />
 
           <span :class="ui.label">
             {{ link.label }}
 
-            <UIcon v-if="link.target === '_blank'" :name="ui.externalIcon.name" :class="ui.externalIcon.base" />
+            <UIcon
+              v-if="link.target === '_blank'"
+              :name="ui.externalIcon.name"
+              :class="ui.externalIcon.base"
+            />
           </span>
         </ULink>
       </slot>
@@ -32,13 +44,13 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { twMerge } from 'tailwind-merge'
-import { getULinkProps } from '#ui/utils'
-import type { AvatarSize, DeepPartial } from '#ui/types'
-import type { PageLink } from '#ui-pro/types'
+import type { PropType } from 'vue';
+import { twMerge } from 'tailwind-merge';
+import { getULinkProps } from '#ui/utils';
+import type { AvatarSize, DeepPartial } from '#ui/types';
+import type { PageLink } from '#ui-pro/types';
 
-const appConfig = useAppConfig()
+const appConfig = useAppConfig();
 
 const config = computed(() => ({
   wrapper: 'space-y-3',
@@ -59,11 +71,11 @@ const config = computed(() => ({
     base: 'w-3 h-3 absolute top-0.5 -right-3.5 text-gray-400 dark:text-gray-500'
   },
   label: 'text-sm/6 font-medium relative'
-}))
+}));
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   title: {
@@ -82,7 +94,7 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config.value>>,
     default: () => ({})
   }
-})
+});
 
-const { ui, attrs } = useUI('page.links', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI('page.links', toRef(props, 'ui'), config, toRef(props, 'class'), true);
 </script>

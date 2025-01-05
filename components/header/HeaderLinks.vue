@@ -14,7 +14,13 @@
               {{ link.label }}
             </slot>
 
-            <UIcon :name="ui.trailingIcon.name" :class="[ui.trailingIcon.base, open ? ui.trailingIcon.active : ui.trailingIcon.inactive]" />
+            <UIcon
+              :name="ui.trailingIcon.name"
+              :class="[
+                ui.trailingIcon.base,
+                open ? ui.trailingIcon.active : ui.trailingIcon.inactive
+              ]"
+            />
           </ULink>
         </template>
 
@@ -36,19 +42,23 @@
           {{ link.label }}
         </slot>
 
-        <UIcon v-if="link.target === '_blank'" :name="ui.externalIcon.name" :class="ui.externalIcon.base" />
+        <UIcon
+          v-if="link.target === '_blank'"
+          :name="ui.externalIcon.name"
+          :class="ui.externalIcon.base"
+        />
       </ULink>
     </li>
   </ul>
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { getULinkProps } from '#ui/utils'
-import type { DeepPartial } from '#ui/types'
-import type { HeaderLink } from '#ui-pro/types'
+import type { PropType } from 'vue';
+import { getULinkProps } from '#ui/utils';
+import type { DeepPartial } from '#ui/types';
+import type { HeaderLink } from '#ui-pro/types';
 
-const appConfig = useAppConfig()
+const appConfig = useAppConfig();
 
 const config = computed(() => ({
   wrapper: 'flex items-center gap-x-8',
@@ -74,11 +84,11 @@ const config = computed(() => ({
       }
     }
   }
-}))
+}));
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   links: {
@@ -93,7 +103,13 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config.value>>,
     default: () => ({})
   }
-})
+});
 
-const { ui, attrs } = useUI('header.links', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI(
+  'header.links',
+  toRef(props, 'ui'),
+  config,
+  toRef(props, 'class'),
+  true
+);
 </script>

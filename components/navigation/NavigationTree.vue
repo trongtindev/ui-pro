@@ -15,19 +15,19 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import type { DeepPartial } from '#ui/types'
-import type { NavigationGroup, NavigationTree } from '#ui-pro/types'
+import type { PropType } from 'vue';
+import type { DeepPartial } from '#ui/types';
+import type { NavigationGroup, NavigationTree } from '#ui-pro/types';
 
 const config = {
   wrapper: 'space-y-3',
   accordion: {},
   links: {}
-}
+};
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   level: {
@@ -54,33 +54,39 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config>>,
     default: () => ({})
   }
-})
+});
 
-const { ui, attrs } = useUI('navigation.tree', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI(
+  'navigation.tree',
+  toRef(props, 'ui'),
+  config,
+  toRef(props, 'class'),
+  true
+);
 
 const groups = computed<NavigationGroup[]>(() => {
-  const groups: NavigationGroup[] = []
+  const groups: NavigationGroup[] = [];
 
-  let group: NavigationGroup = { type: undefined, children: [] }
+  let group: NavigationGroup = { type: undefined, children: [] };
 
   for (const link of props.links) {
-    const type = link.children?.length ? 'accordion' : 'link'
+    const type = link.children?.length ? 'accordion' : 'link';
     if (!group.type) {
-      group.type = type
+      group.type = type;
     }
 
     if (group.type === type) {
-      group.children.push(link)
+      group.children.push(link);
     } else {
-      groups.push(group)
-      group = { type, children: [link] }
+      groups.push(group);
+      group = { type, children: [link] };
     }
   }
 
   if (group.children.length) {
-    groups.push(group)
+    groups.push(group);
   }
 
-  return groups
-})
+  return groups;
+});
 </script>

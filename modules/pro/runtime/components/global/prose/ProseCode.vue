@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
+import type { PropType } from 'vue';
 
 defineProps({
   code: {
@@ -30,11 +30,12 @@ defineProps({
     type: String,
     default: undefined
   }
-})
+});
 
 const config = {
   wrapper: '[&>pre]:!rounded-t-none [&>pre]:!my-0 my-5',
-  header: 'flex items-center gap-1.5 border border-gray-200 dark:border-gray-700 border-b-0 relative rounded-t-md px-4 py-3 not-prose',
+  header:
+    'flex items-center gap-1.5 border border-gray-200 dark:border-gray-700 border-b-0 relative rounded-t-md px-4 py-3 not-prose',
   icon: {
     base: ''
   },
@@ -42,9 +43,9 @@ const config = {
     base: 'absolute top-2.5 right-2.5'
   },
   filename: 'text-gray-700 dark:text-gray-200 text-sm/6'
-}
+};
 
-const { ui } = useUI('content.prose.code', undefined, config, undefined, true)
+const { ui } = useUI('content.prose.code', undefined, config, undefined, true);
 </script>
 
 <template>

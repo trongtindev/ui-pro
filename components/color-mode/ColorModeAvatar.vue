@@ -6,7 +6,7 @@
 <script setup lang="ts">
 defineOptions({
   inheritAttrs: false
-})
+});
 
 defineProps({
   dark: {
@@ -17,5 +17,5 @@ defineProps({
     type: String,
     required: true
   }
-})
+});
 </script>

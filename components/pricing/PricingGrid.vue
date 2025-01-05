@@ -5,12 +5,12 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import type { DeepPartial } from '#ui/types'
+import type { PropType } from 'vue';
+import type { DeepPartial } from '#ui/types';
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   compact: {
@@ -25,11 +25,17 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config>>,
     default: () => ({})
   }
-})
+});
 
 const config = {
   wrapper: 'flex flex-col lg:grid lg:grid-cols-3 w-full justify-center items-center gap-8'
-}
+};
 
-const { ui, attrs } = useUI('pricing.grid', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI(
+  'pricing.grid',
+  toRef(props, 'ui'),
+  config,
+  toRef(props, 'class'),
+  true
+);
 </script>

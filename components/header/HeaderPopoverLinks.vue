@@ -15,7 +15,11 @@
         <span :class="ui.label">
           {{ link.label }}
 
-          <UIcon v-if="link.target === '_blank'" :name="ui.externalIcon.name" :class="ui.externalIcon.base" />
+          <UIcon
+            v-if="link.target === '_blank'"
+            :name="ui.externalIcon.name"
+            :class="ui.externalIcon.base"
+          />
         </span>
         <span v-if="link.description" :class="ui.description">
           {{ link.description }}
@@ -26,13 +30,13 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { twMerge } from 'tailwind-merge'
-import { getULinkProps } from '#ui/utils'
-import type { DeepPartial } from '#ui/types'
-import type { HeaderPopoverLink } from '#ui-pro/types'
+import type { PropType } from 'vue';
+import { twMerge } from 'tailwind-merge';
+import { getULinkProps } from '#ui/utils';
+import type { DeepPartial } from '#ui/types';
+import type { HeaderPopoverLink } from '#ui-pro/types';
 
-const appConfig = useAppConfig()
+const appConfig = useAppConfig();
 
 const config = computed(() => ({
   wrapper: 'p-2 space-y-1',
@@ -48,11 +52,11 @@ const config = computed(() => ({
     name: appConfig.ui.icons.external,
     base: 'w-3 h-3 absolute top-0.5 -right-3.5 text-gray-400 dark:text-gray-500'
   }
-}))
+}));
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   links: {
@@ -67,7 +71,13 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config.value>>,
     default: () => ({})
   }
-})
+});
 
-const { ui, attrs } = useUI('header.popover.links', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI(
+  'header.popover.links',
+  toRef(props, 'ui'),
+  config,
+  toRef(props, 'class'),
+  true
+);
 </script>

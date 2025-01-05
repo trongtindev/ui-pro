@@ -1,7 +1,10 @@
 <template>
   <Disclosure v-slot="{ open }" as="div">
     <DisclosureButton :class="ui.button.base">
-      <UIcon :name="ui.button.icon.name" :class="[ui.button.icon.base, open ? ui.button.icon.active : ui.button.icon.inactive]" />
+      <UIcon
+        :name="ui.button.icon.name"
+        :class="[ui.button.icon.base, open ? ui.button.icon.active : ui.button.icon.inactive]"
+      />
       <span>{{ open ? closeText : openText }} {{ name }}</span>
     </DisclosureButton>
 
@@ -12,10 +15,10 @@
 </template>
 
 <script setup lang="ts">
-import { Disclosure, DisclosureButton, DisclosurePanel, provideUseId } from '@headlessui/vue'
-import { useId } from '#imports'
+import { Disclosure, DisclosureButton, DisclosurePanel, provideUseId } from '@headlessui/vue';
+import { useId } from '#imports';
 
-const appConfig = useAppConfig()
+const appConfig = useAppConfig();
 
 const config = computed(() => ({
   button: {
@@ -28,7 +31,7 @@ const config = computed(() => ({
     }
   },
   panel: 'mt-4 ml-2 py-2.5 pl-4 border-l border-gray-200 dark:border-gray-800 [&>div]:!mt-0'
-}))
+}));
 
 defineProps({
   name: {
@@ -43,9 +46,9 @@ defineProps({
     type: String,
     default: 'Hide'
   }
-})
+});
 
-const { ui } = useUI('content.collapsible', undefined, config, undefined, true)
+const { ui } = useUI('content.collapsible', undefined, config, undefined, true);
 
-provideUseId(() => useId() as string)
+provideUseId(() => useId() as string);
 </script>

@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import type { TocLink } from '@nuxt/content'
+import type { PropType } from 'vue';
+import type { TocLink } from '@nuxt/content';
 
 const config = {
   wrapper: 'space-y-1',
@@ -24,11 +24,11 @@ const config = {
   active: 'text-primary',
   inactive: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200',
   depth: 'ml-3'
-}
+};
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   links: {
@@ -43,25 +43,28 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config>>,
     default: () => ({})
   }
-})
+});
 
-const emit = defineEmits(['move'])
+const emit = defineEmits(['move']);
 
-const router = useRouter()
-const nuxtApp = useNuxtApp()
-const { activeHeadings, updateHeadings } = useScrollspy()
-const { ui, attrs } = useUI('content.toc.links', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const router = useRouter();
+const nuxtApp = useNuxtApp();
+const { activeHeadings, updateHeadings } = useScrollspy();
+const { ui, attrs } = useUI(
+  'content.toc.links',
+  toRef(props, 'ui'),
+  config,
+  toRef(props, 'class'),
+  true
+);
 
 nuxtApp.hooks.hookOnce('page:finish', () => {
-  updateHeadings([
-    ...document.querySelectorAll('h2'),
-    ...document.querySelectorAll('h3')
-  ])
-})
+  updateHeadings([...document.querySelectorAll('h2'), ...document.querySelectorAll('h3')]);
+});
 
 const scrollToHeading = (id: string) => {
-  const encodedId = encodeURIComponent(id)
-  router.push(`#${encodedId}`)
-  emit('move', id)
-}
+  const encodedId = encodeURIComponent(id);
+  router.push(`#${encodedId}`);
+  emit('move', id);
+};
 </script>

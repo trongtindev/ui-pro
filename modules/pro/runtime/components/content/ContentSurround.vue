@@ -1,11 +1,6 @@
 <template>
   <div :class="ui.wrapper" v-bind="attrs">
-    <UContentSurroundLink
-      v-if="prev"
-      :link="prev"
-      :ui="ui.link"
-      :icon="ui.icon.prev"
-    />
+    <UContentSurroundLink v-if="prev" :link="prev" :ui="ui.link" :icon="ui.icon.prev" />
     <span v-else class="hidden sm:block">&nbsp;</span>
     <UContentSurroundLink
       v-if="next"
@@ -18,8 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import type { ParsedContent } from '@nuxt/content'
+import type { PropType } from 'vue';
+import type { ParsedContent } from '@nuxt/content';
 
 const config = {
   wrapper: 'grid gap-8 sm:grid-cols-2',
@@ -28,11 +23,11 @@ const config = {
     next: 'i-heroicons-arrow-right-20-solid'
   },
   link: {}
-}
+};
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   surround: {
@@ -47,9 +42,15 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config>>,
     default: () => ({})
   }
-})
+});
 
-const { ui, attrs } = useUI('content.surround', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI(
+  'content.surround',
+  toRef(props, 'ui'),
+  config,
+  toRef(props, 'class'),
+  true
+);
 
-const [prev, next] = props.surround || []
+const [prev, next] = props.surround || [];
 </script>

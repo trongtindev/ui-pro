@@ -1,5 +1,11 @@
 <template>
-  <UAccordion :class="ui.wrapper" :items="items" :multiple="multiple" v-bind="attrs" :ui="{ item: ui.item, container: ui.container }">
+  <UAccordion
+    :class="ui.wrapper"
+    :items="items"
+    :multiple="multiple"
+    v-bind="attrs"
+    :ui="{ item: ui.item, container: ui.container }"
+  >
     <template #default="{ item, open }">
       <UButton
         color="gray"
@@ -13,7 +19,10 @@
         <template #trailing>
           <UIcon
             :name="ui.button.trailingIcon.name"
-            :class="[ui.button.trailingIcon.base, open ? ui.button.trailingIcon.active : ui.button.trailingIcon.inactive]"
+            :class="[
+              ui.button.trailingIcon.base,
+              open ? ui.button.trailingIcon.active : ui.button.trailingIcon.inactive
+            ]"
           />
         </template>
       </UButton>
@@ -26,10 +35,10 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import type { AccordionItem, DeepPartial } from '#ui/types'
+import type { PropType } from 'vue';
+import type { AccordionItem, DeepPartial } from '#ui/types';
 
-const appConfig = useAppConfig()
+const appConfig = useAppConfig();
 
 const config = computed(() => ({
   wrapper: 'divide-y divide-gray-200 dark:divide-gray-800 -mt-6',
@@ -48,11 +57,11 @@ const config = computed(() => ({
       inactive: '-rotate-90'
     }
   }
-}))
+}));
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   items: {
@@ -71,7 +80,7 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config.value>>,
     default: () => ({})
   }
-})
+});
 
-const { ui, attrs } = useUI('landing.faq', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI('landing.faq', toRef(props, 'ui'), config, toRef(props, 'class'), true);
 </script>

@@ -3,7 +3,7 @@
     <div>
       <div v-if="icon || $slots.icon" :class="ui.icon.wrapper">
         <slot name="icon">
-          <UIcon :name="(icon as string)" :class="ui.icon.base" />
+          <UIcon :name="icon as string" :class="ui.icon.base" />
         </slot>
       </div>
 
@@ -14,10 +14,21 @@
       </q>
 
       <div v-if="author" :class="ui.author.wrapper">
-        <UAvatar v-if="author.avatar" :alt="author.name" v-bind="{ size: ui.author.avatar.size, ...author.avatar }" :class="ui.author.avatar.base" />
+        <UAvatar
+          v-if="author.avatar"
+          :alt="author.name"
+          v-bind="{ size: ui.author.avatar.size, ...author.avatar }"
+          :class="ui.author.avatar.base"
+        />
 
         <div>
-          <NuxtLink v-if="author.to" :aria-label="author.name" v-bind="getNuxtLinkProps(author)" class="focus:outline-none" tabindex="-1">
+          <NuxtLink
+            v-if="author.to"
+            :aria-label="author.name"
+            v-bind="getNuxtLinkProps(author)"
+            class="focus:outline-none"
+            tabindex="-1"
+          >
             <span class="absolute inset-0" aria-hidden="true" />
           </NuxtLink>
 
@@ -34,16 +45,16 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { getNuxtLinkProps } from '#ui/utils'
-import type { Avatar, AvatarSize, DeepPartial } from '#ui/types'
-import type { card as cardConfig } from '#ui/ui.config'
-import { NuxtLink } from '#components'
-import type { NuxtLinkProps } from '#app'
+import type { PropType } from 'vue';
+import { getNuxtLinkProps } from '#ui/utils';
+import type { Avatar, AvatarSize, DeepPartial } from '#ui/types';
+import type { card as cardConfig } from '#ui/ui.config';
+import { NuxtLink } from '#components';
+import type { NuxtLinkProps } from '#app';
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   icon: {
@@ -55,11 +66,13 @@ const props = defineProps({
     required: true
   },
   author: {
-    type: Object as PropType<{
-      name: string
-      description?: string
-      avatar?: Avatar
-    } & NuxtLinkProps>,
+    type: Object as PropType<
+      {
+        name: string;
+        description?: string;
+        avatar?: Avatar;
+      } & NuxtLinkProps
+    >,
     default: undefined
   },
   card: {
@@ -74,20 +87,20 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config.value & typeof cardConfig>>,
     default: () => ({})
   }
-})
+});
 
 const config = computed(() => {
-  const card: Record<string, string> = {}
+  const card: Record<string, string> = {};
 
   if (!props.card) {
-    card.ring = ''
-    card.rounded = ''
-    card.background = ''
-    card.shadow = ''
-    card.divide = ''
+    card.ring = '';
+    card.rounded = '';
+    card.background = '';
+    card.shadow = '';
+    card.divide = '';
   }
 
-  const padding: any = props.card ? undefined : ''
+  const padding: any = props.card ? undefined : '';
 
   return {
     ...card,
@@ -110,8 +123,14 @@ const config = computed(() => {
         size: 'md' as AvatarSize
       }
     }
-  }
-})
+  };
+});
 
-const { ui, attrs } = useUI('landing.testimonial', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI(
+  'landing.testimonial',
+  toRef(props, 'ui'),
+  config,
+  toRef(props, 'class'),
+  true
+);
 </script>

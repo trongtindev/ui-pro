@@ -1,44 +1,47 @@
-import { createSharedComposable } from '@vueuse/core'
+import { createSharedComposable } from '@vueuse/core';
 
 const _useUIState = () => {
-  const route = useRoute()
+  const route = useRoute();
 
-  const isHeaderDialogOpen = ref(false)
-  const isContentSearchModalOpen = ref(false)
-  const isDashboardSidebarSlideoverOpen = ref(false)
-  const isDashboardSearchModalOpen = ref(false)
+  const isHeaderDialogOpen = ref(false);
+  const isContentSearchModalOpen = ref(false);
+  const isDashboardSidebarSlideoverOpen = ref(false);
+  const isDashboardSearchModalOpen = ref(false);
 
   function toggleContentSearch() {
     if (isHeaderDialogOpen.value) {
-      isHeaderDialogOpen.value = false
+      isHeaderDialogOpen.value = false;
 
       setTimeout(() => {
-        isContentSearchModalOpen.value = !isContentSearchModalOpen.value
-      }, 0)
+        isContentSearchModalOpen.value = !isContentSearchModalOpen.value;
+      }, 0);
 
-      return
+      return;
     }
 
-    isContentSearchModalOpen.value = !isContentSearchModalOpen.value
+    isContentSearchModalOpen.value = !isContentSearchModalOpen.value;
   }
 
   function toggleDashboardSearch() {
     if (isDashboardSidebarSlideoverOpen.value) {
-      isDashboardSidebarSlideoverOpen.value = false
+      isDashboardSidebarSlideoverOpen.value = false;
 
       setTimeout(() => {
-        isDashboardSearchModalOpen.value = !isDashboardSearchModalOpen.value
-      }, 200)
+        isDashboardSearchModalOpen.value = !isDashboardSearchModalOpen.value;
+      }, 200);
 
-      return
+      return;
     }
 
-    isDashboardSearchModalOpen.value = !isDashboardSearchModalOpen.value
+    isDashboardSearchModalOpen.value = !isDashboardSearchModalOpen.value;
   }
 
-  watch(() => route.path, () => {
-    isDashboardSidebarSlideoverOpen.value = false
-  })
+  watch(
+    () => route.path,
+    () => {
+      isDashboardSidebarSlideoverOpen.value = false;
+    }
+  );
 
   return {
     isHeaderDialogOpen,
@@ -51,7 +54,7 @@ const _useUIState = () => {
     isDashboardSearchModalOpen,
     toggleContentSearch,
     toggleDashboardSearch
-  }
-}
+  };
+};
 
-export const useUIState = createSharedComposable(_useUIState)
+export const useUIState = createSharedComposable(_useUIState);

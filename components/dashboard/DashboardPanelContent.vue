@@ -5,16 +5,16 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import type { DeepPartial } from '#ui/types'
+import type { PropType } from 'vue';
+import type { DeepPartial } from '#ui/types';
 
 const config = {
   wrapper: 'p-4 flex-1 flex flex-col overflow-y-auto'
-}
+};
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   class: {
@@ -25,7 +25,13 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config>>,
     default: () => ({})
   }
-})
+});
 
-const { ui, attrs } = useUI('dashboard.panel.content', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI(
+  'dashboard.panel.content',
+  toRef(props, 'ui'),
+  config,
+  toRef(props, 'class'),
+  true
+);
 </script>

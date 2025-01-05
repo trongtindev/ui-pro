@@ -6,7 +6,7 @@
 <script setup lang="ts">
 defineOptions({
   inheritAttrs: false
-})
+});
 
 defineProps({
   as: {
@@ -21,5 +21,5 @@ defineProps({
     type: String,
     required: true
   }
-})
+});
 </script>

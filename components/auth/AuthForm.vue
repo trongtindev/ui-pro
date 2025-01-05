@@ -1,9 +1,12 @@
 <template>
   <div :class="ui.wrapper" v-bind="attrs">
-    <div v-if="(icon || $slots.icon) || (title || $slots.title) || (description || $slots.description)" :class="ui.base">
+    <div
+      v-if="icon || $slots.icon || title || $slots.title || description || $slots.description"
+      :class="ui.base"
+    >
       <div v-if="icon || $slots.icon" :class="ui.icon.wrapper">
         <slot name="icon">
-          <UIcon :name="(icon as string)" :class="ui.icon.base" />
+          <UIcon :name="icon as string" :class="ui.icon.base" />
         </slot>
       </div>
 
@@ -22,7 +25,13 @@
 
     <div :class="ui.container">
       <div v-if="providers?.length" :class="ui.providers">
-        <UButton v-for="(provider, index) in providers" :key="index" v-bind="provider" block @click="provider.click" />
+        <UButton
+          v-for="(provider, index) in providers"
+          :key="index"
+          v-bind="provider"
+          block
+          @click="provider.click"
+        />
       </div>
 
       <UDivider v-if="providers?.length && fields?.length" :label="divider" />
@@ -40,16 +49,27 @@
         <UFormGroup
           v-for="field in fields"
           :key="field.name"
-          :label="field.type === 'checkbox' ? '' : field.label ?? ''"
+          :label="field.type === 'checkbox' ? '' : (field.label ?? '')"
           :description="field.description"
           :help="field.help"
           :hint="field.hint"
           :name="field.name"
           :size="field.size"
         >
-          <slot :name="`${field.name}-field`" v-bind="{ state, field: omit(field, ['description', 'help', 'hint', 'size']) }">
-            <UCheckbox v-if="field.type === 'checkbox'" v-model="state[field.name]" v-bind="omit(field, ['description', 'help', 'hint', 'size'])" />
-            <USelectMenu v-else-if="field.type === 'select'" v-model="state[field.name]" v-bind="omit(field, ['description', 'help', 'hint', 'size'])" />
+          <slot
+            :name="`${field.name}-field`"
+            v-bind="{ state, field: omit(field, ['description', 'help', 'hint', 'size']) }"
+          >
+            <UCheckbox
+              v-if="field.type === 'checkbox'"
+              v-model="state[field.name]"
+              v-bind="omit(field, ['description', 'help', 'hint', 'size'])"
+            />
+            <USelectMenu
+              v-else-if="field.type === 'select'"
+              v-model="state[field.name]"
+              v-bind="omit(field, ['description', 'help', 'hint', 'size'])"
+            />
             <UInput
               v-else-if="field.type === 'password'"
               v-model="state[field.name]"
@@ -60,13 +80,19 @@
               <template v-if="passwordToggle" #trailing>
                 <UButton
                   v-bind="{ ...ui.default.passwordToggle, ...passwordToggle }"
-                  :icon="passwordVisibility ? ui.passwordToggle.hideIcon : ui.passwordToggle.showIcon"
+                  :icon="
+                    passwordVisibility ? ui.passwordToggle.hideIcon : ui.passwordToggle.showIcon
+                  "
                   :padded="false"
                   @click="togglePasswordVisibility"
                 />
               </template>
             </UInput>
-            <UInput v-else v-model="state[field.name]" v-bind="omit(field, ['label', 'description', 'help', 'hint', 'size'])" />
+            <UInput
+              v-else
+              v-model="state[field.name]"
+              v-bind="omit(field, ['label', 'description', 'help', 'hint', 'size'])"
+            />
           </slot>
           <template v-if="$slots[`${field.name}-label`]" #label>
             <slot :name="`${field.name}-label`" />
@@ -84,7 +110,12 @@
 
         <slot name="validation" />
 
-        <UButton type="submit" block :loading="loading" v-bind="{ ...ui.default.submitButton, ...submitButton }" />
+        <UButton
+          type="submit"
+          block
+          :loading="loading"
+          v-bind="{ ...ui.default.submitButton, ...submitButton }"
+        />
       </UForm>
     </div>
 
@@ -95,15 +126,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
-import type { PropType } from 'vue'
-import { twJoin } from 'tailwind-merge'
-import { omit } from '#ui/utils'
-import type { Button, ButtonColor, ButtonVariant, FormError, FormEventType, FormGroupSize, DeepPartial } from '#ui/types'
+import { ref, reactive, computed } from 'vue';
+import type { PropType } from 'vue';
+import { twJoin } from 'tailwind-merge';
+import { omit } from '#ui/utils';
+import type {
+  Button,
+  ButtonColor,
+  ButtonVariant,
+  FormError,
+  FormEventType,
+  FormGroupSize,
+  DeepPartial
+} from '#ui/types';
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   title: {
@@ -127,19 +166,21 @@ const props = defineProps({
     default: false
   },
   fields: {
-    type: Array as PropType<{
-      name: string
-      type: string
-      label: string
-      description?: string
-      help?: string
-      hint?: string
-      size?: FormGroupSize
-      placeholder?: string
-      required?: boolean
-      value?: string | number
-      readonly?: boolean
-    }[]>,
+    type: Array as PropType<
+      {
+        name: string;
+        type: string;
+        label: string;
+        description?: string;
+        help?: string;
+        hint?: string;
+        size?: FormGroupSize;
+        placeholder?: string;
+        required?: boolean;
+        value?: string | number;
+        readonly?: boolean;
+      }[]
+    >,
     default: () => []
   },
   providers: {
@@ -159,7 +200,9 @@ const props = defineProps({
     default: undefined
   },
   validate: {
-    type: [Function, Array] as PropType<((state: any) => Promise<FormError[]>) | ((state: any) => FormError[])>,
+    type: [Function, Array] as PropType<
+      ((state: any) => Promise<FormError[]>) | ((state: any) => FormError[])
+    >,
     default: undefined
   },
   validateOn: {
@@ -178,15 +221,15 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config.value>>,
     default: () => ({})
   }
-})
+});
 
-defineEmits(['submit'])
+defineEmits(['submit']);
 
 const config = computed(() => {
   const container: string = twJoin(
     'gap-y-6 flex flex-col',
     props.align === 'top' && 'flex-col-reverse'
-  )
+  );
 
   return {
     wrapper: 'w-full max-w-sm space-y-6',
@@ -214,22 +257,27 @@ const config = computed(() => {
         variant: 'link' as ButtonVariant
       }
     }
-  }
-})
+  };
+});
 
-const formRef = ref<HTMLElement>()
+const formRef = ref<HTMLElement>();
 
-const { ui, attrs } = useUI('auth.form', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI('auth.form', toRef(props, 'ui'), config, toRef(props, 'class'), true);
 
-const state = reactive(Object.values(props.fields).reduce((acc, { name, value }) => {
-  acc[name] = value
-  return acc
-}, {} as Record<string, any>))
+const state = reactive(
+  Object.values(props.fields).reduce(
+    (acc, { name, value }) => {
+      acc[name] = value;
+      return acc;
+    },
+    {} as Record<string, any>
+  )
+);
 
-const passwordVisibility = ref(false)
+const passwordVisibility = ref(false);
 
 function togglePasswordVisibility() {
-  passwordVisibility.value = !passwordVisibility.value
+  passwordVisibility.value = !passwordVisibility.value;
 }
 
 // Expose
@@ -237,5 +285,5 @@ function togglePasswordVisibility() {
 defineExpose({
   formRef,
   state
-})
+});
 </script>

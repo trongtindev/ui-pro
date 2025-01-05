@@ -12,7 +12,7 @@
         <div :class="ui.header.inner">
           <div v-if="icon || $slots.icon" :class="ui.icon.wrapper">
             <slot name="icon">
-              <UIcon :name="(icon as string)" :class="ui.icon.base" />
+              <UIcon :name="icon as string" :class="ui.icon.base" />
             </slot>
           </div>
 
@@ -31,7 +31,12 @@
           </div>
         </div>
 
-        <UButton v-if="closeButton" aria-label="Close" v-bind="{ ...ui.default.closeButton, ...closeButton }" @click="isOpen = false" />
+        <UButton
+          v-if="closeButton"
+          aria-label="Close"
+          v-bind="{ ...ui.default.closeButton, ...closeButton }"
+          @click="isOpen = false"
+        />
       </slot>
     </div>
 
@@ -46,14 +51,14 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { useBreakpoints, breakpointsTailwind } from '@vueuse/core'
-import { twMerge } from 'tailwind-merge'
-import type { modal as modalConfig } from '#ui/ui.config'
-import type { Button, ButtonColor, ButtonVariant, ButtonSize, DeepPartial } from '#ui/types'
+import type { PropType } from 'vue';
+import { useBreakpoints, breakpointsTailwind } from '@vueuse/core';
+import { twMerge } from 'tailwind-merge';
+import type { modal as modalConfig } from '#ui/ui.config';
+import type { Button, ButtonColor, ButtonVariant, ButtonSize, DeepPartial } from '#ui/types';
 
-const appConfig = useAppConfig()
-const slots = useSlots()
+const appConfig = useAppConfig();
+const slots = useSlots();
 
 const config = computed(() => ({
   rounded: 'sm:rounded-lg',
@@ -64,7 +69,7 @@ const config = computed(() => ({
   header: {
     base: 'flex items-start justify-between gap-x-1.5 flex-shrink-0 min-h-[--header-height]',
     inner: 'flex items-start gap-4',
-    padding: twMerge('px-4 py-4 sm:px-6', (slots.default || slots.footer) ? 'pb-0' : undefined)
+    padding: twMerge('px-4 py-4 sm:px-6', slots.default || slots.footer ? 'pb-0' : undefined)
   },
   body: {
     base: 'flex-1 flex flex-col gap-y-3',
@@ -88,11 +93,11 @@ const config = computed(() => ({
       size: 'sm' as ButtonSize
     }
   }
-}))
+}));
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   modelValue: {
@@ -123,21 +128,21 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config.value & typeof modalConfig>>,
     default: () => ({})
   }
-})
+});
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue']);
 
 const isOpen = computed({
   get() {
-    return props.modelValue
+    return props.modelValue;
   },
   set(value) {
-    emit('update:modelValue', value)
+    emit('update:modelValue', value);
   }
-})
+});
 
-const breakpoints = useBreakpoints(breakpointsTailwind)
-const { ui, attrs } = useUI('dashboard.modal', toRef(props, 'ui'), config, undefined, true)
+const breakpoints = useBreakpoints(breakpointsTailwind);
+const { ui, attrs } = useUI('dashboard.modal', toRef(props, 'ui'), config, undefined, true);
 
-const smallerThanSm = breakpoints.smaller('sm')
+const smallerThanSm = breakpoints.smaller('sm');
 </script>

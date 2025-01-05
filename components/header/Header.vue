@@ -24,7 +24,7 @@
           <UButton
             v-if="links.length || $slots.panel"
             :class="ui.button.base"
-            v-bind="($ui?.button?.secondary as any)"
+            v-bind="$ui?.button?.secondary as any"
             :aria-label="`${isHeaderDialogOpen ? 'Close' : 'Open'} Menu`"
             :icon="isHeaderDialogOpen ? ui.button.icon.close : ui.button.icon.open"
             @click="isHeaderDialogOpen = !isHeaderDialogOpen"
@@ -58,7 +58,7 @@
                 <slot name="panel-button" :open="isHeaderDialogOpen">
                   <UButton
                     :class="ui.button.base"
-                    v-bind="($ui?.button?.secondary as any)"
+                    v-bind="$ui?.button?.secondary as any"
                     :aria-label="`${isHeaderDialogOpen ? 'Close' : 'Open'} Menu`"
                     :icon="isHeaderDialogOpen ? ui.button.icon.close : ui.button.icon.open"
                     @click="isHeaderDialogOpen = !isHeaderDialogOpen"
@@ -79,17 +79,18 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { Dialog, DialogPanel, TransitionRoot, provideUseId } from '@headlessui/vue'
-import { getSlotChildrenText } from '../../lib/slots'
-import type { DeepPartial } from '#ui/types'
-import type { HeaderLink } from '#ui-pro/types'
-import { useId } from '#imports'
+import type { PropType } from 'vue';
+import { Dialog, DialogPanel, TransitionRoot, provideUseId } from '@headlessui/vue';
+import { getSlotChildrenText } from '../../lib/slots';
+import type { DeepPartial } from '#ui/types';
+import type { HeaderLink } from '#ui-pro/types';
+import { useId } from '#imports';
 
-const appConfig = useAppConfig()
+const appConfig = useAppConfig();
 
 const config = computed(() => ({
-  wrapper: 'bg-background/75 backdrop-blur border-b border-gray-200 dark:border-gray-800 -mb-px sticky top-0 z-50',
+  wrapper:
+    'bg-background/75 backdrop-blur border-b border-gray-200 dark:border-gray-800 -mb-px sticky top-0 z-50',
   container: 'flex items-center justify-between gap-3 h-[--header-height]',
   left: 'lg:flex-1 flex items-center gap-1.5',
   center: 'hidden lg:flex',
@@ -107,11 +108,11 @@ const config = computed(() => ({
       close: appConfig.ui.icons.close
     }
   }
-}))
+}));
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   to: {
@@ -134,19 +135,24 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config.value>>,
     default: () => ({})
   }
-})
+});
 
-const route = useRoute()
-const slots = useSlots()
-const { $ui } = useNuxtApp()
-const { isHeaderDialogOpen } = useUIState()
-const { ui, attrs } = useUI('header', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const route = useRoute();
+const slots = useSlots();
+const { $ui } = useNuxtApp();
+const { isHeaderDialogOpen } = useUIState();
+const { ui, attrs } = useUI('header', toRef(props, 'ui'), config, toRef(props, 'class'), true);
 
-const ariaLabel = computed(() => (props.title || (slots.logo && getSlotChildrenText(slots.logo())) || 'Logo').trim())
+const ariaLabel = computed(() =>
+  (props.title || (slots.logo && getSlotChildrenText(slots.logo())) || 'Logo').trim()
+);
 
-watch(() => route.fullPath, () => {
-  isHeaderDialogOpen.value = false
-})
+watch(
+  () => route.fullPath,
+  () => {
+    isHeaderDialogOpen.value = false;
+  }
+);
 
-provideUseId(() => useId() as string)
+provideUseId(() => useId() as string);
 </script>

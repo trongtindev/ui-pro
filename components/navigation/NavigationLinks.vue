@@ -14,25 +14,34 @@
       <span :class="ui.label">{{ link.label }}</span>
 
       <slot name="badge" :link="link">
-        <UBadge v-if="link.badge" v-bind="typeof link.badge === 'string' ? { size: 'xs', variant: 'subtle', label: link.badge } : { size: 'xs', variant: 'subtle', ...link.badge }" :class="ui.badge.base" />
+        <UBadge
+          v-if="link.badge"
+          v-bind="
+            typeof link.badge === 'string'
+              ? { size: 'xs', variant: 'subtle', label: link.badge }
+              : { size: 'xs', variant: 'subtle', ...link.badge }
+          "
+          :class="ui.badge.base"
+        />
       </slot>
     </ULink>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { twMerge } from 'tailwind-merge'
-import { getULinkProps } from '#ui/utils'
-import type { DeepPartial } from '#ui/types'
-import type { NavigationLink } from '#ui-pro/types'
+import type { PropType } from 'vue';
+import { twMerge } from 'tailwind-merge';
+import { getULinkProps } from '#ui/utils';
+import type { DeepPartial } from '#ui/types';
+import type { NavigationLink } from '#ui-pro/types';
 
 const config = {
   wrapper: 'space-y-3',
   wrapperLevel: 'space-y-1.5',
   base: 'flex items-center gap-1.5 group',
   active: 'text-primary font-medium border-current',
-  inactive: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 border-transparent hover:border-gray-500 dark:hover:border-gray-400',
+  inactive:
+    'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 border-transparent hover:border-gray-500 dark:hover:border-gray-400',
   level: 'border-l -ml-px pl-4',
   icon: {
     base: 'w-5 h-5 flex-shrink-0'
@@ -41,11 +50,11 @@ const config = {
     base: 'rounded-full'
   },
   label: 'text-sm/6 truncate'
-}
+};
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   level: {
@@ -64,7 +73,13 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config>>,
     default: () => ({})
   }
-})
+});
 
-const { ui, attrs } = useUI('navigation.links', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI(
+  'navigation.links',
+  toRef(props, 'ui'),
+  config,
+  toRef(props, 'class'),
+  true
+);
 </script>

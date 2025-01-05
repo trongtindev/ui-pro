@@ -1,6 +1,12 @@
 <template>
   <UCard :class="[ui.wrapper, to && ui.to]" v-bind="attrs" :ui="ui">
-    <NuxtLink v-if="to" :aria-label="ariaLabel" v-bind="nuxtLinkBind" class="focus:outline-none" tabindex="-1">
+    <NuxtLink
+      v-if="to"
+      :aria-label="ariaLabel"
+      v-bind="nuxtLinkBind"
+      class="focus:outline-none"
+      tabindex="-1"
+    >
       <span class="absolute inset-0" aria-hidden="true" />
     </NuxtLink>
 
@@ -10,7 +16,7 @@
 
     <div v-if="icon || $slots.icon" :class="ui.icon.wrapper">
       <slot name="icon">
-        <UIcon :name="(icon as string)" :class="ui.icon.base" />
+        <UIcon :name="icon as string" :class="ui.icon.base" />
       </slot>
     </div>
 
@@ -35,11 +41,11 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { getSlotChildrenText } from '../../lib/slots'
-import { nuxtLinkProps, getNuxtLinkProps } from '#ui/utils'
-import type { card as cardConfig } from '#ui/ui.config'
-import type { DeepPartial } from '#ui/types'
+import type { PropType } from 'vue';
+import { getSlotChildrenText } from '../../lib/slots';
+import { nuxtLinkProps, getNuxtLinkProps } from '#ui/utils';
+import type { card as cardConfig } from '#ui/ui.config';
+import type { DeepPartial } from '#ui/types';
 
 const config = {
   wrapper: 'relative group',
@@ -53,11 +59,11 @@ const config = {
   },
   title: 'text-gray-900 dark:text-white text-base font-semibold truncate flex items-center gap-1.5',
   description: 'text-[15px] text-gray-500 dark:text-gray-400 mt-1'
-}
+};
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   ...nuxtLinkProps,
@@ -81,11 +87,13 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config & typeof cardConfig>>,
     default: () => ({})
   }
-})
+});
 
-const slots = useSlots()
-const { ui, attrs } = useUI('page.card', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const slots = useSlots();
+const { ui, attrs } = useUI('page.card', toRef(props, 'ui'), config, toRef(props, 'class'), true);
 
-const nuxtLinkBind = computed(() => getNuxtLinkProps(props))
-const ariaLabel = computed(() => (props.title || (slots.title && getSlotChildrenText(slots.title())) || 'Card link').trim())
+const nuxtLinkBind = computed(() => getNuxtLinkProps(props));
+const ariaLabel = computed(() =>
+  (props.title || (slots.title && getSlotChildrenText(slots.title())) || 'Card link').trim()
+);
 </script>

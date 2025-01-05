@@ -20,17 +20,24 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { defu } from 'defu'
-import { useBreakpoints, breakpointsTailwind } from '@vueuse/core'
-import type { UseFuseOptions } from '@vueuse/integrations/useFuse'
-import type { Group, Command, ButtonColor, ButtonVariant, ButtonSize, DeepPartial } from '#ui/types'
+import type { PropType } from 'vue';
+import { defu } from 'defu';
+import { useBreakpoints, breakpointsTailwind } from '@vueuse/core';
+import type { UseFuseOptions } from '@vueuse/integrations/useFuse';
+import type {
+  Group,
+  Command,
+  ButtonColor,
+  ButtonVariant,
+  ButtonSize,
+  DeepPartial
+} from '#ui/types';
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
-const appConfig = useAppConfig()
+const appConfig = useAppConfig();
 
 const config = computed(() => ({
   padding: 'p-0 sm:p-4',
@@ -47,7 +54,6 @@ const config = computed(() => ({
     },
     group: {
       command: {
-
         prefix: `!text-foreground after:content-['_>']`
       }
     },
@@ -64,7 +70,7 @@ const config = computed(() => ({
       size: 'sm' as ButtonSize
     }
   }
-}))
+}));
 
 const props = defineProps({
   modelValue: {
@@ -87,97 +93,106 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config.value>>,
     default: () => ({})
   }
-})
+});
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue']);
 
-const router = useRouter()
-const { usingInput } = useShortcuts()
-const { isDashboardSearchModalOpen } = useUIState()
-const breakpoints = useBreakpoints(breakpointsTailwind)
-const colorMode = useColorMode()
-const { ui, attrs } = useUI('dashboard.search', toRef(props, 'ui'), config, undefined, true)
+const router = useRouter();
+const { usingInput } = useShortcuts();
+const { isDashboardSearchModalOpen } = useUIState();
+const breakpoints = useBreakpoints(breakpointsTailwind);
+const colorMode = useColorMode();
+const { ui, attrs } = useUI('dashboard.search', toRef(props, 'ui'), config, undefined, true);
 
-const smallerThanSm = breakpoints.smaller('sm')
+const smallerThanSm = breakpoints.smaller('sm');
 
-const commandPaletteRef = ref<HTMLElement & { query: Ref<string>, results: { item: Command }[] }>()
+const commandPaletteRef = ref<HTMLElement & { query: Ref<string>; results: { item: Command }[] }>();
 
 // Computed
 
 const isOpen = computed({
   get() {
-    return props.modelValue !== undefined ? props.modelValue : isDashboardSearchModalOpen.value
+    return props.modelValue !== undefined ? props.modelValue : isDashboardSearchModalOpen.value;
   },
   set(value) {
     if (props.modelValue !== undefined) {
-      emit('update:modelValue', value)
+      emit('update:modelValue', value);
     } else {
-      isDashboardSearchModalOpen.value = value
+      isDashboardSearchModalOpen.value = value;
     }
   }
-})
+});
 
-const fuse: ComputedRef<Partial<UseFuseOptions<Command>>> = computed(() => defu({}, props.fuse, {
-  fuseOptions: {
-    ignoreLocation: true,
-    includeMatches: true,
-    threshold: 0.1,
-    keys: [
-      { name: 'title', weight: 5 },
-      { name: 'label', weight: 5 },
-      { name: 'suffix', weight: 3 }
-    ]
-  },
-  resultLimit: 12
-}))
+const fuse: ComputedRef<Partial<UseFuseOptions<Command>>> = computed(() =>
+  defu({}, props.fuse, {
+    fuseOptions: {
+      ignoreLocation: true,
+      includeMatches: true,
+      threshold: 0.1,
+      keys: [
+        { name: 'title', weight: 5 },
+        { name: 'label', weight: 5 },
+        { name: 'suffix', weight: 3 }
+      ]
+    },
+    resultLimit: 12
+  })
+);
 
 const groups = computed(() => {
-  return [...(props.groups || []), !colorMode?.forced && !props.hideColorMode && {
-    key: 'theme',
-    label: 'Theme',
-    commands: [{
-      id: 'theme-light',
-      label: 'Light',
-      icon: appConfig.ui.icons.light,
-      disabled: colorMode.preference === 'light',
-      click: () => {
-        colorMode.preference = 'light'
+  return [
+    ...(props.groups || []),
+    !colorMode?.forced &&
+      !props.hideColorMode && {
+        key: 'theme',
+        label: 'Theme',
+        commands: [
+          {
+            id: 'theme-light',
+            label: 'Light',
+            icon: appConfig.ui.icons.light,
+            disabled: colorMode.preference === 'light',
+            click: () => {
+              colorMode.preference = 'light';
+            }
+          },
+          {
+            id: 'theme-dark',
+            label: 'Dark',
+            icon: appConfig.ui.icons.dark,
+            disabled: colorMode.preference === 'dark',
+            click: () => {
+              colorMode.preference = 'dark';
+            }
+          }
+        ]
       }
-    }, {
-      id: 'theme-dark',
-      label: 'Dark',
-      icon: appConfig.ui.icons.dark,
-      disabled: colorMode.preference === 'dark',
-      click: () => {
-        colorMode.preference = 'dark'
-      }
-    }]
-  }].filter(Boolean) as Group[]
-})
+  ].filter(Boolean) as Group[];
+});
 
 // avoid conflicts between multiple meta_k shortcuts
-const canToggleModal = computed(() => isOpen.value || !usingInput.value)
+const canToggleModal = computed(() => isOpen.value || !usingInput.value);
 
 // Methods
 
 function onSelect(options: Command[]) {
-  isOpen.value = false
+  isOpen.value = false;
 
-  const option = options[0]
+  const option = options[0];
   if (!option) {
-    return
+    return;
   }
 
   if (option.click) {
-    option.click()
+    option.click();
   } else if (option.to) {
     if (option.target === '_blank' || option.to.startsWith('http')) {
-      window.open(option.to, option.target || '_blank')
+      window.open(option.to, option.target || '_blank');
     } else {
-      router.push(option.to)
+      router.push(option.to);
     }
   } else if (option.href) {
-    window.open(option.href, '_blank')
+    window.open(option.href, '_blank');
   }
 }
 
@@ -188,19 +203,21 @@ defineShortcuts({
     usingInput: true,
     whenever: [canToggleModal],
     handler: () => {
-      isOpen.value = !isOpen.value
+      isOpen.value = !isOpen.value;
     }
   },
   escape: {
     usingInput: true,
     whenever: [isOpen],
-    handler: () => { isOpen.value = false }
+    handler: () => {
+      isOpen.value = false;
+    }
   }
-})
+});
 
 // Expose
 
 defineExpose({
   commandPaletteRef
-})
+});
 </script>

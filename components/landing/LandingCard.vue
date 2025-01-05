@@ -10,13 +10,19 @@
   >
     <UCard :ui="ui">
       <div :class="ui.container">
-        <NuxtLink v-if="to" :aria-label="ariaLabel" v-bind="nuxtLinkBind" class="focus:outline-none" tabindex="-1">
+        <NuxtLink
+          v-if="to"
+          :aria-label="ariaLabel"
+          v-bind="nuxtLinkBind"
+          class="focus:outline-none"
+          tabindex="-1"
+        >
           <span class="absolute inset-0" aria-hidden="true" />
         </NuxtLink>
 
         <div v-if="icon || $slots.icon" :class="ui.icon.wrapper">
           <slot name="icon">
-            <UIcon :name="(icon as string)" :class="ui.icon.base" />
+            <UIcon :name="icon as string" :class="ui.icon.base" />
           </slot>
         </div>
 
@@ -41,18 +47,18 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { twJoin } from 'tailwind-merge'
-import { getSlotChildrenText } from '../../lib/slots'
-import { nuxtLinkProps, getNuxtLinkProps } from '#ui/utils'
-import colors from '#tailwind-config/theme/colors'
-import type uiColors from '#ui-colors'
-import type { card as cardConfig } from '#ui/ui.config'
-import type { DeepPartial } from '#ui/types'
+import type { PropType } from 'vue';
+import { twJoin } from 'tailwind-merge';
+import { getSlotChildrenText } from '../../lib/slots';
+import { nuxtLinkProps, getNuxtLinkProps } from '#ui/utils';
+import colors from '#tailwind-config/theme/colors';
+import type uiColors from '#ui-colors';
+import type { card as cardConfig } from '#ui/ui.config';
+import type { DeepPartial } from '#ui/types';
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   ...nuxtLinkProps,
@@ -69,7 +75,7 @@ const props = defineProps({
     default: undefined
   },
   color: {
-    type: String as PropType<typeof uiColors[number]>,
+    type: String as PropType<(typeof uiColors)[number]>,
     default: 'primary'
   },
   orientation: {
@@ -84,39 +90,41 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config.value & typeof cardConfig>>,
     default: () => ({})
   }
-})
+});
 
 const colorLight = computed(() => {
   if (props.color === 'primary') {
-    return 'rgb(var(--color-primary-DEFAULT))'
+    return 'rgb(var(--color-primary-DEFAULT))';
   }
   // @ts-ignore
-  return colors[props.color]?.['500'] || colors[props.color] || props.color
-})
+  return colors[props.color]?.['500'] || colors[props.color] || props.color;
+});
 const colorDark = computed(() => {
   if (props.color === 'primary') {
-    return 'rgb(var(--color-primary-DEFAULT))'
+    return 'rgb(var(--color-primary-DEFAULT))';
   }
   // @ts-ignore
-  return colors[props.color]?.['400'] || colors[props.color] || props.color
-})
+  return colors[props.color]?.['400'] || colors[props.color] || props.color;
+});
 
 const config = computed(() => {
   const base = twJoin(
     'gap-x-8 gap-y-4 rounded-xl flex-1',
     props.orientation === 'vertical' && 'flex flex-col',
     !!slots.default && props.orientation === 'horizontal' && 'grid lg:grid-cols-2 lg:items-center'
-  )
+  );
 
   return {
-    wrapper: 'relative group isolate rounded-xl background-gradient ring-1 ring-gray-200 dark:ring-gray-800 before:hidden before:lg:block before:absolute before:-inset-[2px] before:h-[calc(100%+4px)] before:w-[calc(100%+4px)] before:z-[-1] before:rounded-[13px] flex-1 flex flex-col shadow',
+    wrapper:
+      'relative group isolate rounded-xl background-gradient ring-1 ring-gray-200 dark:ring-gray-800 before:hidden before:lg:block before:absolute before:-inset-[2px] before:h-[calc(100%+4px)] before:w-[calc(100%+4px)] before:z-[-1] before:rounded-[13px] flex-1 flex flex-col shadow',
     to: 'transition-shadow duration-200',
     base: 'flex-1 flex flex-col overflow-hidden',
     container: '',
     body: {
       base
     },
-    background: 'bg-white dark:bg-gray-900 hover:bg-opacity-90 dark:hover:bg-opacity-90 transition-[background-opacity]',
+    background:
+      'bg-white dark:bg-gray-900 hover:bg-opacity-90 dark:hover:bg-opacity-90 transition-[background-opacity]',
     ring: '',
     rounded: 'rounded-xl',
     shadow: '',
@@ -126,24 +134,34 @@ const config = computed(() => {
     },
     title: 'text-gray-900 dark:text-white text-base font-bold truncate',
     description: 'text-[15px] text-gray-500 dark:text-gray-400 mt-1'
-  }
-})
+  };
+});
 
-const el = ref<HTMLDivElement>()
+const el = ref<HTMLDivElement>();
 
-const slots = useSlots()
-const { elementX, elementY } = useSharedMouseInElement(el)
-const { ui, attrs } = useUI('landing.card', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const slots = useSlots();
+const { elementX, elementY } = useSharedMouseInElement(el);
+const { ui, attrs } = useUI(
+  'landing.card',
+  toRef(props, 'ui'),
+  config,
+  toRef(props, 'class'),
+  true
+);
 
-const nuxtLinkBind = computed(() => getNuxtLinkProps(props))
-const ariaLabel = computed(() => (props.title || (slots.title && getSlotChildrenText(slots.title())) || 'Card link').trim())
+const nuxtLinkBind = computed(() => getNuxtLinkProps(props));
+const ariaLabel = computed(() =>
+  (props.title || (slots.title && getSlotChildrenText(slots.title())) || 'Card link').trim()
+);
 </script>
 
 <style scoped>
 .background-gradient::before {
-  background: radial-gradient(250px circle at var(--x) var(--y),
-      v-bind(colorLight) 0%,
-      transparent 100%);
+  background: radial-gradient(
+    250px circle at var(--x) var(--y),
+    v-bind(colorLight) 0%,
+    transparent 100%
+  );
   will-change: background;
 }
 
@@ -153,9 +171,11 @@ const ariaLabel = computed(() => (props.title || (slots.title && getSlotChildren
 
 .dark {
   .background-gradient::before {
-    background: radial-gradient(250px circle at var(--x) var(--y),
-        v-bind(colorDark) 0%,
-        transparent 100%);
+    background: radial-gradient(
+      250px circle at var(--x) var(--y),
+      v-bind(colorDark) 0%,
+      transparent 100%
+    );
   }
 
   .to:hover {

@@ -1,5 +1,9 @@
 <template>
-  <UCard :class="[ui.wrapper, highlight && ui.highlight, scale && ui.scale]" v-bind="attrs" :ui="ui">
+  <UCard
+    :class="[ui.wrapper, highlight && ui.highlight, scale && ui.scale]"
+    v-bind="attrs"
+    :ui="ui"
+  >
     <template v-if="$slots.header" #header>
       <slot name="header" />
     </template>
@@ -55,7 +59,11 @@
         </slot>
       </div>
 
-      <div v-if="features?.length || $slots.features" :class="align === 'top' && 'order-last'" class="flex-1">
+      <div
+        v-if="features?.length || $slots.features"
+        :class="align === 'top' && 'order-last'"
+        class="flex-1"
+      >
         <slot name="features">
           <ul v-if="features?.length" :class="ui.features.vertical">
             <li v-for="(offer, index) of features" :key="index" :class="ui.features.item.base">
@@ -69,7 +77,10 @@
     </template>
 
     <div :class="ui.right">
-      <div v-if="orientation === 'horizontal'" :class="[ui.amount.base, align === 'top' && 'order-last']">
+      <div
+        v-if="orientation === 'horizontal'"
+        :class="[ui.amount.base, align === 'top' && 'order-last']"
+      >
         <slot name="amount">
           <p v-if="discount && price" :class="ui.amount.discount">
             {{ price }}
@@ -85,7 +96,11 @@
         </slot>
       </div>
 
-      <UButton v-if="button" v-bind="{ block: true, size: 'lg', ...button }" @click="button?.click" />
+      <UButton
+        v-if="button"
+        v-bind="{ block: true, size: 'lg', ...button }"
+        @click="button?.click"
+      />
 
       <slot v-if="orientation === 'horizontal'" name="bottom" />
     </div>
@@ -99,14 +114,14 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { twJoin } from 'tailwind-merge'
-import type { Badge, Button, DeepPartial } from '#ui/types'
-import type { card as cardConfig } from '#ui/ui.config'
+import type { PropType } from 'vue';
+import { twJoin } from 'tailwind-merge';
+import type { Badge, Button, DeepPartial } from '#ui/types';
+import type { card as cardConfig } from '#ui/ui.config';
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   title: {
@@ -165,18 +180,21 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config.value & typeof cardConfig>>,
     default: () => ({})
   }
-})
+});
 
-const appConfig = useAppConfig()
+const appConfig = useAppConfig();
 
 const config = computed(() => {
   const base = twJoin(
     'flex-1 gap-6 lg:gap-x-8 xl:gap-x-10 flex flex-col',
     props.orientation === 'horizontal' ? 'lg:grid lg:grid-cols-10' : ''
-  )
+  );
 
-  const left: string = props.orientation === 'horizontal' ? 'lg:col-span-7' : ''
-  const right: string = props.orientation === 'horizontal' ? 'flex flex-col lg:items-center justify-center gap-y-6 lg:col-span-3 border-t lg:border-l lg:border-t-0 border-gray-200 dark:border-gray-800 pt-6 lg:pt-0 lg:pl-8 xl:pl-10' : ''
+  const left: string = props.orientation === 'horizontal' ? 'lg:col-span-7' : '';
+  const right: string =
+    props.orientation === 'horizontal'
+      ? 'flex flex-col lg:items-center justify-center gap-y-6 lg:col-span-3 border-t lg:border-l lg:border-t-0 border-gray-200 dark:border-gray-800 pt-6 lg:pt-0 lg:pl-8 xl:pl-10'
+      : '';
 
   return {
     wrapper: 'relative flex flex-col self-stretch w-full',
@@ -217,8 +235,14 @@ const config = computed(() => {
     divider: 'my-6 lg:my-8',
     left,
     right
-  }
-})
+  };
+});
 
-const { ui, attrs } = useUI('pricing.card', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI(
+  'pricing.card',
+  toRef(props, 'ui'),
+  config,
+  toRef(props, 'class'),
+  true
+);
 </script>

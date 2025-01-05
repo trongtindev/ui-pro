@@ -1,12 +1,21 @@
 <template>
-  <UCard :class="[ui.wrapper, to && ui.to]" v-bind="attrs" :ui="ui" :style="{ '--color-light': colorLight, '--color-dark': colorDark }">
+  <UCard
+    :class="[ui.wrapper, to && ui.to]"
+    v-bind="attrs"
+    :ui="ui"
+    :style="{ '--color-light': colorLight, '--color-dark': colorDark }"
+  >
     <NuxtLink v-if="to" :to="to" :target="target" class="focus:outline-none" tabindex="-1">
       <span class="absolute inset-0" aria-hidden="true" />
     </NuxtLink>
 
     <UIcon v-if="icon" :name="icon" :class="ui.icon.base" />
 
-    <UIcon v-if="!!to && target === '_blank'" :name="ui.externalIcon.name" :class="ui.externalIcon.base" />
+    <UIcon
+      v-if="!!to && target === '_blank'"
+      :name="ui.externalIcon.name"
+      :class="ui.externalIcon.base"
+    />
 
     <p :class="ui.title">
       {{ title }}
@@ -19,11 +28,11 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import colors from '#tailwind-config/theme/colors'
-import type uiColors from '#ui-colors'
+import type { PropType } from 'vue';
+import colors from '#tailwind-config/theme/colors';
+import type uiColors from '#ui-colors';
 
-const appConfig = useAppConfig()
+const appConfig = useAppConfig();
 
 const config = computed(() => ({
   wrapper: 'relative group overflow-hidden flex items-center rounded-lg',
@@ -40,11 +49,11 @@ const config = computed(() => ({
   },
   title: 'text-gray-900 dark:text-white font-semibold text-base my-0',
   description: 'text-[15px] text-gray-500 dark:text-gray-400 mt-1 mb-0'
-}))
+}));
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   icon: {
@@ -52,7 +61,7 @@ const props = defineProps({
     default: undefined
   },
   color: {
-    type: String as PropType<typeof uiColors[number]>,
+    type: String as PropType<(typeof uiColors)[number]>,
     default: 'primary'
   },
   to: {
@@ -75,24 +84,32 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config.value>>,
     default: () => ({})
   }
-})
+});
 
-const { ui, attrs } = useUI('content.card', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI(
+  'content.card',
+  toRef(props, 'ui'),
+  config,
+  toRef(props, 'class'),
+  true
+);
 
 const colorLight = computed(() => {
   if (props.color === 'primary') {
-    return 'rgb(var(--color-primary-DEFAULT))'
+    return 'rgb(var(--color-primary-DEFAULT))';
   }
   // @ts-ignore
-  return colors[props.color]?.['500'] || colors[props.color] || props.color
-})
+  return colors[props.color]?.['500'] || colors[props.color] || props.color;
+});
 const colorDark = computed(() => {
   if (props.color === 'primary') {
-    return 'rgb(var(--color-primary-DEFAULT))'
+    return 'rgb(var(--color-primary-DEFAULT))';
   }
   // @ts-ignore
-  return colors[props.color]?.['400'] || colors[props.color] || props.color
-})
+  return colors[props.color]?.['400'] || colors[props.color] || props.color;
+});
 
-const target = computed(() => props.target || (props.to && props.to.startsWith('http') ? '_blank' : undefined))
+const target = computed(
+  () => props.target || (props.to && props.to.startsWith('http') ? '_blank' : undefined)
+);
 </script>

@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
+import type { PropType } from 'vue';
 
 const config = {
   wrapper: 'mt-5',
@@ -30,11 +30,11 @@ const config = {
   type: 'text-right',
   label: 'flex flex-1 gap-x-2.5',
   description: 'mt-3 mb-0 text-gray-600 dark:text-gray-300 text-sm space-y-3'
-}
+};
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   name: {
@@ -65,7 +65,13 @@ const props = defineProps({
     type: Object as PropType<Partial<typeof config>>,
     default: () => ({})
   }
-})
+});
 
-const { ui, attrs } = useUI('content.field', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI(
+  'content.field',
+  toRef(props, 'ui'),
+  config,
+  toRef(props, 'class'),
+  true
+);
 </script>

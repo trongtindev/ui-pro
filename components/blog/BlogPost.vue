@@ -2,13 +2,22 @@
   <article :class="ui.wrapper" v-bind="attrs">
     <div v-if="image || $slots.image" :class="ui.image.wrapper">
       <slot name="image">
-        <NuxtImg v-bind="typeof image === 'string' ? { src: image, alt: title } : { alt: title, ...image }" :class="ui.image.base" />
+        <NuxtImg
+          v-bind="typeof image === 'string' ? { src: image, alt: title } : { alt: title, ...image }"
+          :class="ui.image.base"
+        />
       </slot>
     </div>
 
     <div :class="ui.container">
       <div :class="ui.inner">
-        <NuxtLink v-if="to" :aria-label="ariaLabel" v-bind="nuxtLinkBind" class="focus:outline-none" tabindex="-1">
+        <NuxtLink
+          v-if="to"
+          :aria-label="ariaLabel"
+          v-bind="nuxtLinkBind"
+          class="focus:outline-none"
+          tabindex="-1"
+        >
           <span class="absolute inset-0" aria-hidden="true" />
         </NuxtLink>
 
@@ -33,7 +42,10 @@
         <slot />
       </div>
 
-      <div v-if="(authors?.length || $slots.authors) || (date || $slots.date)" :class="ui.authors.wrapper">
+      <div
+        v-if="authors?.length || $slots.authors || date || $slots.date"
+        :class="ui.authors.wrapper"
+      >
         <slot name="authors">
           <UAvatarGroup v-if="authors?.length">
             <UAvatar
@@ -43,7 +55,12 @@
               :class="ui.authors.avatar.base"
               v-bind="{ size: ui.authors.avatar.size, ...author.avatar }"
             >
-              <NuxtLink v-if="author.to" v-bind="{ target: '_blank', ...getNuxtLinkProps(author) }" class="focus:outline-none" tabindex="-1">
+              <NuxtLink
+                v-if="author.to"
+                v-bind="{ target: '_blank', ...getNuxtLinkProps(author) }"
+                class="focus:outline-none"
+                tabindex="-1"
+              >
                 <span class="absolute inset-0" aria-hidden="true" />
               </NuxtLink>
             </UAvatar>
@@ -61,18 +78,18 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { twJoin } from 'tailwind-merge'
-import { getSlotChildrenText } from '../../lib/slots'
-import { nuxtLinkProps, getNuxtLinkProps } from '#ui/utils'
-import type { Avatar, AvatarSize, Badge, DeepPartial } from '#ui/types'
-import type { NuxtLinkProps } from '#app'
+import type { PropType } from 'vue';
+import { twJoin } from 'tailwind-merge';
+import { getSlotChildrenText } from '../../lib/slots';
+import { nuxtLinkProps, getNuxtLinkProps } from '#ui/utils';
+import type { Avatar, AvatarSize, Badge, DeepPartial } from '#ui/types';
+import type { NuxtLinkProps } from '#app';
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
-const slots = useSlots()
+const slots = useSlots();
 
 const props = defineProps({
   ...nuxtLinkProps,
@@ -97,10 +114,12 @@ const props = defineProps({
     default: undefined
   },
   authors: {
-    type: Array as PropType<({
-      name: string
-      avatar: Avatar
-    } & NuxtLinkProps)[]>,
+    type: Array as PropType<
+      ({
+        name: string;
+        avatar: Avatar;
+      } & NuxtLinkProps)[]
+    >,
     default: undefined
   },
   orientation: {
@@ -115,18 +134,21 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config.value>>,
     default: () => ({})
   }
-})
+});
 
 const config = computed(() => {
   const wrapper = twJoin(
     'relative group flex flex-col w-full gap-y-6',
-    props.orientation === 'horizontal' && (!!props.image || !!slots.image) ? 'lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-center' : undefined
-  )
+    props.orientation === 'horizontal' && (!!props.image || !!slots.image)
+      ? 'lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-center'
+      : undefined
+  );
 
   return {
     wrapper,
     image: {
-      wrapper: 'ring-1 ring-gray-200 dark:ring-gray-800 relative overflow-hidden aspect-[16/9] w-full rounded-lg pointer-events-none',
+      wrapper:
+        'ring-1 ring-gray-200 dark:ring-gray-800 relative overflow-hidden aspect-[16/9] w-full rounded-lg pointer-events-none',
       base: 'object-cover object-top w-full h-full transform transition-transform duration-200 group-hover:scale-105'
     },
     container: 'flex flex-col justify-between flex-1',
@@ -135,7 +157,8 @@ const config = computed(() => {
       wrapper: 'mb-3',
       base: ''
     },
-    title: 'text-gray-900 dark:text-white text-xl font-semibold line-clamp-2 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors duration-200',
+    title:
+      'text-gray-900 dark:text-white text-xl font-semibold line-clamp-2 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors duration-200',
     description: 'text-base text-gray-500 dark:text-gray-400 mt-1',
     date: 'text-sm text-gray-500 dark:text-gray-400 font-medium pointer-events-none',
     authors: {
@@ -145,22 +168,24 @@ const config = computed(() => {
         size: 'xs' as AvatarSize
       }
     }
-  }
-})
+  };
+});
 
-const { ui, attrs } = useUI('blog.post', toRef(props, 'ui'), config, toRef(props, 'class'), true)
+const { ui, attrs } = useUI('blog.post', toRef(props, 'ui'), config, toRef(props, 'class'), true);
 
-const nuxtLinkBind = computed(() => getNuxtLinkProps(props))
-const ariaLabel = computed(() => (props.title || (slots.title && getSlotChildrenText(slots.title())) || 'Post link').trim())
+const nuxtLinkBind = computed(() => getNuxtLinkProps(props));
+const ariaLabel = computed(() =>
+  (props.title || (slots.title && getSlotChildrenText(slots.title())) || 'Post link').trim()
+);
 const datetime = computed(() => {
   if (!props.date) {
-    return undefined
+    return undefined;
   }
 
   try {
-    return new Date(props.date).toISOString()
+    return new Date(props.date).toISOString();
   } catch {
-    return undefined
+    return undefined;
   }
-})
+});
 </script>

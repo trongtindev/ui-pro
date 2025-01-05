@@ -8,7 +8,12 @@
           </slot>
         </p>
 
-        <UButton v-if="closeButton" aria-label="Close" v-bind="{ ...ui.default.closeButton, ...closeButton }" @click="isOpen = false" />
+        <UButton
+          v-if="closeButton"
+          aria-label="Close"
+          v-bind="{ ...ui.default.closeButton, ...closeButton }"
+          @click="isOpen = false"
+        />
       </slot>
     </div>
 
@@ -23,11 +28,11 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import type { slideover as slideoverConfig } from '#ui/ui.config'
-import type { Button, ButtonColor, ButtonVariant, ButtonSize, DeepPartial } from '#ui/types'
+import type { PropType } from 'vue';
+import type { slideover as slideoverConfig } from '#ui/ui.config';
+import type { Button, ButtonColor, ButtonVariant, ButtonSize, DeepPartial } from '#ui/types';
 
-const appConfig = useAppConfig()
+const appConfig = useAppConfig();
 
 const config = computed(() => ({
   header: {
@@ -51,11 +56,11 @@ const config = computed(() => ({
       size: 'sm' as ButtonSize
     }
   }
-}))
+}));
 
 defineOptions({
   inheritAttrs: false
-})
+});
 
 const props = defineProps({
   modelValue: {
@@ -78,18 +83,18 @@ const props = defineProps({
     type: Object as PropType<DeepPartial<typeof config.value & typeof slideoverConfig>>,
     default: () => ({})
   }
-})
+});
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue']);
 
 const isOpen = computed({
   get() {
-    return props.modelValue
+    return props.modelValue;
   },
   set(value) {
-    emit('update:modelValue', value)
+    emit('update:modelValue', value);
   }
-})
+});
 
-const { ui, attrs } = useUI('dashboard.slideover', toRef(props, 'ui'), config, undefined, true)
+const { ui, attrs } = useUI('dashboard.slideover', toRef(props, 'ui'), config, undefined, true);
 </script>

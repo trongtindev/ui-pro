@@ -3,7 +3,7 @@
     :icon="appConfig.ui.icons.search"
     :label="label"
     truncate
-    v-bind="((!!label ? { color: 'gray' } : $ui?.button?.secondary) as any)"
+    v-bind="(!!label ? { color: 'gray' } : $ui?.button?.secondary) as any"
     aria-label="Search"
     @click="toggleDashboardSearch"
   >
@@ -12,24 +12,22 @@
         <UKbd>
           {{ metaSymbol }}
         </UKbd>
-        <UKbd>
-          K
-        </UKbd>
+        <UKbd> K </UKbd>
       </div>
     </template>
   </UButton>
 </template>
 
 <script setup lang="ts">
-const appConfig = useAppConfig()
-const { $ui } = useNuxtApp()
-const { toggleDashboardSearch } = useUIState()
-const { metaSymbol } = useShortcuts()
+const appConfig = useAppConfig();
+const { $ui } = useNuxtApp();
+const { toggleDashboardSearch } = useUIState();
+const { metaSymbol } = useShortcuts();
 
 defineProps({
   label: {
     type: String,
     default: 'Search...'
   }
-})
+});
 </script>
