@@ -73,17 +73,17 @@ const config = {
 
 const { ui } = useUI('content.prose.code.icon', undefined, config, undefined, true);
 
-const extension = computed(() => (props.filename?.split('.').pop() || '').toLowerCase());
+const extension = computed(() => (props.filename!.split('.').pop() || '').toLowerCase());
 // @ts-ignore
 const hasIcon = computed(
-  () => props.icon || ui.value[extension.value] || props.filename.includes('.')
+  () => props.icon || ui.value[extension.value] || props.filename!.includes('.')
 );
 // @ts-ignore
 const icon = computed(
   () =>
     props.icon ??
     (props.filename &&
-      (ui.value[props.filename.split('/').pop()] ??
+      (ui.value[props.filename.split('/').pop()!] ??
         ui.value[extension.value] ??
         `i-vscode-icons-file-type-${extension.value}`))
 );
