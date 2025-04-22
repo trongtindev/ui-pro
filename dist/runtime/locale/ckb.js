@@ -1,0 +1,59 @@
+import { ckb } from "@nuxt/ui/locale";
+import { defineLocale } from "@nuxt/ui/composables/defineLocale.js";
+export default defineLocale({
+  ...ckb,
+  messages: {
+    ...ckb.messages,
+    authForm: {
+      submit: "\u0628\u06D5\u0631\u062F\u06D5\u0648\u0627\u0645 \u0628\u06D5",
+      hidePassword: "\u0634\u0627\u0631\u062F\u0646\u06D5\u0648\u06D5\u06CC \u0648\u0634\u06D5\u06CC \u0646\u0647\u06CE\u0646\u06CC",
+      showPassword: "\u067E\u06CC\u0634\u0627\u0646\u062F\u0627\u0646\u06CC \u0648\u0634\u06D5\u06CC \u0646\u0647\u06CE\u0646\u06CC"
+    },
+    banner: {
+      close: "\u062F\u0627\u062E\u0633\u062A\u0646"
+    },
+    colorMode: {
+      system: "\u0633\u06CC\u0633\u062A\u06D5\u0645",
+      light: "\u0695\u0648\u0648\u0646\u0627\u06A9",
+      dark: "\u062A\u0627\u0631\u06CC\u06A9",
+      switchToLight: "\u06AF\u06C6\u0695\u06CC\u0646 \u0628\u06C6 \u062F\u06C6\u062E\u06CC \u0695\u0648\u0648\u0646\u0627\u06A9",
+      switchToDark: "\u06AF\u06C6\u0695\u06CC\u0646 \u0628\u06C6 \u062F\u06C6\u062E\u06CC \u062A\u0627\u0631\u06CC\u06A9"
+    },
+    contentSearch: {
+      links: "\u0628\u06D5\u0633\u062A\u06D5\u0631\u06D5\u06A9\u0627\u0646",
+      theme: "\u0695\u0648\u0648\u06A9\u0627\u0631"
+    },
+    contentSearchButton: {
+      label: "\u06AF\u06D5\u0695\u0627\u0646..."
+    },
+    contentToc: {
+      title: "\u0644\u06D5\u0645 \u067E\u06D5\u0695\u06D5\u06CC\u06D5\u062F\u0627"
+    },
+    dashboardSearch: {
+      theme: "\u0695\u0648\u0648\u06A9\u0627\u0631"
+    },
+    dashboardSearchButton: {
+      label: "\u06AF\u06D5\u0695\u0627\u0646..."
+    },
+    dashboardSidebarCollapse: {
+      expand: "\u0641\u0631\u0627\u0648\u0627\u0646\u06A9\u0631\u062F\u0646\u06CC \u0644\u0627\u06CC \u062A\u06D5\u0646\u06CC\u0634\u062A",
+      collapse: "\u062F\u0627\u062E\u0633\u062A\u0646\u06CC \u0644\u0627\u06CC \u062A\u06D5\u0646\u06CC\u0634\u062A"
+    },
+    dashboardSidebarToggle: {
+      close: "\u062F\u0627\u062E\u0633\u062A\u0646\u06CC \u0644\u0627\u06CC \u062A\u06D5\u0646\u06CC\u0634\u062A",
+      open: "\u06A9\u0631\u062F\u0646\u06D5\u0648\u06D5\u06CC \u0644\u0627\u06CC \u062A\u06D5\u0646\u06CC\u0634\u062A"
+    },
+    error: {
+      clear: "\u06AF\u06D5\u0695\u0627\u0646\u06D5\u0648\u06D5 \u0628\u06C6 \u0633\u06D5\u0631\u06D5\u062A\u0627"
+    },
+    header: {
+      close: "\u062F\u0627\u062E\u0633\u062A\u0646\u06CC \u067E\u06CE\u0695\u0633\u062A",
+      open: "\u06A9\u0631\u062F\u0646\u06D5\u0648\u06D5\u06CC \u067E\u06CE\u0695\u0633\u062A"
+    },
+    prose: {
+      pre: {
+        copy: "\u0644\u06D5\u0628\u06D5\u0631\u06AF\u0631\u062A\u0646\u06D5\u0648\u06D5\u06CC \u06A9\u06C6\u062F"
+      }
+    }
+  }
+});
