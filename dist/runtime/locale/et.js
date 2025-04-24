@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "Sulge"
     },
+    chatPrompt: {
+      placeholder: "Siia kirjutage oma s\xF5num..."
+    },
+    chatPromptSubmit: {
+      label: "Saada"
+    },
     colorMode: {
       system: "S\xFCsteem",
       light: "Hele",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "Sulge men\xFC\xFC",
       open: "Ava men\xFC\xFC"
+    },
+    pricingTable: {
+      caption: "Hinna plaanide v\xF5rdlus"
     },
     prose: {
       pre: {

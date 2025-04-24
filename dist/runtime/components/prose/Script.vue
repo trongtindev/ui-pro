@@ -1,9 +1,8 @@
-<script setup lang="ts">
-defineProps<{
-  src: string
-}>()
-
-const isDev = import.meta.dev
+<script setup>
+defineProps({
+  src: { type: String, required: true }
+});
+const isDev = import.meta.dev;
 </script>
 
 <template>

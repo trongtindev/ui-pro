@@ -1,127 +1,73 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import type { ButtonProps, DrawerProps, ModalProps, SlideoverProps } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/header'
-import { tv } from '../utils/tv'
-
-const appConfigHeader = _appConfig as AppConfig & { uiPro: { header: Partial<typeof theme> } }
-
-const header = tv({ extend: tv(theme), ...(appConfigHeader.uiPro?.header || {}) })
-
-type HeaderMode = 'modal' | 'slideover' | 'drawer'
-type HeaderMenu<T> = T extends 'modal' ? ModalProps : T extends 'slideover' ? SlideoverProps : T extends 'drawer' ? DrawerProps : never
-
-export interface HeaderProps<T> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'header'
-   */
-  as?: any
-  title?: string
-  to?: string
-  /**
-   * The mode of the header menu.
-   * @defaultValue 'modal'
-   */
-  mode?: T
-  /**
-   * The props for the header menu component.
-   */
-  menu?: HeaderMenu<T>
-  /**
-   * Customize the toggle button to open the header menu displayed when the `content` slot is used.
-   * `{ color: 'neutral', variant: 'ghost' }`{lang="ts-type"}
-   */
-  toggle?: boolean | Partial<ButtonProps>
-  /**
-   * The side to render the toggle button on.
-   * @defaultValue 'right'
-   */
-  toggleSide?: 'left' | 'right'
-  class?: any
-  ui?: Partial<typeof header.slots>
-}
-
-export interface HeaderSlots {
-  title(props?: {}): any
-  left(props?: {}): any
-  default(props?: {}): any
-  right(props?: {}): any
-  toggle(props?: { open: boolean }): any
-  top(props?: {}): any
-  bottom(props?: {}): any
-  body(props?: {}): any
-  content(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/header";
 </script>
 
-<script setup lang="ts" generic="T extends HeaderMode">
-import { computed, watch, toRef } from 'vue'
-import { Primitive } from 'reka-ui'
-import { defu } from 'defu'
-import { createReusableTemplate } from '@vueuse/core'
-import USlideover from '@nuxt/ui/components/Slideover.vue'
-import UModal from '@nuxt/ui/components/Modal.vue'
-import UDrawer from '@nuxt/ui/components/Drawer.vue'
-import { useAppConfig, useRoute } from '#imports'
-import { useLocalePro } from '../composables/useLocalePro'
-import { getSlotChildrenText } from '../utils'
-
-const props = withDefaults(defineProps<HeaderProps<T>>(), {
-  as: 'header',
-  mode: 'modal' as never,
-  toggle: true,
-  toggleSide: 'right',
-  to: '/',
-  title: 'Nuxt UI Pro'
-})
-const slots = defineSlots<HeaderSlots>()
-
-const open = defineModel<boolean>('open', { default: false })
-
-const route = useRoute()
-const appConfig = useAppConfig()
-const { t } = useLocalePro()
-
-const [DefineLeftTemplate, ReuseLeftTemplate] = createReusableTemplate()
-const [DefineRightTemplate, ReuseRightTemplate] = createReusableTemplate()
-const [DefineToggleTemplate, ReuseToggleTemplate] = createReusableTemplate()
-
-const ariaLabel = computed(() => (props.title || (slots.title && getSlotChildrenText(slots.title())) || 'Nuxt UI Pro').trim())
-
+<script setup>
+import { computed, watch, toRef } from "vue";
+import { Primitive } from "reka-ui";
+import { defu } from "defu";
+import { createReusableTemplate } from "@vueuse/core";
+import USlideover from "@nuxt/ui/components/Slideover.vue";
+import UModal from "@nuxt/ui/components/Modal.vue";
+import UDrawer from "@nuxt/ui/components/Drawer.vue";
+import { useAppConfig, useRoute } from "#imports";
+import { useLocalePro } from "../composables/useLocalePro";
+import { getSlotChildrenText } from "../utils";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false, default: "header" },
+  title: { type: String, required: false, default: "Nuxt UI Pro" },
+  to: { type: String, required: false, default: "/" },
+  mode: { type: null, required: false, default: "modal" },
+  menu: { type: null, required: false },
+  toggle: { type: [Boolean, Object], required: false, default: true },
+  toggleSide: { type: String, required: false, default: "right" },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const open = defineModel("open", { type: Boolean, ...{ default: false } });
+const route = useRoute();
+const { t } = useLocalePro();
+const appConfig = useAppConfig();
+const [DefineLeftTemplate, ReuseLeftTemplate] = createReusableTemplate();
+const [DefineRightTemplate, ReuseRightTemplate] = createReusableTemplate();
+const [DefineToggleTemplate, ReuseToggleTemplate] = createReusableTemplate();
+const ariaLabel = computed(() => {
+  const slotText = slots.title && getSlotChildrenText(slots.title());
+  return (slotText || props.title || "Nuxt UI Pro").trim();
+});
 watch(() => route.fullPath, () => {
-  open.value = false
-})
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = header()
-
+  open.value = false;
+});
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.header || {} })());
 const Menu = computed(() => ({
   slideover: USlideover,
   modal: UModal,
   drawer: UDrawer
-})[props.mode as HeaderMode])
-
+})[props.mode]);
 const menuProps = toRef(() => defu(props.menu, {
   content: {
-    onOpenAutoFocus: (e: Event) => e.preventDefault()
+    onOpenAutoFocus: (e) => e.preventDefault()
   }
-}, props.mode === 'modal' ? { fullscreen: true, transition: false } : {}) as HeaderMenu<T>)
+}, props.mode === "modal" ? { fullscreen: true, transition: false } : {}));
+function toggleOpen() {
+  open.value = !open.value;
+}
 </script>
 
 <template>
   <DefineToggleTemplate>
-    <slot name="toggle" :open="open">
+    <slot name="toggle" :open="open" :toggle="toggleOpen">
       <UButton
         v-if="toggle"
         color="neutral"
         variant="ghost"
         :aria-label="open ? t('header.close') : t('header.open')"
         :icon="open ? appConfig.ui.icons.close : appConfig.ui.icons.menu"
-        v-bind="(typeof toggle === 'object' ? toggle as Partial<ButtonProps> : {})"
+        v-bind="typeof toggle === 'object' ? toggle : {}"
         :class="ui.toggle({ class: props.ui?.toggle, toggleSide })"
-        @click="open = !open"
+        @click="toggleOpen"
       />
     </slot>
   </DefineToggleTemplate>
@@ -168,9 +114,9 @@ const menuProps = toRef(() => defu(props.menu, {
     v-model:open="open"
     v-bind="menuProps"
     :ui="{
-      overlay: ui.overlay({ class: props.ui?.overlay }),
-      content: ui.content({ class: props.ui?.content })
-    }"
+  overlay: ui.overlay({ class: props.ui?.overlay }),
+  content: ui.content({ class: props.ui?.content })
+}"
   >
     <template #content>
       <slot name="content">

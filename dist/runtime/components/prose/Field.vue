@@ -1,52 +1,24 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/field'
-import { tv } from '../../utils/tv'
-
-const appConfigField = _appConfig as AppConfig & { uiPro: { prose: { field: Partial<typeof theme> } } }
-
-const field = tv({ extend: tv(theme), ...(appConfigField.uiPro?.prose?.field || {}) })
-
-export interface FieldProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * The name of the field.
-   */
-  name: string
-  /**
-   * Expected type of the field’s value
-   */
-  type: string
-  /**
-   * Description of the field
-   */
-  description?: string
-  /**
-   * Indicate whether the field is required
-   */
-  required?: boolean
-  class?: any
-  ui?: Partial<typeof field.slots>
-}
-
-export interface FieldSlots {
-  default(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/prose/field";
 </script>
 
-<script setup lang="ts">
-import { Primitive } from 'reka-ui'
-
-const props = defineProps<FieldProps>()
-const slots = defineSlots<FieldSlots>()
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = field()
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false },
+  name: { type: String, required: true },
+  type: { type: String, required: true },
+  description: { type: String, required: false },
+  required: { type: Boolean, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.field || {} })());
 </script>
 
 <template>

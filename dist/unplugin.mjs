@@ -4,8 +4,7 @@ import { globSync } from 'tinyglobby';
 import { defu } from 'defu';
 import { createUnplugin } from 'unplugin';
 import ui from '@nuxt/ui/vite';
-import { g as getTemplates, i as icons } from './shared/ui-pro.qTd-WLcu.mjs';
-import dotenv from 'dotenv';
+import { g as getTemplates, i as icons } from './shared/ui-pro.CjN6508I.mjs';
 import 'scule';
 import '@nuxt/kit';
 
@@ -56,8 +55,6 @@ function AppConfigPlugin(appConfig) {
     },
   };
 }
-
-dotenv.config();
 
 const runtimeDir = normalize(
   fileURLToPath(new URL('./runtime', import.meta.url)),
@@ -152,6 +149,7 @@ const NuxtUIProPlugin = createUnplugin((_options = {}) => {
     ui(options),
     TemplatePlugin(options),
     AppConfigPlugin(appConfig),
+    LicensePlugin(options.license),
   ].flat(1);
 });
 

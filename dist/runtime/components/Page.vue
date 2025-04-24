@@ -1,42 +1,23 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/page'
-import { tv } from '../utils/tv'
-
-const appConfigPage = _appConfig as AppConfig & { uiPro: { page: Partial<typeof theme> } }
-
-const page = tv({ extend: tv(theme), ...(appConfigPage.uiPro?.page || {}) })
-
-export interface PageProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  class?: any
-  ui?: Partial<typeof page.slots>
-}
-
-export interface PageSlots {
-  left(props?: {}): any
-  default(props?: {}): any
-  right(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/page";
 </script>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-import { Primitive, Slot } from 'reka-ui'
-
-const props = defineProps<PageProps>()
-const slots = defineSlots<PageSlots>()
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => page({
+<script setup>
+import { computed } from "vue";
+import { Primitive, Slot } from "reka-ui";
+import { useAppConfig } from "#imports";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.page || {} })({
   left: !!slots.left,
   right: !!slots.right
-}))
+}));
 </script>
 
 <template>

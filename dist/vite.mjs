@@ -5,7 +5,7 @@ import 'tinyglobby';
 import 'defu';
 import 'unplugin';
 import '@nuxt/ui/vite';
-import './shared/ui-pro.qTd-WLcu.mjs';
+import './shared/ui-pro.CjN6508I.mjs';
 import 'scule';
 import '@nuxt/kit';
 import 'dotenv';

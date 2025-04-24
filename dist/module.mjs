@@ -7,13 +7,20 @@ import {
   addComponentsDir,
   addImportsDir,
 } from '@nuxt/kit';
-import { i as icons, a as addTemplates } from './shared/ui-pro.qTd-WLcu.mjs';
+import {
+  a as version,
+  n as name,
+  i as icons,
+  b as addTemplates,
+} from './shared/ui-pro.CjN6508I.mjs';
 import 'node:url';
 import 'scule';
 
 const module = defineNuxtModule({
   meta: {
-    name: 'ui-pro',
+    name,
+    version,
+    docs: 'https://ui.nuxt.com/getting-started/installation/pro/nuxt',
     configKey: 'uiPro',
     compatibility: {
       nuxt: '>=3.16.0',
@@ -25,14 +32,15 @@ const module = defineNuxtModule({
     content: false,
   },
   async setup(options, nuxt) {
+    nuxt.options.appConfig.ui = defu(nuxt.options.appConfig.ui || {}, {
+      icons,
+    });
     if (!hasNuxtModule('@nuxt/ui')) {
       await installModule('@nuxt/ui');
     }
     const { resolve } = createResolver(import.meta.url);
     nuxt.options.alias['#ui-pro'] = resolve('./runtime');
-    nuxt.options.appConfig.ui = defu(nuxt.options.appConfig.ui || {}, {
-      icons,
-    });
+    nuxt.options.appConfig.uiPro = defu(nuxt.options.appConfig.uiPro || {}, {});
     nuxt.options.router.options.scrollBehaviorType = 'smooth';
     if (
       hasNuxtModule('@nuxtjs/mdc') ||

@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "Zatvori\u0165"
     },
+    chatPrompt: {
+      placeholder: "Tu nap\xED\u0161te svoje spr\xE1vu..."
+    },
+    chatPromptSubmit: {
+      label: "Odosla\u0165"
+    },
     colorMode: {
       system: "Syst\xE9m",
       light: "Svetl\xFD",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "Zatvori\u0165 menu",
       open: "Otvori\u0165 menu"
+    },
+    pricingTable: {
+      caption: "Porovnanie cien"
     },
     prose: {
       pre: {

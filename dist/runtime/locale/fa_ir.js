@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "\u0628\u0633\u062A\u0646"
     },
+    chatPrompt: {
+      placeholder: "\u0627\u06CC\u0646\u062C\u0627 \u067E\u06CC\u0627\u0645 \u062E\u0648\u062F \u0631\u0627 \u0628\u0646\u0648\u06CC\u0633\u06CC\u062F..."
+    },
+    chatPromptSubmit: {
+      label: "\u0627\u0631\u0633\u0627\u0644"
+    },
     colorMode: {
       system: "\u0633\u06CC\u0633\u062A\u0645",
       light: "\u0631\u0648\u0634\u0646",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "\u0628\u0633\u062A\u0646 \u0645\u0646\u0648",
       open: "\u0628\u0627\u0632 \u06A9\u0631\u062F\u0646 \u0645\u0646\u0648"
+    },
+    pricingTable: {
+      caption: "\u0645\u0642\u0627\u06CC\u0633\u0647 \u0637\u0631\u062D \u0642\u06CC\u0645\u062A"
     },
     prose: {
       pre: {

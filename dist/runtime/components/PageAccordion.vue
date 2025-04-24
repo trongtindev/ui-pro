@@ -1,36 +1,25 @@
-<!-- eslint-disable vue/block-tag-newline -->
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import type { AccordionProps, AccordionSlots, AccordionItem } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/page-accordion'
-import { tv } from '../utils/tv'
-
-const appConfigPageAccordion = _appConfig as AppConfig & { uiPro: { pageAccordion: Partial<typeof theme> } }
-
-const pageAccordion = tv({ extend: tv(theme), ...(appConfigPageAccordion.uiPro?.pageAccordion || {}) })
-
-export interface PageAccordionProps<T extends AccordionItem> extends /** @vue-ignore */ Omit<AccordionProps<T>, 'type'> {
-  type?: AccordionProps<T>['type']
-  ui?: Partial<typeof pageAccordion.slots>
-}
-
-export type PageAccordionSlots<T> = AccordionSlots<T & { slot?: string }>
-
+<script>
+import theme from "#build/ui-pro/page-accordion";
 </script>
 
-<script setup lang="ts" generic="T extends AccordionItem">
-import { transformUI } from '../utils'
-
-withDefaults(defineProps<PageAccordionProps<T>>(), {
-  type: 'multiple'
-})
-const slots = defineSlots<PageAccordionSlots<T>>()
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { transformUI } from "../utils";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  type: { type: null, required: false, default: "multiple" },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.pageAccordion || {} })());
 </script>
 
 <template>
-  <UAccordion :type="type" :unmount-on-hide="false" :ui="transformUI(pageAccordion())">
-    <template v-for="(_, name) in slots" #[name]="slotData: any">
+  <UAccordion :type="type" :unmount-on-hide="false" :class="ui.base({ class: [props.class, props.ui?.base] })" :ui="transformUI(ui, props.ui)">
+    <template v-for="(_, name) in slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
     </template>
   </UAccordion>

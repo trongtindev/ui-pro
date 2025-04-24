@@ -1,22 +1,21 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/badge'
-import { tv } from '../../utils/tv'
-
-const appConfigProseBadge = _appConfig as AppConfig & { uiPro: { prose: { badge: Partial<typeof theme> } } }
-
-const badge = tv({ extend: tv(theme), ...(appConfigProseBadge.uiPro?.prose?.badge || {}) })
+<script>
+import theme from "#build/ui-pro/prose/badge";
 </script>
 
-<script setup lang="ts">
-const props = defineProps<{
-  class?: any
-}>()
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  class: { type: null, required: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.badge || {} }));
 </script>
 
 <template>
-  <UBadge color="primary" variant="subtle" :class="badge({ class: props.class })">
+  <UBadge color="primary" variant="subtle" :class="ui({ class: props.class })">
     <slot mdc-unwrap="p" />
   </UBadge>
 </template>

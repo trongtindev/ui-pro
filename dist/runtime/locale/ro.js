@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "\xCEnchide"
     },
+    chatPrompt: {
+      placeholder: "Scrie\u021Bi mesajul dvs. aici..."
+    },
+    chatPromptSubmit: {
+      label: "Trimite"
+    },
     colorMode: {
       system: "Sistem",
       light: "Luminos",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "\xCEnchide meniul",
       open: "Deschide meniul"
+    },
+    pricingTable: {
+      caption: "Comparare pre\u021Buri"
     },
     prose: {
       pre: {

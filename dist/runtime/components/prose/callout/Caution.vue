@@ -1,8 +1,7 @@
-<script setup lang="ts">
-import { useAppConfig } from '#imports'
-import Callout from '../Callout.vue'
-
-const appConfig = useAppConfig()
+<script setup>
+import { useAppConfig } from "#imports";
+import Callout from "../Callout.vue";
+const appConfig = useAppConfig();
 </script>
 
 <template>

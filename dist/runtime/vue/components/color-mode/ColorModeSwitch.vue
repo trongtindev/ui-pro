@@ -1,31 +1,24 @@
-<script lang="ts">
-import type { SwitchProps } from '@nuxt/ui'
+<script>
 
-export interface ColorModeSwitchProps extends /** @vue-ignore */ Pick<SwitchProps, 'as' | 'color' | 'size' | 'disabled' | 'ui'> {
-}
 </script>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-import { useAppConfig, useColorMode } from '#imports'
-import { useLocalePro } from '../../../composables/useLocalePro'
-
-defineOptions({ inheritAttrs: false })
-
-defineProps<ColorModeSwitchProps>()
-
-const colorMode = useColorMode()
-const appConfig = useAppConfig()
-const { t } = useLocalePro()
-
+<script setup>
+import { computed } from "vue";
+import { useAppConfig, useColorMode } from "#imports";
+import { useLocalePro } from "../../../composables/useLocalePro";
+defineOptions({ inheritAttrs: false });
+defineProps(void 0);
+const { t } = useLocalePro();
+const colorMode = useColorMode();
+const appConfig = useAppConfig();
 const isDark = computed({
   get() {
-    return colorMode.value === 'dark'
+    return colorMode.value === "dark";
   },
-  set() {
-    colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
+  set(_isDark) {
+    colorMode.preference = _isDark ? "dark" : "light";
   }
-})
+});
 </script>
 
 <template>

@@ -1,56 +1,25 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import type { PartialString } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/code-collapse'
-import { tv } from '../../utils/tv'
-
-const appConfigProseCodeCollapse = _appConfig as AppConfig & { uiPro: { prose: { codeCollapse: Partial<typeof theme> } } }
-
-const codeCollapse = tv({ extend: tv(theme), ...(appConfigProseCodeCollapse.uiPro?.prose?.codeCollapse || {}) })
-
-interface CodeCollapseProps {
-  /**
-   * The icon displayed to toggle the code.
-   * @defaultValue appConfig.ui.icons.chevronDown
-   */
-  icon?: string
-  /**
-   * The name displayed in the trigger label.
-   * @defaultValue 'code'
-   */
-  name?: string
-  /**
-   * The text displayed when the code is collapsed.
-   * @defaultValue 'Expand'
-   */
-  openText?: string
-  /**
-   * The text displayed when the code is expanded.
-   * @defaultValue 'Collapse'
-   */
-  closeText?: string
-  class?: any
-  ui?: PartialString<typeof codeCollapse.slots>
-}
+<script>
+import theme from "#build/ui-pro/prose/code-collapse";
 </script>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-import { useAppConfig } from '#imports'
-
-const props = withDefaults(defineProps<CodeCollapseProps>(), {
-  name: 'code',
-  openText: 'Expand',
-  closeText: 'Collapse'
-})
-
-const open = defineModel<boolean>('open', { default: false })
-
-const appConfig = useAppConfig()
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => codeCollapse({ open: open.value }))
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  icon: { type: String, required: false },
+  name: { type: String, required: false, default: "code" },
+  openText: { type: String, required: false, default: "Expand" },
+  closeText: { type: String, required: false, default: "Collapse" },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+defineSlots();
+const open = defineModel("open", { type: Boolean, ...{ default: false } });
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.codeCollapse || {} })({
+  open: open.value
+}));
 </script>
 
 <template>

@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "Tancar"
     },
+    chatPrompt: {
+      placeholder: "Escriu el teu missatge aqu\xED..."
+    },
+    chatPromptSubmit: {
+      label: "Enviar"
+    },
     colorMode: {
       system: "Sistema",
       light: "Clar",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "Tancar men\xFA",
       open: "Obrir men\xFA"
+    },
+    pricingTable: {
+      caption: "Comparaci\xF3 de plans de preu"
     },
     prose: {
       pre: {

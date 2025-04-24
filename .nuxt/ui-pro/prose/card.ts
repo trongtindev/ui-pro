@@ -1,3 +1,5 @@
+import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/prose/card"
+
 const color = [
   "primary",
   "secondary",
@@ -8,42 +10,59 @@ const color = [
   "neutral"
 ] as const
 
-export default {
+const result = typeof template === 'function' ? (template as Function)({
+  "prefix": "U",
+  "fonts": true,
+  "colorMode": true,
+  "theme": {
+    "colors": [
+      "primary",
+      "secondary",
+      "success",
+      "info",
+      "warning",
+      "error"
+    ],
+    "transitions": true
+  }
+}) : template
+
+const theme = {
   "slots": {
     "base": [
-      "group relative block p-4 sm:p-6 border border-(--ui-border) rounded-[calc(var(--ui-radius)*1.5)] bg-(--ui-bg)",
+      "group relative block p-4 sm:p-6 border border-default rounded-md bg-default",
       "transition-colors"
     ],
     "icon": "size-6 mb-2 block",
-    "title": "text-(--ui-text-highlighted) font-semibold",
-    "description": "text-[15px] text-(--ui-text-muted)",
+    "title": "text-highlighted font-semibold",
+    "description": "text-[15px] text-muted",
     "externalIcon": [
-      "size-4 align-top absolute right-2 top-2 text-(--ui-text-dimmed) pointer-events-none",
+      "size-4 align-top absolute right-2 top-2 text-dimmed pointer-events-none",
       "transition-colors"
     ]
   },
   "variants": {
     "color": {
       "primary": {
-        "icon": "text-(--ui-primary)"
+        "icon": "text-primary"
       },
       "secondary": {
-        "icon": "text-(--ui-secondary)"
+        "icon": "text-secondary"
       },
       "success": {
-        "icon": "text-(--ui-success)"
+        "icon": "text-success"
       },
       "info": {
-        "icon": "text-(--ui-info)"
+        "icon": "text-info"
       },
       "warning": {
-        "icon": "text-(--ui-warning)"
+        "icon": "text-warning"
       },
       "error": {
-        "icon": "text-(--ui-error)"
+        "icon": "text-error"
       },
       "neutral": {
-        "icon": "text-(--ui-text-highlighted)"
+        "icon": "text-highlighted"
       }
     },
     "to": {
@@ -60,56 +79,56 @@ export default {
       "color": "primary" as typeof color[number],
       "to": true,
       "class": {
-        "base": "hover:bg-(--ui-primary)/10 hover:border-(--ui-primary)",
-        "externalIcon": "group-hover:text-(--ui-primary)"
+        "base": "hover:bg-primary/10 hover:border-primary",
+        "externalIcon": "group-hover:text-primary"
       }
     },
     {
       "color": "secondary" as typeof color[number],
       "to": true,
       "class": {
-        "base": "hover:bg-(--ui-secondary)/10 hover:border-(--ui-secondary)",
-        "externalIcon": "group-hover:text-(--ui-secondary)"
+        "base": "hover:bg-secondary/10 hover:border-secondary",
+        "externalIcon": "group-hover:text-secondary"
       }
     },
     {
       "color": "success" as typeof color[number],
       "to": true,
       "class": {
-        "base": "hover:bg-(--ui-success)/10 hover:border-(--ui-success)",
-        "externalIcon": "group-hover:text-(--ui-success)"
+        "base": "hover:bg-success/10 hover:border-success",
+        "externalIcon": "group-hover:text-success"
       }
     },
     {
       "color": "info" as typeof color[number],
       "to": true,
       "class": {
-        "base": "hover:bg-(--ui-info)/10 hover:border-(--ui-info)",
-        "externalIcon": "group-hover:text-(--ui-info)"
+        "base": "hover:bg-info/10 hover:border-info",
+        "externalIcon": "group-hover:text-info"
       }
     },
     {
       "color": "warning" as typeof color[number],
       "to": true,
       "class": {
-        "base": "hover:bg-(--ui-warning)/10 hover:border-(--ui-warning)",
-        "externalIcon": "group-hover:text-(--ui-warning)"
+        "base": "hover:bg-warning/10 hover:border-warning",
+        "externalIcon": "group-hover:text-warning"
       }
     },
     {
       "color": "error" as typeof color[number],
       "to": true,
       "class": {
-        "base": "hover:bg-(--ui-error)/10 hover:border-(--ui-error)",
-        "externalIcon": "group-hover:text-(--ui-error)"
+        "base": "hover:bg-error/10 hover:border-error",
+        "externalIcon": "group-hover:text-error"
       }
     },
     {
       "color": "neutral" as typeof color[number],
       "to": true,
       "class": {
-        "base": "hover:bg-(--ui-bg-elevated)/50 hover:border-(--ui-border-inverted)",
-        "externalIcon": "group-hover:text-(--ui-text-highlighted)"
+        "base": "hover:bg-elevated/50 hover:border-inverted",
+        "externalIcon": "group-hover:text-highlighted"
       }
     }
   ],
@@ -117,3 +136,5 @@ export default {
     "color": "primary" as typeof color[number]
   }
 }
+
+export default result as typeof theme

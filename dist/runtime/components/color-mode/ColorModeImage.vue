@@ -1,12 +1,10 @@
-<script setup lang="ts">
-import ImageComponent from '#build/ui-image-component'
-
-defineOptions({ inheritAttrs: false })
-
-defineProps<{
-  dark: string
-  light: string
-}>()
+<script setup>
+import ImageComponent from "#build/ui-image-component";
+defineOptions({ inheritAttrs: false });
+defineProps({
+  dark: { type: String, required: true },
+  light: { type: String, required: true }
+});
 </script>
 
 <template>

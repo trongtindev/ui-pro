@@ -1,55 +1,30 @@
-<script lang="ts">
-import type { VariantProps } from 'tailwind-variants'
-import type { AppConfig } from '@nuxt/schema'
-import type { LinkProps, PartialString } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/card'
-import { tv } from '../../utils/tv'
-
-const appConfigProseCard = _appConfig as AppConfig & { uiPro: { prose: { card: Partial<typeof theme> } } }
-
-const card = tv({ extend: tv(theme), ...(appConfigProseCard.uiPro?.prose?.card || {}) })
-
-type CardVariants = VariantProps<typeof card>
-
-interface CardProps {
-  to?: LinkProps['to']
-  target?: LinkProps['target']
-  icon?: string
-  title?: string
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: CardVariants['color']
-  class?: any
-  ui?: PartialString<typeof card.slots>
-}
-
-interface CardSlots {
-  default(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/prose/card";
 </script>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-import { useAppConfig } from '#imports'
-
-defineOptions({ inheritAttrs: false })
-
-const props = defineProps<CardProps>()
-const slots = defineSlots<CardSlots>()
-
-const appConfig = useAppConfig()
-
-const ui = computed(() => card({
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+defineOptions({ inheritAttrs: false });
+const props = defineProps({
+  to: { type: null, required: false },
+  target: { type: null, required: false },
+  icon: { type: String, required: false },
+  title: { type: String, required: false },
+  color: { type: null, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.card || {} })({
   color: props.color,
   to: !!props.to,
   title: !!props.title
-}))
-
-const target = computed(() => props.target || (!!props.to && typeof props.to === 'string' && props.to.startsWith('http') ? '_blank' : undefined))
-
-const ariaLabel = computed(() => (props.title || 'Card link').trim())
+}));
+const target = computed(() => props.target || (!!props.to && typeof props.to === "string" && props.to.startsWith("http") ? "_blank" : void 0));
+const ariaLabel = computed(() => (props.title || "Card link").trim());
 </script>
 
 <template>

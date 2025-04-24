@@ -1,65 +1,27 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import type { ButtonProps } from '@nuxt/ui'
-import type { NuxtError } from '#app'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/error'
-import { tv } from '../utils/tv'
-
-const appConfigError = _appConfig as AppConfig & { uiPro: { error: Partial<typeof theme> } }
-
-// eslint-disable-next-line vue/no-dupe-keys
-const error = tv({ extend: tv(theme), ...(appConfigError.uiPro?.error || {}) })
-
-export interface ErrorProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  error?: Partial<NuxtError & { message: string }>
-  /**
-   * The URL to redirect to when the error is cleared.
-   * @defaultValue '/'
-   */
-  redirect?: string
-  /**
-   * Display a button to clear the error in the links slot.
-   * `{ size: 'lg', color: 'primary', variant: 'solid', label: 'Back to home' }`{lang="ts-type"}
-   * @defaultValue true
-   */
-  clear?: boolean | Partial<ButtonProps>
-  class?: any
-  ui?: Partial<typeof error.slots>
-}
-
-export interface ErrorSlots {
-  default(props?: {}): any
-  statusCode(props?: {}): any
-  statusMessage(props?: {}): any
-  links(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/error";
 </script>
 
-<script setup lang="ts">
-import { Primitive } from 'reka-ui'
-import { clearError } from '#imports'
-import { useLocalePro } from '../composables/useLocalePro'
-
-const props = withDefaults(defineProps<ErrorProps>(), {
-  as: 'main',
-  redirect: '/',
-  clear: true
-})
-defineSlots<ErrorSlots>()
-
-const { t } = useLocalePro()
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = error()
-
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { clearError, useAppConfig } from "#imports";
+import { useLocalePro } from "../composables/useLocalePro";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false, default: "main" },
+  error: { type: Object, required: false },
+  redirect: { type: String, required: false, default: "/" },
+  clear: { type: [Boolean, Object], required: false, default: true },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+defineSlots();
+const { t } = useLocalePro();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.error || {} })());
 function handleError() {
-  clearError({ redirect: props.redirect })
+  clearError({ redirect: props.redirect });
 }
 </script>
 
@@ -81,7 +43,7 @@ function handleError() {
         color="primary"
         variant="solid"
         :label="t('error.clear')"
-        v-bind="(typeof clear === 'object' ? clear as Partial<ButtonProps> : {})"
+        v-bind="typeof clear === 'object' ? clear : {}"
         @click="handleError"
       />
     </div>

@@ -1,88 +1,34 @@
-<script lang="ts">
-import type { VariantProps } from 'tailwind-variants'
-import type { AppConfig } from '@nuxt/schema'
-import type { ButtonProps } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/page-section'
-import { tv } from '../utils/tv'
-import type { PageFeatureProps } from '../types'
-
-const appConfigPageSection = _appConfig as AppConfig & { uiPro: { pageSection: Partial<typeof theme> } }
-
-const pageSection = tv({ extend: tv(theme), ...(appConfigPageSection.uiPro?.pageSection || {}) })
-
-type PageSectionVariants = VariantProps<typeof pageSection>
-
-export interface PageSectionProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'section'
-   */
-  as?: any
-  /**
-   * The headline displayed above the title.
-   */
-  headline?: string
-  /**
-   * The icon displayed above the title.
-   * @IconifyIcon
-   */
-  icon?: string
-  title?: string
-  description?: string
-  /**
-   * Display a list of Button under the description.
-   * `{ size: 'lg' }`{lang="ts-type"}
-   */
-  links?: ButtonProps[]
-  /**
-   * Display a list of PageFeature under the description.
-   */
-  features?: PageFeatureProps[]
-  /**
-   * The orientation of the section.
-   * @defaultValue 'vertical'
-   */
-  orientation?: PageSectionVariants['orientation']
-  /**
-   * Reverse the order of the default slot.
-   * @defaultValue false
-   */
-  reverse?: boolean
-  class?: any
-  ui?: Partial<typeof pageSection.slots>
-}
-
-export interface PageSectionSlots {
-  default(props?: {}): any
-  top(props?: {}): any
-  bottom(props?: {}): any
-  headline(props?: {}): any
-  leading(props?: {}): any
-  title(props?: {}): any
-  description(props?: {}): any
-  links(props?: {}): any
-  features(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/page-section";
 </script>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-import { Primitive } from 'reka-ui'
-
-const props = withDefaults(defineProps<PageSectionProps>(), {
-  as: 'section',
-  orientation: 'vertical'
-})
-const slots = defineSlots<PageSectionSlots>()
-
-const ui = computed(() => pageSection({
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { useAppConfig } from "#imports";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false, default: "section" },
+  headline: { type: String, required: false },
+  icon: { type: String, required: false },
+  title: { type: String, required: false },
+  description: { type: String, required: false },
+  links: { type: Array, required: false },
+  features: { type: Array, required: false },
+  orientation: { type: null, required: false, default: "vertical" },
+  reverse: { type: Boolean, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.pageSection || {} })({
   orientation: props.orientation,
   reverse: props.reverse,
   title: !!props.title || !!slots.title,
   description: !!props.description || !!slots.description,
   features: !!props.features?.length || !!slots.features
-}))
+}));
 </script>
 
 <template>
@@ -90,7 +36,7 @@ const ui = computed(() => pageSection({
     <slot name="top" />
 
     <UContainer :class="ui.container({ class: props.ui?.container })">
-      <div v-if="(icon || !!slots.leading) || (headline || !!slots.headline) || (title || !!slots.title) || (description || !!slots.description) || (features?.length || !!slots.features) || (links?.length || !!slots.links)" :class="ui.wrapper({ class: props.ui?.wrapper })">
+      <div v-if="icon || !!slots.leading || (headline || !!slots.headline) || (title || !!slots.title) || (description || !!slots.description) || (features?.length || !!slots.features) || (links?.length || !!slots.links)" :class="ui.wrapper({ class: props.ui?.wrapper })">
         <div v-if="icon || !!slots.leading" :class="ui.leading({ class: props.ui?.leading })">
           <slot name="leading">
             <UIcon v-if="icon" :name="icon" :class="ui.leadingIcon({ class: props.ui?.leadingIcon })" />

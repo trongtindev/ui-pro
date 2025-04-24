@@ -1,16 +1,35 @@
+import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/page-feature"
+
 const orientation = [
   "horizontal",
   "vertical"
 ] as const
 
-export default {
+const result = typeof template === 'function' ? (template as Function)({
+  "prefix": "U",
+  "fonts": true,
+  "colorMode": true,
+  "theme": {
+    "colors": [
+      "primary",
+      "secondary",
+      "success",
+      "info",
+      "warning",
+      "error"
+    ],
+    "transitions": true
+  }
+}) : template
+
+const theme = {
   "slots": {
     "root": "relative",
     "wrapper": "",
     "leading": "inline-flex items-center justify-center",
-    "leadingIcon": "size-5 shrink-0 text-(--ui-primary)",
-    "title": "text-base text-pretty font-semibold text-(--ui-text-highlighted)",
-    "description": "text-[15px] text-pretty text-(--ui-text-muted)"
+    "leadingIcon": "size-5 shrink-0 text-primary",
+    "title": "text-base text-pretty font-semibold text-highlighted",
+    "description": "text-[15px] text-pretty text-muted"
   },
   "variants": {
     "orientation": {
@@ -29,3 +48,5 @@ export default {
     }
   }
 }
+
+export default result as typeof theme

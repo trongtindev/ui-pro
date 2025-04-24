@@ -1,42 +1,20 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/footer'
-import { tv } from '../utils/tv'
-
-const appConfigFooter = _appConfig as AppConfig & { uiPro: { footer: Partial<typeof theme> } }
-
-const footer = tv({ extend: tv(theme), ...(appConfigFooter.uiPro?.footer || {}) })
-
-export interface FooterProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'footer'
-   */
-  as?: any
-  class?: any
-  ui?: Partial<typeof footer.slots>
-}
-
-export interface FooterSlots {
-  left(props?: {}): any
-  default(props?: {}): any
-  right(props?: {}): any
-  top(props?: {}): any
-  bottom(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/footer";
 </script>
 
-<script setup lang="ts">
-import { Primitive } from 'reka-ui'
-
-const props = withDefaults(defineProps<FooterProps>(), {
-  as: 'footer'
-})
-const slots = defineSlots<FooterSlots>()
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = footer()
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { useAppConfig } from "#imports";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false, default: "footer" },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.footer || {} })());
 </script>
 
 <template>

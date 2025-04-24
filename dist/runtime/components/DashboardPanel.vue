@@ -1,49 +1,30 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/dashboard-panel'
-import type { UseResizableProps } from '../composables/useResizable'
-import { tv } from '../utils/tv'
-
-const appConfig = _appConfig as AppConfig & { uiPro: { dashboardPanel: Partial<typeof theme> } }
-
-const dashboardPanel = tv({ extend: tv(theme), ...(appConfig.uiPro?.dashboardPanel || {}) })
-
-export interface DashboardPanelProps extends Pick<UseResizableProps, 'id' | 'minSize' | 'maxSize' | 'defaultSize' | 'resizable'> {
-  class?: any
-  ui?: Partial<typeof dashboardPanel.slots>
-}
-
-export interface DashboardPanelSlots {
-  'default'(props?: {}): any
-  'header'(props?: {}): any
-  'body'(props?: {}): any
-  'footer'(props?: {}): any
-  'resize-handle'(props: { onMouseDown: (e: MouseEvent) => void, onTouchStart: (e: TouchEvent) => void }): any
-}
+<script>
+import theme from "#build/ui-pro/dashboard-panel";
 </script>
 
-<script setup lang="ts">
-import { computed, useId, toRef } from 'vue'
-import { useDashboard } from '../utils/dashboard'
-import { useResizable } from '../composables/useResizable'
-
-const props = withDefaults(defineProps<DashboardPanelProps>(), {
-  minSize: 15,
-  resizable: false
-})
-defineSlots<DashboardPanelSlots>()
-
-const dashboardContext = useDashboard({ storageKey: 'dashboard', unit: '%' })
-
-const id = `${dashboardContext.storageKey}-panel-${props.id || useId()}`
-
-const { el, size, isDragging, onMouseDown, onTouchStart } = useResizable(id, toRef(() => ({ ...dashboardContext, ...props })))
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => dashboardPanel({
+<script setup>
+import { computed, useId, toRef } from "vue";
+import { useAppConfig } from "#imports";
+import { useResizable } from "../composables/useResizable";
+import { useDashboard } from "../utils/dashboard";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  class: { type: null, required: false },
+  ui: { type: null, required: false },
+  id: { type: String, required: false },
+  minSize: { type: Number, required: false, default: 15 },
+  maxSize: { type: Number, required: false },
+  defaultSize: { type: Number, required: false },
+  resizable: { type: Boolean, required: false, default: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const dashboardContext = useDashboard({ storageKey: "dashboard", unit: "%" });
+const id = `${dashboardContext.storageKey}-panel-${props.id || useId()}`;
+const { el, size, isDragging, onMouseDown, onTouchStart } = useResizable(id, toRef(() => ({ ...dashboardContext, ...props })));
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.dashboardPanel || {} })({
   size: !!size.value
-}))
+}));
 </script>
 
 <template>
@@ -52,7 +33,7 @@ const ui = computed(() => dashboardPanel({
     ref="el"
     :data-dragging="isDragging"
     :class="ui.root({ class: [props.class, props.ui?.root] })"
-    :style="[size ? { '--width': `${size}${dashboardContext.unit}` } : undefined]"
+    :style="[size ? { '--width': `${size}${dashboardContext.unit}` } : void 0]"
   >
     <slot>
       <slot name="header" />

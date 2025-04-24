@@ -1,129 +1,84 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import type { ButtonProps, DrawerProps, ModalProps, SlideoverProps } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/dashboard-sidebar'
-import type { UseResizableProps } from '../composables/useResizable'
-import { tv } from '../utils/tv'
-
-const appConfig = _appConfig as AppConfig & { uiPro: { dashboardSidebar: Partial<typeof theme> } }
-
-const dashboardSidebar = tv({ extend: tv(theme), ...(appConfig.uiPro?.dashboardSidebar || {}) })
-
-type DashboardSidebarMode = 'modal' | 'slideover' | 'drawer'
-type DashboardSidebarMenu<T> = T extends 'modal' ? ModalProps : T extends 'slideover' ? SlideoverProps : T extends 'drawer' ? DrawerProps : never
-
-export interface DashboardSidebarProps<T> extends Pick<UseResizableProps, 'id' | 'side' | 'minSize' | 'maxSize' | 'defaultSize' | 'resizable' | 'collapsible' | 'collapsedSize'> {
-  /**
-   * The mode of the sidebar menu.
-   * @defaultValue 'modal'
-   */
-  mode?: T
-  /**
-   * The props for the sidebar menu component.
-   */
-  menu?: DashboardSidebarMenu<T>
-  /**
-   * Customize the toggle button to open the sidebar.
-   * `{ color: 'neutral', variant: 'ghost' }`{lang="ts-type"}
-   * @defaultValue true
-   */
-  toggle?: boolean | Partial<ButtonProps>
-  /**
-   * The side to render the toggle button on.
-   * @defaultValue 'left'
-   */
-  toggleSide?: 'left' | 'right'
-  class?: any
-  ui?: Partial<typeof dashboardSidebar.slots>
-}
-
-export interface DashboardSidebarSlots {
-  'header'(props: { collapsed?: boolean, collapse?: (value: boolean) => void }): any
-  'default'(props: { collapsed?: boolean, collapse?: (value: boolean) => void }): any
-  'footer'(props: { collapsed?: boolean, collapse?: (value: boolean) => void }): any
-  'toggle'(props?: { open: boolean, toggle: () => void }): any
-  'content'(props?: {}): any
-  'resize-handle'(props: { onMouseDown: (e: MouseEvent) => void, onTouchStart: (e: TouchEvent) => void }): any
-}
+<script>
+import theme from "#build/ui-pro/dashboard-sidebar";
 </script>
 
-<script setup lang="ts" generic="T extends DashboardSidebarMode">
-import { ref, computed, toRef, useId, watch } from 'vue'
-import { defu } from 'defu'
-import { createReusableTemplate } from '@vueuse/core'
-import { useRuntimeHook } from '#imports'
-import USlideover from '@nuxt/ui/components/Slideover.vue'
-import UModal from '@nuxt/ui/components/Modal.vue'
-import UDrawer from '@nuxt/ui/components/Drawer.vue'
-import { useResizable } from '../composables/useResizable'
-import { useDashboard } from '../utils/dashboard'
-
-const props = withDefaults(defineProps<DashboardSidebarProps<T>>(), {
-  side: 'left',
-  mode: 'slideover' as never,
-  toggle: true,
-  toggleSide: 'left',
-  minSize: 10,
-  maxSize: 20,
-  defaultSize: 15,
-  resizable: false,
-  collapsible: false,
-  collapsedSize: 0
-})
-const slots = defineSlots<DashboardSidebarSlots>()
-
-const open = defineModel<boolean>('open', { default: false })
-const collapsed = defineModel<boolean>('collapsed', { default: false })
-
+<script setup>
+import { ref, computed, toRef, useId, watch } from "vue";
+import { defu } from "defu";
+import { createReusableTemplate } from "@vueuse/core";
+import USlideover from "@nuxt/ui/components/Slideover.vue";
+import UModal from "@nuxt/ui/components/Modal.vue";
+import UDrawer from "@nuxt/ui/components/Drawer.vue";
+import { useAppConfig, useRuntimeHook, useRoute } from "#imports";
+import { useResizable } from "../composables/useResizable";
+import { useDashboard } from "../utils/dashboard";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  mode: { type: null, required: false, default: "slideover" },
+  menu: { type: null, required: false },
+  toggle: { type: [Boolean, Object], required: false, default: true },
+  toggleSide: { type: String, required: false, default: "left" },
+  class: { type: null, required: false },
+  ui: { type: null, required: false },
+  id: { type: String, required: false },
+  side: { type: String, required: false, default: "left" },
+  minSize: { type: Number, required: false, default: 10 },
+  maxSize: { type: Number, required: false, default: 20 },
+  defaultSize: { type: Number, required: false, default: 15 },
+  resizable: { type: Boolean, required: false, default: false },
+  collapsible: { type: Boolean, required: false, default: false },
+  collapsedSize: { type: Number, required: false, default: 0 }
+});
+const slots = defineSlots();
+const open = defineModel("open", { type: Boolean, ...{ default: false } });
+const collapsed = defineModel("collapsed", { type: Boolean, ...{ default: false } });
+const route = useRoute();
+const appConfig = useAppConfig();
 const dashboardContext = useDashboard({
-  storageKey: 'dashboard',
-  unit: '%',
+  storageKey: "dashboard",
+  unit: "%",
   sidebarOpen: ref(false),
   sidebarCollapsed: ref(false)
-})
-
-const id = `${dashboardContext.storageKey}-sidebar-${props.id || useId()}`
-
-const { el, size, collapse, isCollapsed, isDragging, onMouseDown, onTouchStart } = useResizable(id, toRef(() => ({ ...dashboardContext, ...props })), { collapsed })
-
-const [DefineToggleTemplate, ReuseToggleTemplate] = createReusableTemplate()
-const [DefineResizeHandleTemplate, ReuseResizeHandleTemplate] = createReusableTemplate()
-
-useRuntimeHook('dashboard:sidebar:toggle', () => {
-  open.value = !open.value
-})
-
-useRuntimeHook('dashboard:sidebar:collapse', (value: boolean) => {
-  isCollapsed.value = value
-})
-
-watch(open, () => dashboardContext.sidebarOpen!.value = open.value, { immediate: true })
-watch(isCollapsed, () => dashboardContext.sidebarCollapsed!.value = isCollapsed.value, { immediate: true })
-
-const ui = computed(() => dashboardSidebar({
+});
+const id = `${dashboardContext.storageKey}-sidebar-${props.id || useId()}`;
+const { el, size, collapse, isCollapsed, isDragging, onMouseDown, onTouchStart } = useResizable(id, toRef(() => ({ ...dashboardContext, ...props })), { collapsed });
+const [DefineToggleTemplate, ReuseToggleTemplate] = createReusableTemplate();
+const [DefineResizeHandleTemplate, ReuseResizeHandleTemplate] = createReusableTemplate();
+useRuntimeHook("dashboard:sidebar:toggle", () => {
+  open.value = !open.value;
+});
+useRuntimeHook("dashboard:sidebar:collapse", (value) => {
+  isCollapsed.value = value;
+});
+watch(open, () => dashboardContext.sidebarOpen.value = open.value, { immediate: true });
+watch(isCollapsed, () => dashboardContext.sidebarCollapsed.value = isCollapsed.value, { immediate: true });
+watch(() => route.fullPath, () => {
+  open.value = false;
+});
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.dashboardSidebar || {} })({
   side: props.side
-}))
-
+}));
 const Menu = computed(() => ({
   slideover: USlideover,
   modal: UModal,
   drawer: UDrawer
-})[props.mode as DashboardSidebarMode])
-
+})[props.mode]);
 const menuProps = toRef(() => defu(props.menu, {
   content: {
-    onOpenAutoFocus: (e: Event) => e.preventDefault()
+    onOpenAutoFocus: (e) => e.preventDefault()
   }
-}, props.mode === 'modal' ? { fullscreen: true, transition: false } : props.mode === 'slideover' ? { side: 'left' } : {}) as DashboardSidebarMenu<T>)
+}, props.mode === "modal" ? { fullscreen: true, transition: false } : props.mode === "slideover" ? { side: "left" } : {}));
+function toggleOpen() {
+  open.value = !open.value;
+}
 </script>
 
 <template>
   <DefineToggleTemplate>
-    <slot name="toggle" :open="open" :toggle="toggle">
+    <slot name="toggle" :open="open" :toggle="toggleOpen">
       <UDashboardSidebarToggle
         v-if="toggle"
-        v-bind="(typeof toggle === 'object' ? toggle as Partial<ButtonProps> : {})"
+        v-bind="typeof toggle === 'object' ? toggle : {}"
         :side="toggleSide"
         :class="ui.toggle({ class: props.ui?.toggle, toggleSide })"
       />
@@ -171,9 +126,9 @@ const menuProps = toRef(() => defu(props.menu, {
     v-model:open="open"
     v-bind="menuProps"
     :ui="{
-      overlay: ui.overlay({ class: props.ui?.overlay }),
-      content: ui.content({ class: props.ui?.content })
-    }"
+  overlay: ui.overlay({ class: props.ui?.overlay }),
+  content: ui.content({ class: props.ui?.content })
+}"
   >
     <template #content>
       <slot name="content">

@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "Sulje"
     },
+    chatPrompt: {
+      placeholder: "Kirjoita viestisi t\xE4h\xE4n..."
+    },
+    chatPromptSubmit: {
+      label: "L\xE4het\xE4"
+    },
     colorMode: {
       system: "J\xE4rjestelm\xE4",
       light: "Vaalea",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "Sulje valikko",
       open: "Avaa valikko"
+    },
+    pricingTable: {
+      caption: "Hinnoitellut suunnitelmat"
     },
     prose: {
       pre: {

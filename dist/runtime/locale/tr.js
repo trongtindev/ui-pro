@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "Kapat"
     },
+    chatPrompt: {
+      placeholder: "Buraya mesaj\u0131n\u0131z\u0131 yaz\u0131n..."
+    },
+    chatPromptSubmit: {
+      label: "G\xF6nder"
+    },
     colorMode: {
       system: "Sistem",
       light: "A\xE7\u0131k",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "Men\xFCy\xFC kapat",
       open: "Men\xFCy\xFC a\xE7"
+    },
+    pricingTable: {
+      caption: "Fiyat planlar\u0131n\u0131 kar\u015F\u0131la\u015Ft\u0131r"
     },
     prose: {
       pre: {

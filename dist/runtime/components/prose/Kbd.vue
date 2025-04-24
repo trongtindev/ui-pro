@@ -1,21 +1,19 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/kbd'
-import { tv } from '../../utils/tv'
-
-const appConfigProseKbd = _appConfig as AppConfig & { uiPro: { prose: { kbd: Partial<typeof theme> } } }
-
-const proseKbd = tv({ extend: tv(theme), ...(appConfigProseKbd.uiPro?.prose?.kbd || {}) })
+<script>
+import theme from "#build/ui-pro/prose/kbd";
 </script>
 
-<script setup lang="ts">
-const props = defineProps<{
-  value: string
-  class?: any
-}>()
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  value: { type: String, required: true },
+  class: { type: null, required: false }
+});
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.kbd || {} }));
 </script>
 
 <template>
-  <UKbd :value="value" :class="proseKbd({ class: props.class })" />
+  <UKbd :value="value" :class="ui({ class: props.class })" />
 </template>

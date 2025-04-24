@@ -152,6 +152,9 @@ export const useResizable = (key, options = {}, { collapsed = ref(false) } = {})
     }
     isCollapsed.value = newCollapsed;
   };
+  if (isRef(collapsed) && storageData.value.collapsed) {
+    collapsed.value = storageData.value.collapsed;
+  }
   if (isRef(collapsed)) {
     watch(collapsed, (value) => {
       if (!opts.value.collapsible) {

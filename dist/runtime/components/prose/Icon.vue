@@ -1,21 +1,19 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/icon'
-import { tv } from '../../utils/tv'
-
-const appConfigProseIcon = _appConfig as AppConfig & { uiPro: { prose: { icon: Partial<typeof theme> } } }
-
-const icon = tv({ extend: tv(theme), ...(appConfigProseIcon.uiPro?.prose?.icon || {}) })
+<script>
+import theme from "#build/ui-pro/prose/icon";
 </script>
 
-<script setup lang="ts">
-const props = defineProps<{
-  name: string
-  class?: any
-}>()
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  name: { type: String, required: true },
+  class: { type: null, required: false }
+});
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.icon || {} }));
 </script>
 
 <template>
-  <UIcon :name="name" :class="icon({ class: props.class })" />
+  <UIcon :name="name" :class="ui({ class: props.class })" />
 </template>

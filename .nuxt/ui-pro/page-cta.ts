@@ -1,3 +1,5 @@
+import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/page-cta"
+
 const orientation = [
   "horizontal",
   "vertical"
@@ -11,13 +13,30 @@ const variant = [
   "naked"
 ] as const
 
-export default {
+const result = typeof template === 'function' ? (template as Function)({
+  "prefix": "U",
+  "fonts": true,
+  "colorMode": true,
+  "theme": {
+    "colors": [
+      "primary",
+      "secondary",
+      "success",
+      "info",
+      "warning",
+      "error"
+    ],
+    "transitions": true
+  }
+}) : template
+
+const theme = {
   "slots": {
-    "root": "relative isolate rounded-[calc(var(--ui-radius)*3)] overflow-hidden",
+    "root": "relative isolate rounded-xl overflow-hidden",
     "container": "flex flex-col lg:grid px-6 py-12 sm:px-12 sm:py-24 lg:px-16 lg:py-24 gap-8 sm:gap-16",
     "wrapper": "",
-    "title": "text-3xl sm:text-4xl text-pretty tracking-tight font-bold text-(--ui-text-highlighted)",
-    "description": "text-base sm:text-lg text-(--ui-text-muted)",
+    "title": "text-3xl sm:text-4xl text-pretty tracking-tight font-bold text-highlighted",
+    "description": "text-base sm:text-lg text-muted",
     "links": "mt-8 flex flex-wrap gap-x-6 gap-y-3"
   },
   "variants": {
@@ -40,24 +59,24 @@ export default {
     },
     "variant": {
       "solid": {
-        "root": "bg-(--ui-bg-inverted) text-(--ui-bg)",
-        "title": "text-(--ui-bg)",
-        "description": "text-(--ui-text-dimmed)"
+        "root": "bg-inverted text-inverted",
+        "title": "text-inverted",
+        "description": "text-dimmed"
       },
       "outline": {
-        "root": "bg-(--ui-bg) ring ring-(--ui-border)",
-        "description": "text-(--ui-text-muted)"
+        "root": "bg-default ring ring-default",
+        "description": "text-muted"
       },
       "soft": {
-        "root": "bg-(--ui-bg-elevated)/50",
-        "description": "text-(--ui-text-toned)"
+        "root": "bg-elevated/50",
+        "description": "text-toned"
       },
       "subtle": {
-        "root": "bg-(--ui-bg-elevated)/50 ring ring-(--ui-border)",
-        "description": "text-(--ui-text-toned)"
+        "root": "bg-elevated/50 ring ring-default",
+        "description": "text-toned"
       },
       "naked": {
-        "description": "text-(--ui-text-muted)"
+        "description": "text-muted"
       }
     },
     "title": {
@@ -70,3 +89,5 @@ export default {
     "variant": "outline" as typeof variant[number]
   }
 }
+
+export default result as typeof theme

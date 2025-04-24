@@ -1,45 +1,28 @@
-<script lang="ts">
-import type { ButtonProps } from '@nuxt/ui'
+<script>
 
-export interface ColorModeButtonProps extends /** @vue-ignore */ Pick<ButtonProps, 'as' | 'size' | 'disabled' | 'ui'> {
-  /**
-   * @defaultValue 'neutral'
-   */
-  color?: ButtonProps['color']
-  /**
-   * @defaultValue 'ghost'
-   */
-  variant?: ButtonProps['variant']
-}
 </script>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-import { useColorMode, useAppConfig } from '#imports'
-import { useLocalePro } from '../../composables/useLocalePro'
-
-defineOptions({ inheritAttrs: false })
-
-withDefaults(defineProps<ColorModeButtonProps>(), {
-  color: 'neutral',
-  variant: 'ghost'
-})
-defineSlots<{
-  fallback(props?: {}): any
-}>()
-
-const colorMode = useColorMode()
-const appConfig = useAppConfig()
-const { t } = useLocalePro()
-
+<script setup>
+import { computed } from "vue";
+import { useColorMode, useAppConfig } from "#imports";
+import { useLocalePro } from "../../composables/useLocalePro";
+defineOptions({ inheritAttrs: false });
+defineProps({
+  color: { type: null, required: false, default: "neutral" },
+  variant: { type: null, required: false, default: "ghost" }
+});
+defineSlots();
+const { t } = useLocalePro();
+const colorMode = useColorMode();
+const appConfig = useAppConfig();
 const isDark = computed({
   get() {
-    return colorMode.value === 'dark'
+    return colorMode.value === "dark";
   },
-  set() {
-    colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
+  set(_isDark) {
+    colorMode.preference = _isDark ? "dark" : "light";
   }
-})
+});
 </script>
 
 <template>

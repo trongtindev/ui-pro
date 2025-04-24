@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "Tutup"
     },
+    chatPrompt: {
+      placeholder: "Tulis pesan Anda di sini..."
+    },
+    chatPromptSubmit: {
+      label: "Kirim"
+    },
     colorMode: {
       system: "Sistem",
       light: "Terang",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "Tutup menu",
       open: "Buka menu"
+    },
+    pricingTable: {
+      caption: "Perbandingan Harga"
     },
     prose: {
       pre: {

@@ -1,7 +1,26 @@
-export default {
+import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/prose/code-collapse"
+
+const result = typeof template === 'function' ? (template as Function)({
+  "prefix": "U",
+  "fonts": true,
+  "colorMode": true,
+  "theme": {
+    "colors": [
+      "primary",
+      "secondary",
+      "success",
+      "info",
+      "warning",
+      "error"
+    ],
+    "transitions": true
+  }
+}) : template
+
+const theme = {
   "slots": {
     "root": "relative [&_pre]:h-[200px]",
-    "footer": "h-16 absolute inset-x-px bottom-px rounded-b-[calc(var(--ui-radius)*1.5)] flex items-center justify-center",
+    "footer": "h-16 absolute inset-x-px bottom-px rounded-b-md flex items-center justify-center",
     "trigger": "group",
     "triggerIcon": "group-data-[state=open]:rotate-180"
   },
@@ -12,8 +31,10 @@ export default {
       },
       "false": {
         "root": "[&_pre]:overflow-hidden",
-        "footer": "bg-gradient-to-t from-(--ui-bg-muted)"
+        "footer": "bg-gradient-to-t from-muted"
       }
     }
   }
 }
+
+export default result as typeof theme

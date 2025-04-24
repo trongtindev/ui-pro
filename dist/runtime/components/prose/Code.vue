@@ -1,32 +1,23 @@
-<script lang="ts">
-import type { VariantProps } from 'tailwind-variants'
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/code'
-import { tv } from '../../utils/tv'
-
-const appConfigProseCode = _appConfig as AppConfig & { uiPro: { prose: { code: Partial<typeof theme> } } }
-
-const proseCode = tv({ extend: tv(theme), ...(appConfigProseCode.uiPro?.prose?.code || {}) })
-
-type CodeVariants = VariantProps<typeof proseCode>
-
-interface CodeProps {
-  lang?: string
-  /**
-   * @defaultValue 'neutral'
-   */
-  color?: CodeVariants['color']
-  class?: any
-}
+<script>
+import theme from "#build/ui-pro/prose/code";
 </script>
 
-<script setup lang="ts">
-const props = defineProps<CodeProps>()
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  lang: { type: String, required: false },
+  color: { type: null, required: false },
+  class: { type: null, required: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.code || {} }));
 </script>
 
 <template>
-  <code :class="proseCode({ class: (props.class || '').split(',').join(' '), color: props.color })">
+  <code :class="ui({ class: (props.class || '').split(',').join(' '), color: props.color })">
     <slot />
   </code>
 </template>

@@ -1,24 +1,23 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/a'
-import { tv } from '../../utils/tv'
-
-const appConfigProseA = _appConfig as AppConfig & { uiPro: { prose: { a: Partial<typeof theme> } } }
-
-const proseA = tv({ extend: tv(theme), ...(appConfigProseA.uiPro?.prose?.a || {}) })
+<script>
+import theme from "#build/ui-pro/prose/a";
 </script>
 
-<script setup lang="ts">
-const props = defineProps<{
-  href?: string
-  target?: '_blank' | '_parent' | '_self' | '_top' | (string & object) | null | undefined
-  class?: any
-}>()
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.a || {} }));
+const props = defineProps({
+  href: { type: String, required: false },
+  target: { type: null, required: false },
+  class: { type: null, required: false }
+});
+defineSlots();
 </script>
 
 <template>
-  <ULink :href="href" :target="target" :class="proseA({ class: props.class })" raw>
+  <ULink :href="href" :target="target" :class="ui({ class: props.class })" raw>
     <slot />
   </ULink>
 </template>

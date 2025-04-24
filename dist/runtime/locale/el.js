@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "\u039A\u03BB\u03B5\u03AF\u03C3\u03B9\u03BC\u03BF"
     },
+    chatPrompt: {
+      placeholder: "\u0395\u03B4\u03CE \u03B3\u03C1\u03AC\u03C8\u03C4\u03B5 \u03C4\u03BF \u03BC\u03AE\u03BD\u03C5\u03BC\u03AC \u03C3\u03B1\u03C2..."
+    },
+    chatPromptSubmit: {
+      label: "\u0391\u03C0\u03BF\u03C3\u03C4\u03BF\u03BB\u03AE"
+    },
     colorMode: {
       system: "\u03A3\u03CD\u03C3\u03C4\u03B7\u03BC\u03B1",
       light: "\u03A6\u03C9\u03C4\u03B5\u03B9\u03BD\u03CC",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "\u039A\u03BB\u03B5\u03AF\u03C3\u03B9\u03BC\u03BF \u03BC\u03B5\u03BD\u03BF\u03CD",
       open: "\u0386\u03BD\u03BF\u03B9\u03B3\u03BC\u03B1 \u03BC\u03B5\u03BD\u03BF\u03CD"
+    },
+    pricingTable: {
+      caption: "\u03A3\u03CD\u03B3\u03BA\u03C1\u03B9\u03C3\u03B7 \u03C0\u03C1\u03BF\u03B3\u03C1\u03B1\u03BC\u03BC\u03AC\u03C4\u03C9\u03BD \u03C4\u03B9\u03BC\u03BF\u03BB\u03CC\u03B3\u03B7\u03C3\u03B7\u03C2"
     },
     prose: {
       pre: {

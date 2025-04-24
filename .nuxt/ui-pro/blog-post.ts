@@ -1,3 +1,5 @@
+import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/blog-post"
+
 const orientation = [
   "horizontal",
   "vertical"
@@ -11,14 +13,31 @@ const variant = [
   "naked"
 ] as const
 
-export default {
+const result = typeof template === 'function' ? (template as Function)({
+  "prefix": "U",
+  "fonts": true,
+  "colorMode": true,
+  "theme": {
+    "colors": [
+      "primary",
+      "secondary",
+      "success",
+      "info",
+      "warning",
+      "error"
+    ],
+    "transitions": true
+  }
+}) : template
+
+const theme = {
   "slots": {
-    "root": "relative group/blog-post flex flex-col rounded-[calc(var(--ui-radius)*2)] overflow-hidden",
+    "root": "relative group/blog-post flex flex-col rounded-lg overflow-hidden",
     "header": "relative overflow-hidden aspect-[16/9] w-full pointer-events-none",
     "body": "min-w-0 flex-1 flex flex-col",
     "footer": "",
     "image": "object-cover object-top w-full h-full",
-    "title": "text-xl text-pretty font-semibold text-(--ui-text-highlighted)",
+    "title": "text-xl text-pretty font-semibold text-highlighted",
     "description": "mt-1 text-base text-pretty",
     "authors": "pt-4 mt-auto flex flex-wrap gap-x-3 gap-y-1.5",
     "avatar": "",
@@ -39,30 +58,30 @@ export default {
     },
     "variant": {
       "outline": {
-        "root": "bg-(--ui-bg) ring ring-(--ui-border)",
-        "date": "text-(--ui-text-toned)",
-        "description": "text-(--ui-text-muted)"
+        "root": "bg-default ring ring-default",
+        "date": "text-toned",
+        "description": "text-muted"
       },
       "soft": {
-        "root": "bg-(--ui-bg-elevated)/50",
-        "date": "text-(--ui-text-muted)",
-        "description": "text-(--ui-text-toned)"
+        "root": "bg-elevated/50",
+        "date": "text-muted",
+        "description": "text-toned"
       },
       "subtle": {
-        "root": "bg-(--ui-bg-elevated)/50 ring ring-(--ui-border)",
-        "date": "text-(--ui-text-muted)",
-        "description": "text-(--ui-text-toned)"
+        "root": "bg-elevated/50 ring ring-default",
+        "date": "text-muted",
+        "description": "text-toned"
       },
       "ghost": {
-        "date": "text-(--ui-text-toned)",
-        "description": "text-(--ui-text-muted)",
-        "header": "shadow-lg rounded-[calc(var(--ui-radius)*2)]"
+        "date": "text-toned",
+        "description": "text-muted",
+        "header": "shadow-lg rounded-lg"
       },
       "naked": {
         "root": "p-0 sm:p-0",
-        "date": "text-(--ui-text-toned)",
-        "description": "text-(--ui-text-muted)",
-        "header": "shadow-lg rounded-[calc(var(--ui-radius)*2)]"
+        "date": "text-toned",
+        "description": "text-muted",
+        "header": "shadow-lg rounded-lg"
       }
     },
     "to": {
@@ -83,28 +102,28 @@ export default {
       "variant": "outline" as typeof variant[number],
       "to": true,
       "class": {
-        "root": "hover:bg-(--ui-bg-elevated)/50"
+        "root": "hover:bg-elevated/50"
       }
     },
     {
       "variant": "soft" as typeof variant[number],
       "to": true,
       "class": {
-        "root": "hover:bg-(--ui-bg-elevated)"
+        "root": "hover:bg-elevated"
       }
     },
     {
       "variant": "subtle" as typeof variant[number],
       "to": true,
       "class": {
-        "root": "hover:bg-(--ui-bg-elevated) hover:ring-(--ui-border-accented)"
+        "root": "hover:bg-elevated hover:ring-accented"
       }
     },
     {
       "variant": "ghost" as typeof variant[number],
       "to": true,
       "class": {
-        "root": "hover:bg-(--ui-bg-elevated)/50",
+        "root": "hover:bg-elevated/50",
         "header": [
           "group-hover/blog-post:shadow-none",
           "transition-all"
@@ -140,3 +159,5 @@ export default {
     "variant": "outline" as typeof variant[number]
   }
 }
+
+export default result as typeof theme

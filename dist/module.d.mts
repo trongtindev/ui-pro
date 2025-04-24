@@ -25,15 +25,7 @@ declare module '#app' {
         'dashboard:sidebar:collapse': (value: boolean) => HookResult;
     }
 }
-declare const _default: _nuxt_schema.NuxtModule<{
-    license: string;
-    mdc: boolean;
-    content: boolean;
-}, {
-    license: string;
-    mdc: boolean;
-    content: boolean;
-}, false>;
+declare const _default: _nuxt_schema.NuxtModule<ModuleOptions, ModuleOptions, false>;
 
 export { _default as default };
 export type { ModuleOptions };

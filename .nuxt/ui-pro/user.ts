@@ -1,3 +1,5 @@
+import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/user"
+
 const orientation = [
   "horizontal",
   "vertical"
@@ -15,12 +17,29 @@ const size = [
   "3xl"
 ] as const
 
-export default {
+const result = typeof template === 'function' ? (template as Function)({
+  "prefix": "U",
+  "fonts": true,
+  "colorMode": true,
+  "theme": {
+    "colors": [
+      "primary",
+      "secondary",
+      "success",
+      "info",
+      "warning",
+      "error"
+    ],
+    "transitions": true
+  }
+}) : template
+
+const theme = {
   "slots": {
     "root": "relative group/user",
     "wrapper": "",
     "name": "font-medium",
-    "description": "text-(--ui-text-muted)",
+    "description": "text-muted",
     "avatar": "shrink-0"
   },
   "variants": {
@@ -35,17 +54,17 @@ export default {
     "to": {
       "true": {
         "name": [
-          "text-(--ui-text) peer-hover:text-(--ui-text-highlighted)",
+          "text-default peer-hover:text-highlighted",
           "transition-colors"
         ],
         "description": [
-          "peer-hover:text-(--ui-text-muted-toned)",
+          "peer-hover:text-toned",
           "transition-colors"
         ],
         "avatar": "transform transition-transform duration-200 group-hover/user:scale-115"
       },
       "false": {
-        "name": "text-(--ui-text-highlighted)",
+        "name": "text-highlighted",
         "description": ""
       }
     },
@@ -104,3 +123,5 @@ export default {
     "size": "md" as typeof size[number]
   }
 }
+
+export default result as typeof theme

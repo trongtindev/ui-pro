@@ -1,7 +1,5 @@
-import type { NuxtModule } from '@nuxt/schema'
+export { default } from './module.mjs'
 
-import type { default as Module } from './module.js'
+export { type ModuleOptions } from './module.mjs'
 
-export type ModuleOptions = typeof Module extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
-
-export { default } from './module.js'
+export * from '../dist/runtime/types/index.js'

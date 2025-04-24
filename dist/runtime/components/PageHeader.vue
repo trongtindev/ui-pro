@@ -1,51 +1,26 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import type { ButtonProps } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/page-header'
-import { tv } from '../utils/tv'
-
-const appConfigPageHeader = _appConfig as AppConfig & { uiPro: { pageHeader: Partial<typeof theme> } }
-
-const pageHeader = tv({ extend: tv(theme), ...(appConfigPageHeader.uiPro?.pageHeader || {}) })
-
-export interface PageHeaderProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  headline?: string
-  title?: string
-  description?: string
-  /**
-   * Display a list of Button next to the title.
-   * `{ color: 'neutral', variant: 'outline' }`{lang="ts-type"}
-   */
-  links?: ButtonProps[]
-  class?: any
-  ui?: Partial<typeof pageHeader.slots>
-}
-
-export interface PageHeaderSlots {
-  headline(props?: {}): any
-  title(props?: {}): any
-  description(props?: {}): any
-  links(props?: {}): any
-  default(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/page-header";
 </script>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-import { Primitive } from 'reka-ui'
-
-const props = defineProps<PageHeaderProps>()
-const slots = defineSlots<PageHeaderSlots>()
-
-const ui = computed(() => pageHeader({
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { useAppConfig } from "#imports";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false },
+  headline: { type: String, required: false },
+  title: { type: String, required: false },
+  description: { type: String, required: false },
+  links: { type: Array, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.pageHeader || {} })({
   title: !!props.title || !!slots.title
-}))
+}));
 </script>
 
 <template>

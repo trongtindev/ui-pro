@@ -1,3 +1,24 @@
-export default {
-  "base": "bg-(--ui-bg-muted)"
+import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/prose/thead"
+
+const result = typeof template === 'function' ? (template as Function)({
+  "prefix": "U",
+  "fonts": true,
+  "colorMode": true,
+  "theme": {
+    "colors": [
+      "primary",
+      "secondary",
+      "success",
+      "info",
+      "warning",
+      "error"
+    ],
+    "transitions": true
+  }
+}) : template
+
+const theme = {
+  "base": "bg-muted"
 }
+
+export default result as typeof theme

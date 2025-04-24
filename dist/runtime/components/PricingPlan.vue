@@ -1,151 +1,55 @@
-<script lang="ts">
-import type { VariantProps } from 'tailwind-variants'
-import type { AppConfig } from '@nuxt/schema'
-import type { BadgeProps, ButtonProps } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/pricing-plan'
-import { tv } from '../utils/tv'
-
-const appConfigPricingPlan = _appConfig as AppConfig & { uiPro: { pricingPlan: Partial<typeof theme> } }
-
-const pricingPlan = tv({ extend: tv(theme), ...(appConfigPricingPlan.uiPro?.pricingPlan || {}) })
-
-type PricingPlanVariants = VariantProps<typeof pricingPlan>
-
-type PricingPlanFeature = {
-  title: string
-  /**
-   * @defaultValue appConfig.ui.icons.success
-   * @IconifyIcon
-   */
-  icon?: string
-}
-
-export interface PricingPlanProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  title?: string
-  description?: string
-  /**
-   * Display a badge on the pricing plan next to the title.
-   * Can be a string or an object.
-   * `{ color: 'primary', variant: 'subtle' }`{lang="ts-type"}
-   */
-  badge?: string | BadgeProps
-  /**
-   * The unit price period that appears next to the price.
-   * Typically used to show the recurring interval.
-   * @example "/month", "/year", "/seat/month"
-   */
-  billingCycle?: string
-  /**
-   * Additional billing context that appears above the billing cycle.
-   * Typically used to show the actual billing frequency.
-   * @example "billed annually", "billed monthly", "per user, billed annually"
-   */
-  billingPeriod?: string
-  /**
-   * The current price of the plan.
-   * When used with `discount`, this becomes the original price.
-   * @example "$99", "€99", "Free"
-   */
-  price?: string
-  /**
-   * The discounted price of the plan.
-   * When provided, the `price` prop will be displayed as strikethrough.
-   * @example "$79", "€79"
-   */
-  discount?: string
-  /**
-   * Display a list of features under the price.
-   * Can be an array of strings or an array of objects.
-   */
-  features?: string[] | PricingPlanFeature[]
-  /**
-   * Display a buy button at the bottom of the pricing plan.
-   * `{ size: 'lg', block: true }`{lang="ts-type"}
-   * Use the `onClick` field to add a click handler.
-   */
-  button?: ButtonProps
-  /**
-   * Display a tagline highlighting the pricing value proposition.
-   * @example 'Pay once, own it forever'
-   */
-  tagline?: string
-  /**
-   * Display terms at the bottom of the pricing plan.
-   * @example '14-day free trial'
-   */
-  terms?: string
-  /**
-   * The orientation of the pricing plan.
-   * @defaultValue 'vertical'
-   */
-  orientation?: PricingPlanVariants['orientation']
-  /**
-   * @defaultValue 'outline'
-   */
-  variant?: PricingPlanVariants['variant']
-  /** Display a ring around the pricing plan to highlight it. */
-  highlight?: boolean
-  /** Enlarge the plan to make it more prominent. */
-  scale?: boolean
-  class?: any
-  ui?: Partial<typeof pricingPlan.slots>
-}
-
-export interface PricingPlanSlots {
-  badge(props?: {}): any
-  title(props?: {}): any
-  description(props?: {}): any
-  price(props?: {}): any
-  discount(props?: {}): any
-  billing(props?: {}): any
-  features(props?: {}): any
-  button(props?: {}): any
-  header(props?: {}): any
-  body(props?: {}): any
-  footer(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/pricing-plan";
+import { tv } from "../utils/tv";
 </script>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-import { Primitive } from 'reka-ui'
-import { createReusableTemplate } from '@vueuse/core'
-import { useAppConfig } from '#imports'
-
-const props = withDefaults(defineProps<PricingPlanProps>(), {
-  orientation: 'vertical'
-})
-const slots = defineSlots<PricingPlanSlots>()
-
-const appConfig = useAppConfig()
-const [DefinePriceTemplate, ReusePriceTemplate] = createReusableTemplate()
-
-const ui = computed(() => pricingPlan({
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { createReusableTemplate } from "@vueuse/core";
+import { useAppConfig } from "#imports";
+const props = defineProps({
+  as: { type: null, required: false },
+  title: { type: String, required: false },
+  description: { type: String, required: false },
+  badge: { type: null, required: false },
+  billingCycle: { type: String, required: false },
+  billingPeriod: { type: String, required: false },
+  price: { type: String, required: false },
+  discount: { type: String, required: false },
+  features: { type: Array, required: false },
+  button: { type: null, required: false },
+  tagline: { type: String, required: false },
+  terms: { type: String, required: false },
+  orientation: { type: null, required: false, default: "vertical" },
+  variant: { type: null, required: false },
+  highlight: { type: Boolean, required: false },
+  scale: { type: Boolean, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const appConfig = useAppConfig();
+const [DefinePriceTemplate, ReusePriceTemplate] = createReusableTemplate();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.pricingPlan || {} })({
   orientation: props.orientation,
   variant: props.variant,
   highlight: props.highlight,
   scale: props.scale
-}))
-
-const features = computed(() => props.features?.map(feature => typeof feature === 'string' ? { title: feature } : feature))
+}));
+const features = computed(() => props.features?.map((feature) => typeof feature === "string" ? { title: feature } : feature));
 </script>
 
 <template>
   <DefinePriceTemplate>
     <div v-if="discount || price || !!slots.discount || !!slots.price || billingCycle || billingPeriod || !!slots.billing" :class="ui.priceWrapper({ class: props.ui?.priceWrapper })">
-      <div v-if="(discount && price) || !!slots.discount" :class="ui.discount({ class: props.ui?.discount })">
+      <div v-if="discount && price || !!slots.discount" :class="ui.discount({ class: props.ui?.discount })">
         <slot name="discount">
           {{ price }}
         </slot>
       </div>
 
-      <div v-if="(discount || price) || !!slots.price" :class="ui.price({ class: props.ui?.price })">
+      <div v-if="discount || price || !!slots.price" :class="ui.price({ class: props.ui?.price })">
         <slot name="price">
           {{ discount || price }}
         </slot>
@@ -154,7 +58,7 @@ const features = computed(() => props.features?.map(feature => typeof feature ==
       <div v-if="billingCycle || billingPeriod || !!slots.billing" :class="ui.billing({ class: props.ui?.billing })">
         <slot name="billing">
           <span :class="ui.billingPeriod({ class: props.ui?.billingPeriod })">
-            {{ billingPeriod || '&nbsp;' }}
+            {{ billingPeriod || '\xA0' }}
           </span>
 
           <span v-if="billingCycle" :class="ui.billingCycle({ class: props.ui?.billingCycle })">

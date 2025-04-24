@@ -1,29 +1,21 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/h1'
-import { tv } from '../../utils/tv'
-
-const appConfigProseH1 = _appConfig as AppConfig & { uiPro: { prose: { h1: Partial<typeof theme> } } }
-
-const proseH1 = tv({ extend: tv(theme), ...(appConfigProseH1.uiPro?.prose?.h1 || {}) })
+<script>
+import theme from "#build/ui-pro/prose/h1";
 </script>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-import { useRuntimeConfig } from '#imports'
-
-const props = defineProps<{
-  id?: string
-  class?: any
-  ui?: Partial<typeof proseH1.slots>
-}>()
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = proseH1()
-
-const { headings } = useRuntimeConfig().public.mdc
-const generate = computed(() => props.id && typeof headings?.anchorLinks === 'object' && headings.anchorLinks.h1)
+<script setup>
+import { computed } from "vue";
+import { useAppConfig, useRuntimeConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  id: { type: String, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const { headings } = useRuntimeConfig().public.mdc;
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.h1 || {} })());
+const generate = computed(() => props.id && typeof headings?.anchorLinks === "object" && headings.anchorLinks.h1);
 </script>
 
 <template>

@@ -1,59 +1,23 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import type { LinkProps } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/page-links'
-import { tv } from '../utils/tv'
-
-const appConfigPageLinks = _appConfig as AppConfig & { uiPro: { pageLinks: Partial<typeof theme> } }
-
-const pageLinks = tv({ extend: tv(theme), ...(appConfigPageLinks.uiPro?.pageLinks || {}) })
-
-export interface PageLink extends Omit<LinkProps, 'custom'> {
-  label: string
-  /**
-   * @IconifyIcon
-   */
-  icon?: string
-}
-
-export interface PageLinksProps<T> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'nav'
-   */
-  as?: any
-  title?: string
-  links?: T[]
-  class?: any
-  ui?: Partial<typeof pageLinks.slots>
-}
-
-type SlotProps<T> = (props: { link: T, active: boolean }) => any
-
-export interface PageLinksSlots<T> {
-  'title'(props?: {}): any
-  'link': SlotProps<T>
-  'link-leading': SlotProps<T>
-  'link-label': SlotProps<T>
-  'link-trailing': SlotProps<T>
-}
+<script>
+import theme from "#build/ui-pro/page-links";
 </script>
 
-<script setup lang="ts" generic="T extends PageLink">
-import { Primitive } from 'reka-ui'
-import { pickLinkProps } from '@nuxt/ui/utils/link'
-import { useAppConfig } from '#imports'
-
-const props = withDefaults(defineProps<PageLinksProps<T>>(), {
-  as: 'nav'
-})
-const slots = defineSlots<PageLinksSlots<T>>()
-
-const appConfig = useAppConfig()
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = pageLinks()
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { pickLinkProps } from "@nuxt/ui/utils/link";
+import { useAppConfig } from "#imports";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false, default: "nav" },
+  title: { type: String, required: false },
+  links: { type: Array, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.pageLinks || {} })());
 </script>
 
 <template>

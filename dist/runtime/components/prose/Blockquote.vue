@@ -1,22 +1,21 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/blockquote'
-import { tv } from '../../utils/tv'
-
-const appConfigProseBlockquote = _appConfig as AppConfig & { uiPro: { prose: { blockquote: Partial<typeof theme> } } }
-
-const proseBlockquote = tv({ extend: tv(theme), ...(appConfigProseBlockquote.uiPro?.prose?.blockquote || {}) })
+<script>
+import theme from "#build/ui-pro/prose/blockquote";
 </script>
 
-<script setup lang="ts">
-const props = defineProps<{
-  class?: string
-}>()
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  class: { type: null, required: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.blockquote || {} }));
 </script>
 
 <template>
-  <blockquote :class="proseBlockquote({ class: props.class })">
+  <blockquote :class="ui({ class: props.class })">
     <slot />
   </blockquote>
 </template>

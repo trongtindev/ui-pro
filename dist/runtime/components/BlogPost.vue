@@ -1,115 +1,66 @@
-<script lang="ts">
-import type { VariantProps } from 'tailwind-variants'
-import type { AppConfig } from '@nuxt/schema'
-import type { BadgeProps, LinkProps } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/blog-post'
-import { tv } from '../utils/tv'
-import type { UserProps } from '../types'
-
-const appConfigBlogPost = _appConfig as AppConfig & { uiPro: { blogPost: Partial<typeof theme> } }
-
-const blogPost = tv({ extend: tv(theme), ...(appConfigBlogPost.uiPro?.blogPost || {}) })
-
-type BlogPostVariants = VariantProps<typeof blogPost>
-
-export interface BlogPostProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'article'
-   */
-  as?: any
-  title?: string
-  description?: string
-  /** The date of the blog post. Can be a string or a Date object. */
-  date?: string | Date
-  /**
-   * Display a badge on the blog post.
-   * Can be a string or an object.
-   * `{ color: 'neutral', variant: 'subtle' }`{lang="ts-type"}
-   */
-  badge?: string | BadgeProps
-  /** The authors of the blog post. */
-  authors?: UserProps[]
-  /** The image of the blog post. Can be a string or an object. */
-  image?: string | Partial<HTMLImageElement>
-  /**
-   * The orientation of the blog post.
-   * @defaultValue 'vertical'
-   */
-  orientation?: BlogPostVariants['orientation']
-  /**
-   * @defaultValue 'outline'
-   */
-  variant?: BlogPostVariants['variant']
-  to?: LinkProps['to']
-  target?: LinkProps['target']
-  onClick?: (event: MouseEvent) => void | Promise<void>
-  class?: any
-  ui?: Partial<typeof blogPost.slots>
-}
-
-export interface BlogPostSlots {
-  date(props?: {}): any
-  badge(props?: {}): any
-  title(props?: {}): any
-  description(props?: {}): any
-  authors(props?: {}): any
-  header(props?: {}): any
-  body(props?: {}): any
-  footer(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/blog-post";
 </script>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-import { Primitive, useDateFormatter } from 'reka-ui'
-import ImageComponent from '#build/ui-image-component'
-import { useLocale } from '#imports'
-import { getSlotChildrenText } from '../utils'
-import UUser from './User.vue'
-
-defineOptions({ inheritAttrs: false })
-
-const props = withDefaults(defineProps<BlogPostProps>(), {
-  as: 'article',
-  orientation: 'vertical'
-})
-const slots = defineSlots<BlogPostSlots>()
-
-const ui = computed(() => blogPost({
+<script setup>
+import { computed } from "vue";
+import { Primitive, useDateFormatter } from "reka-ui";
+import ImageComponent from "#build/ui-image-component";
+import { useLocale, useAppConfig } from "#imports";
+import { getSlotChildrenText } from "../utils";
+import { tv } from "../utils/tv";
+import UUser from "./User.vue";
+defineOptions({ inheritAttrs: false });
+const props = defineProps({
+  as: { type: null, required: false, default: "article" },
+  title: { type: String, required: false },
+  description: { type: String, required: false },
+  date: { type: [String, Date], required: false },
+  badge: { type: null, required: false },
+  authors: { type: Array, required: false },
+  image: { type: [String, Object], required: false },
+  orientation: { type: null, required: false, default: "vertical" },
+  variant: { type: null, required: false },
+  to: { type: null, required: false },
+  target: { type: null, required: false },
+  onClick: { type: Function, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const { locale } = useLocale();
+const appConfig = useAppConfig();
+const formatter = useDateFormatter(locale.value.code);
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.blogPost || {} })({
   orientation: props.orientation,
   variant: props.variant,
   image: !!props.image,
   to: !!props.to || !!props.onClick
-}))
-
-const { locale } = useLocale()
-const formatter = useDateFormatter(locale.value.code)
-
+}));
 const date = computed(() => {
   if (!props.date) {
-    return
+    return;
   }
-
   try {
-    return formatter.custom(new Date(props.date), { dateStyle: 'medium' })
+    return formatter.custom(new Date(props.date), { dateStyle: "medium" });
   } catch {
-    return props.date
+    return props.date;
   }
-})
+});
 const datetime = computed(() => {
   if (!props.date) {
-    return
+    return;
   }
-
   try {
-    return new Date(props.date)?.toISOString()
+    return new Date(props.date)?.toISOString();
   } catch {
-    return undefined
+    return void 0;
   }
-})
-const ariaLabel = computed(() => (props.title || (slots.title && getSlotChildrenText(slots.title())) || 'Post link').trim())
+});
+const ariaLabel = computed(() => {
+  const slotText = slots.title && getSlotChildrenText(slots.title());
+  return (slotText || props.title || "Post link").trim();
+});
 </script>
 
 <template>
@@ -137,7 +88,7 @@ const ariaLabel = computed(() => (props.title || (slots.title && getSlotChildren
       </ULink>
 
       <slot name="body">
-        <div v-if="(date || !!slots.date) || (badge || !!slots.badge)" :class="ui.meta({ class: props.ui?.meta })">
+        <div v-if="date || !!slots.date || (badge || !!slots.badge)" :class="ui.meta({ class: props.ui?.meta })">
           <slot name="badge">
             <UBadge v-if="badge" color="neutral" variant="subtle" v-bind="typeof badge === 'string' ? { label: badge } : badge" :class="ui.badge({ class: props.ui?.badge })" />
           </slot>

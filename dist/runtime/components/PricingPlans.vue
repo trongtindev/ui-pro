@@ -1,76 +1,37 @@
-<script lang="ts">
-import type { VariantProps } from 'tailwind-variants'
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/pricing-plans'
-import { tv } from '../utils/tv'
-import type { PricingPlanProps } from '../types'
-
-const appConfigPricingPlans = _appConfig as AppConfig & { uiPro: { pricingPlans: Partial<typeof theme> } }
-
-const pricingPlans = tv({ extend: tv(theme), ...(appConfigPricingPlans.uiPro?.pricingPlans || {}) })
-
-type PricingPlansVariants = VariantProps<typeof pricingPlans>
-
-export interface PricingPlansProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  plans?: PricingPlanProps[]
-  /**
-   * The orientation of the pricing plans.
-   * @defaultValue 'horizontal'
-   */
-  orientation?: PricingPlansVariants['orientation']
-  /**
-   * When `true`, the plans will be displayed without gap.
-   * @defaultValue false
-   */
-  compact?: boolean
-  /**
-   * When `true`, the plans will be displayed with a larger gap.
-   * Useful when one plan is scaled. Doesn't work with `compact`.
-   * @defaultValue false
-   */
-  scale?: boolean
-  class?: any
-}
-
-export interface PricingPlansSlots {
-  default(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/pricing-plans";
 </script>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-import { Primitive } from 'reka-ui'
-
-const props = withDefaults(defineProps<PricingPlansProps>(), {
-  orientation: 'horizontal',
-  compact: false,
-  scale: false
-})
-const slots = defineSlots<PricingPlansSlots>()
-
-const count = computed(() => props.plans?.length || slots.default?.()?.flatMap(mapSlot).filter(Boolean)?.length || 3)
-
-function mapSlot(slot: any) {
-  if (typeof slot.type === 'symbol') {
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { useAppConfig } from "#imports";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false },
+  plans: { type: Array, required: false },
+  orientation: { type: null, required: false, default: "horizontal" },
+  compact: { type: Boolean, required: false, default: false },
+  scale: { type: Boolean, required: false, default: false },
+  class: { type: null, required: false }
+});
+const slots = defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.pricingPlans || {} }));
+const count = computed(() => props.plans?.length || slots.default?.()?.flatMap(mapSlot).filter(Boolean)?.length || 3);
+function mapSlot(slot) {
+  if (typeof slot.type === "symbol") {
     if (slot.children && Array.isArray(slot.children)) {
-      return slot.children.map(mapSlot)
+      return slot.children.map(mapSlot);
     }
-
-    return
+    return;
   }
-
-  return slot
+  return slot;
 }
 </script>
 
 <template>
-  <Primitive :as="as" :data-orientation="orientation" :class="pricingPlans({ class: props.class, compact, scale, orientation })" :style="{ '--count': count }">
+  <Primitive :as="as" :data-orientation="orientation" :class="ui({ class: props.class, compact, scale, orientation })" :style="{ '--count': count }">
     <slot>
       <UPricingPlan
         v-for="(plan, index) in plans"

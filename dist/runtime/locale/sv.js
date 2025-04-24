@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "St\xE4ng"
     },
+    chatPrompt: {
+      placeholder: "Skriv ditt meddelande h\xE4r..."
+    },
+    chatPromptSubmit: {
+      label: "Skicka"
+    },
     colorMode: {
       system: "System",
       light: "Ljust",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "St\xE4ng menyn",
       open: "\xD6ppna menyn"
+    },
+    pricingTable: {
+      caption: "Prisplanering"
     },
     prose: {
       pre: {

@@ -1,3 +1,5 @@
+import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/dashboard-sidebar"
+
 const side = [
   "left",
   "right"
@@ -8,9 +10,26 @@ const toggleSide = [
   "right"
 ] as const
 
-export default {
+const result = typeof template === 'function' ? (template as Function)({
+  "prefix": "U",
+  "fonts": true,
+  "colorMode": true,
+  "theme": {
+    "colors": [
+      "primary",
+      "secondary",
+      "success",
+      "info",
+      "warning",
+      "error"
+    ],
+    "transitions": true
+  }
+}) : template
+
+const theme = {
   "slots": {
-    "root": "hidden lg:flex flex-col min-h-svh min-w-16 w-(--width) shrink-0",
+    "root": "relative hidden lg:flex flex-col min-h-svh min-w-16 w-(--width) shrink-0",
     "header": "h-(--ui-header-height) shrink-0 flex items-center gap-1.5 px-4",
     "body": "flex flex-col gap-4 flex-1 overflow-y-auto px-4 py-2",
     "footer": "shrink-0 flex items-center gap-1.5 px-4 py-2",
@@ -29,7 +48,7 @@ export default {
     },
     "side": {
       "left": {
-        "root": "border-r border-(--ui-border)"
+        "root": "border-r border-default"
       },
       "right": {
         "root": ""
@@ -45,3 +64,5 @@ export default {
     }
   }
 }
+
+export default result as typeof theme

@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "Lukk"
     },
+    chatPrompt: {
+      placeholder: "Skriv din melding her..."
+    },
+    chatPromptSubmit: {
+      label: "Send"
+    },
     colorMode: {
       system: "System",
       light: "Lys",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "Lukk meny",
       open: "\xC5pne meny"
+    },
+    pricingTable: {
+      caption: "Prisplaneringssammenligning"
     },
     prose: {
       pre: {

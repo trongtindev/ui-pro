@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "Ba\u011Fla"
     },
+    chatPrompt: {
+      placeholder: "Buraya mesaj\u0131n\u0131z\u0131 yaz\u0131n..."
+    },
+    chatPromptSubmit: {
+      label: "G\xF6nd\u0259r"
+    },
     colorMode: {
       system: "Sistem",
       light: "\u0130\u015F\u0131ql\u0131",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "Menyunu ba\u011Fla",
       open: "Menyunu a\xE7"
+    },
+    pricingTable: {
+      caption: "Qiym\u0259t planlar\u0131n\u0131n m\xFCqayis\u0259si"
     },
     prose: {
       pre: {

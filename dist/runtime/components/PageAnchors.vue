@@ -1,57 +1,22 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import type { LinkProps } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/page-anchors'
-import { tv } from '../utils/tv'
-
-const appConfigPageAnchors = _appConfig as AppConfig & { uiPro: { pageAnchors: Partial<typeof theme> } }
-
-const pageAnchors = tv({ extend: tv(theme), ...(appConfigPageAnchors.uiPro?.pageAnchors || {}) })
-
-export interface PageAnchor extends Omit<LinkProps, 'custom'> {
-  label: string
-  /**
-   * @IconifyIcon
-   */
-  icon?: string
-}
-
-export interface PageAnchorsProps<T> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'nav'
-   */
-  as?: any
-  links?: T[]
-  class?: any
-  ui?: Partial<typeof pageAnchors.slots>
-}
-
-type SlotProps<T> = (props: { link: T, active: boolean }) => any
-
-export interface PageAnchorsSlots<T> {
-  'link': SlotProps<T>
-  'link-leading': SlotProps<T>
-  'link-label': SlotProps<T>
-  'link-trailing': SlotProps<T>
-}
+<script>
+import theme from "#build/ui-pro/page-anchors";
 </script>
 
-<script setup lang="ts" generic="T extends PageAnchor">
-import { Primitive } from 'reka-ui'
-import { pickLinkProps } from '@nuxt/ui/utils/link'
-import { useAppConfig } from '#imports'
-
-const props = withDefaults(defineProps<PageAnchorsProps<T>>(), {
-  as: 'nav'
-})
-const slots = defineSlots<PageAnchorsSlots<T>>()
-
-const appConfig = useAppConfig()
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = pageAnchors()
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { pickLinkProps } from "@nuxt/ui/utils/link";
+import { useAppConfig } from "#imports";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false, default: "nav" },
+  links: { type: Array, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.pageAnchors || {} })());
 </script>
 
 <template>

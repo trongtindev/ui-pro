@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "Fechar"
     },
+    chatPrompt: {
+      placeholder: "Escreva sua mensagem aqui..."
+    },
+    chatPromptSubmit: {
+      label: "Enviar"
+    },
     colorMode: {
       system: "Sistema",
       light: "Claro",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "Fechar menu",
       open: "Abrir menu"
+    },
+    pricingTable: {
+      caption: "Compara\xE7\xE3o de planos de pre\xE7os"
     },
     prose: {
       pre: {

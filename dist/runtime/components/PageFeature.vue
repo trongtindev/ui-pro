@@ -1,68 +1,36 @@
-<script lang="ts">
-import type { VariantProps } from 'tailwind-variants'
-import type { AppConfig } from '@nuxt/schema'
-import type { LinkProps } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/page-feature'
-import { tv } from '../utils/tv'
-
-const appConfigPageFeature = _appConfig as AppConfig & { uiPro: { pageFeature: Partial<typeof theme> } }
-
-const pageFeature = tv({ extend: tv(theme), ...(appConfigPageFeature.uiPro?.pageFeature || {}) })
-
-type PageFeatureVariants = VariantProps<typeof pageFeature>
-
-export interface PageFeatureProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * The icon displayed next to the title when `orientation` is `horizontal` and above the title when `orientation` is `vertical`.
-   * @IconifyIcon
-   */
-  icon?: string
-  title?: string
-  description?: string
-  /**
-   * The orientation of the page feature.
-   * @defaultValue 'horizontal'
-   */
-  orientation?: PageFeatureVariants['orientation']
-  to?: LinkProps['to']
-  target?: LinkProps['target']
-  onClick?: (event: MouseEvent) => void | Promise<void>
-  class?: any
-  ui?: Partial<typeof pageFeature.slots>
-}
-
-export interface PageFeatureSlots {
-  leading(props?: {}): any
-  title(props?: {}): any
-  description(props?: {}): any
-  default(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/page-feature";
 </script>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-import { Primitive } from 'reka-ui'
-import { getSlotChildrenText } from '../utils'
-
-defineOptions({ inheritAttrs: false })
-
-const props = withDefaults(defineProps<PageFeatureProps>(), {
-  orientation: 'horizontal'
-})
-const slots = defineSlots<PageFeatureSlots>()
-
-const ui = computed(() => pageFeature({
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { getSlotChildrenText } from "../utils";
+import { useAppConfig } from "#imports";
+import { tv } from "../utils/tv";
+defineOptions({ inheritAttrs: false });
+const props = defineProps({
+  as: { type: null, required: false },
+  icon: { type: String, required: false },
+  title: { type: String, required: false },
+  description: { type: String, required: false },
+  orientation: { type: null, required: false, default: "horizontal" },
+  to: { type: null, required: false },
+  target: { type: null, required: false },
+  onClick: { type: Function, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.pageFeature || {} })({
   orientation: props.orientation,
   title: !!props.title || !!slots.title
-}))
-
-const ariaLabel = computed(() => (props.title || (slots.title && getSlotChildrenText(slots.title())) || 'Feature link').trim())
+}));
+const ariaLabel = computed(() => {
+  const slotText = slots.title && getSlotChildrenText(slots.title());
+  return (slotText || props.title || "Feature link").trim();
+});
 </script>
 
 <template>

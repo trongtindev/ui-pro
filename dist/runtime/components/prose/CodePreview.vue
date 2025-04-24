@@ -1,32 +1,18 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/code-preview'
-import { tv } from '../../utils/tv'
-
-const appConfigProseCodePreview = _appConfig as AppConfig & { uiPro: { prose: { codePreview: Partial<typeof theme> } } }
-
-const codePreview = tv({ extend: tv(theme), ...(appConfigProseCodePreview.uiPro?.prose?.codePreview || {}) })
-
-interface CodePreviewProps {
-  class?: any
-  ui?: Partial<typeof codePreview.slots>
-}
-
-interface CodePreviewSlots {
-  default(props?: {}): any
-  code(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/prose/code-preview";
 </script>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-
-const props = defineProps<CodePreviewProps>()
-const slots = defineSlots<CodePreviewSlots>()
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => codePreview({ code: !!slots.code }))
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.codePreview || {} })({ code: !!slots.code }));
 </script>
 
 <template>

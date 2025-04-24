@@ -1,3 +1,5 @@
+import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/content/content-toc"
+
 const color = [
   "primary",
   "secondary",
@@ -18,13 +20,30 @@ const highlightColor = [
   "neutral"
 ] as const
 
-export default {
+const result = typeof template === 'function' ? (template as Function)({
+  "prefix": "U",
+  "fonts": true,
+  "colorMode": true,
+  "theme": {
+    "colors": [
+      "primary",
+      "secondary",
+      "success",
+      "info",
+      "warning",
+      "error"
+    ],
+    "transitions": true
+  }
+}) : template
+
+const theme = {
   "slots": {
-    "root": "sticky top-(--ui-header-height) bg-(--ui-bg)/75 lg:bg-[initial] backdrop-blur -mx-4 px-4 sm:px-6 sm:-mx-6 overflow-y-auto max-h-[calc(100vh-var(--ui-header-height))]",
-    "container": "pt-4 sm:pt-6 pb-2.5 sm:pb-4.5 lg:py-8 border-b border-dashed border-(--ui-border) lg:border-0 flex flex-col",
+    "root": "sticky top-(--ui-header-height) bg-default/75 lg:bg-[initial] backdrop-blur -mx-4 px-4 sm:px-6 sm:-mx-6 overflow-y-auto max-h-[calc(100vh-var(--ui-header-height))]",
+    "container": "pt-4 sm:pt-6 pb-2.5 sm:pb-4.5 lg:py-8 border-b border-dashed border-default lg:border-0 flex flex-col",
     "top": "",
     "bottom": "mt-6 hidden lg:flex lg:flex-col gap-6",
-    "trigger": "group text-sm font-semibold flex-1 flex items-center gap-1.5 py-1.5 -mt-1.5 focus-visible:outline-(--ui-primary)",
+    "trigger": "group text-sm font-semibold flex-1 flex items-center gap-1.5 py-1.5 -mt-1.5 focus-visible:outline-primary",
     "title": "truncate",
     "trailing": "ms-auto inline-flex gap-1.5 items-center",
     "trailingIcon": "size-5 transform transition-transform duration-200 shrink-0 group-data-[state=open]:rotate-180 lg:hidden",
@@ -33,7 +52,7 @@ export default {
     "listWithChildren": "ms-3",
     "item": "min-w-0",
     "itemWithChildren": "",
-    "link": "group relative text-sm flex items-center focus-visible:outline-(--ui-primary) py-1",
+    "link": "group relative text-sm flex items-center focus-visible:outline-primary py-1",
     "linkText": "truncate",
     "indicator": "absolute ms-2.5 transition-[translate,height] duration-200 h-(--indicator-size) translate-y-(--indicator-position) w-px rounded-full"
   },
@@ -49,38 +68,38 @@ export default {
     },
     "highlightColor": {
       "primary": {
-        "indicator": "bg-(--ui-primary)"
+        "indicator": "bg-primary"
       },
       "secondary": {
-        "indicator": "bg-(--ui-secondary)"
+        "indicator": "bg-secondary"
       },
       "success": {
-        "indicator": "bg-(--ui-success)"
+        "indicator": "bg-success"
       },
       "info": {
-        "indicator": "bg-(--ui-info)"
+        "indicator": "bg-info"
       },
       "warning": {
-        "indicator": "bg-(--ui-warning)"
+        "indicator": "bg-warning"
       },
       "error": {
-        "indicator": "bg-(--ui-error)"
+        "indicator": "bg-error"
       },
       "neutral": {
-        "indicator": "bg-(--ui-bg-inverted)"
+        "indicator": "bg-inverted"
       }
     },
     "active": {
       "false": {
         "link": [
-          "text-(--ui-text-muted) hover:text-(--ui-text)",
+          "text-muted hover:text-default",
           "transition-colors"
         ]
       }
     },
     "highlight": {
       "true": {
-        "list": "ms-2.5 ps-4 border-s border-(--ui-border)",
+        "list": "ms-2.5 ps-4 border-s border-default",
         "item": "-ms-px"
       }
     }
@@ -90,56 +109,56 @@ export default {
       "color": "primary" as typeof color[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-primary)",
-        "linkLeadingIcon": "text-(--ui-primary)"
+        "link": "text-primary",
+        "linkLeadingIcon": "text-primary"
       }
     },
     {
       "color": "secondary" as typeof color[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-secondary)",
-        "linkLeadingIcon": "text-(--ui-secondary)"
+        "link": "text-secondary",
+        "linkLeadingIcon": "text-secondary"
       }
     },
     {
       "color": "success" as typeof color[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-success)",
-        "linkLeadingIcon": "text-(--ui-success)"
+        "link": "text-success",
+        "linkLeadingIcon": "text-success"
       }
     },
     {
       "color": "info" as typeof color[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-info)",
-        "linkLeadingIcon": "text-(--ui-info)"
+        "link": "text-info",
+        "linkLeadingIcon": "text-info"
       }
     },
     {
       "color": "warning" as typeof color[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-warning)",
-        "linkLeadingIcon": "text-(--ui-warning)"
+        "link": "text-warning",
+        "linkLeadingIcon": "text-warning"
       }
     },
     {
       "color": "error" as typeof color[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-error)",
-        "linkLeadingIcon": "text-(--ui-error)"
+        "link": "text-error",
+        "linkLeadingIcon": "text-error"
       }
     },
     {
       "color": "neutral" as typeof color[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-text-highlighted)",
-        "linkLeadingIcon": "text-(--ui-text-highlighted)"
+        "link": "text-highlighted",
+        "linkLeadingIcon": "text-highlighted"
       }
     }
   ],
@@ -148,3 +167,5 @@ export default {
     "highlightColor": "primary" as typeof highlightColor[number]
   }
 }
+
+export default result as typeof theme

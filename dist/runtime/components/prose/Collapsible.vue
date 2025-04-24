@@ -1,53 +1,22 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import type { PartialString } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/collapsible'
-import { tv } from '../../utils/tv'
-
-const appConfigProseCollapsible = _appConfig as AppConfig & { uiPro: { prose: { collapsible: Partial<typeof theme> } } }
-
-const collapsible = tv({ extend: tv(theme), ...(appConfigProseCollapsible.uiPro?.prose?.collapsible || {}) })
-
-interface CollapsibleProps {
-  /**
-   * The icon displayed to toggle the collapsible.
-   * @defaultValue appConfig.ui.icons.chevronDown
-   */
-  icon?: string
-  /**
-   * The name displayed in the trigger label.
-   * @defaultValue 'properties'
-   */
-  name?: string
-  /**
-   * The text displayed when the collapsible is open.
-   * @defaultValue 'Show'
-   */
-  openText?: string
-  /**
-   * The text displayed when the collapsible is closed.
-   * @defaultValue 'Hide'
-   */
-  closeText?: string
-  class?: any
-  ui?: PartialString<typeof collapsible.slots>
-}
+<script>
+import theme from "#build/ui-pro/prose/collapsible";
 </script>
 
-<script setup lang="ts">
-import { useAppConfig } from '#imports'
-
-const props = withDefaults(defineProps<CollapsibleProps>(), {
-  name: 'properties',
-  openText: 'Show',
-  closeText: 'Hide'
-})
-
-const appConfig = useAppConfig()
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = collapsible()
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  icon: { type: String, required: false },
+  name: { type: String, required: false, default: "properties" },
+  openText: { type: String, required: false, default: "Show" },
+  closeText: { type: String, required: false, default: "Hide" },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.collapsible || {} })());
 </script>
 
 <template>

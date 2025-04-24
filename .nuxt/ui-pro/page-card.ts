@@ -1,3 +1,5 @@
+import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/page-card"
+
 const orientation = [
   "horizontal",
   "vertical"
@@ -32,18 +34,35 @@ const spotlightColor = [
   "neutral"
 ] as const
 
-export default {
+const result = typeof template === 'function' ? (template as Function)({
+  "prefix": "U",
+  "fonts": true,
+  "colorMode": true,
+  "theme": {
+    "colors": [
+      "primary",
+      "secondary",
+      "success",
+      "info",
+      "warning",
+      "error"
+    ],
+    "transitions": true
+  }
+}) : template
+
+const theme = {
   "slots": {
-    "root": "relative flex rounded-[calc(var(--ui-radius)*2)]",
-    "spotlight": "absolute inset-0 rounded-[inherit] pointer-events-none bg-(--ui-bg)/90",
+    "root": "relative flex rounded-lg",
+    "spotlight": "absolute inset-0 rounded-[inherit] pointer-events-none bg-default/90",
     "container": "relative flex flex-col flex-1 lg:grid gap-x-8 gap-y-4 p-4 sm:p-6",
-    "wrapper": "",
+    "wrapper": "flex flex-col flex-1",
     "header": "mb-4",
-    "body": "",
-    "footer": "mt-4",
-    "leading": "inline-flex items-center justify-center mb-2.5",
-    "leadingIcon": "size-5 shrink-0 text-(--ui-primary)",
-    "title": "text-base text-pretty font-semibold text-(--ui-text-highlighted)",
+    "body": "flex-1",
+    "footer": "pt-4 mt-auto",
+    "leading": "inline-flex items-center mb-2.5",
+    "leadingIcon": "size-5 shrink-0 text-primary",
+    "title": "text-base text-pretty font-semibold text-highlighted",
     "description": "text-[15px] text-pretty"
   },
   "variants": {
@@ -62,28 +81,28 @@ export default {
     },
     "variant": {
       "solid": {
-        "root": "bg-(--ui-bg-inverted) text-(--ui-bg)",
-        "title": "text-(--ui-bg)",
-        "description": "text-(--ui-text-dimmed)"
+        "root": "bg-inverted text-inverted",
+        "title": "text-inverted",
+        "description": "text-dimmed"
       },
       "outline": {
-        "root": "bg-(--ui-bg) ring ring-(--ui-border)",
-        "description": "text-(--ui-text-muted)"
+        "root": "bg-default ring ring-default",
+        "description": "text-muted"
       },
       "soft": {
-        "root": "bg-(--ui-bg-elevated)/50",
-        "description": "text-(--ui-text-toned)"
+        "root": "bg-elevated/50",
+        "description": "text-toned"
       },
       "subtle": {
-        "root": "bg-(--ui-bg-elevated)/50 ring ring-(--ui-border)",
-        "description": "text-(--ui-text-toned)"
+        "root": "bg-elevated/50 ring ring-default",
+        "description": "text-toned"
       },
       "ghost": {
-        "description": "text-(--ui-text-muted)"
+        "description": "text-muted"
       },
       "naked": {
         "container": "p-0 sm:p-0",
-        "description": "text-(--ui-text-muted)"
+        "description": "text-muted"
       }
     },
     "to": {
@@ -132,28 +151,28 @@ export default {
       "variant": "solid" as typeof variant[number],
       "to": true,
       "class": {
-        "root": "hover:bg-(--ui-bg-inverted)/90"
+        "root": "hover:bg-inverted/90"
       }
     },
     {
       "variant": "outline" as typeof variant[number],
       "to": true,
       "class": {
-        "root": "hover:bg-(--ui-bg-elevated)/50"
+        "root": "hover:bg-elevated/50"
       }
     },
     {
       "variant": "soft" as typeof variant[number],
       "to": true,
       "class": {
-        "root": "hover:bg-(--ui-bg-elevated)"
+        "root": "hover:bg-elevated"
       }
     },
     {
       "variant": "subtle" as typeof variant[number],
       "to": true,
       "class": {
-        "root": "hover:bg-(--ui-bg-elevated)"
+        "root": "hover:bg-elevated"
       }
     },
     {
@@ -161,63 +180,63 @@ export default {
       "to": true,
       "highlight": false,
       "class": {
-        "root": "hover:ring-(--ui-border-accented)"
+        "root": "hover:ring-accented"
       }
     },
     {
       "variant": "ghost" as typeof variant[number],
       "to": true,
       "class": {
-        "root": "hover:bg-(--ui-bg-elevated)/50"
+        "root": "hover:bg-elevated/50"
       }
     },
     {
       "highlightColor": "primary" as typeof highlightColor[number],
       "highlight": true,
       "class": {
-        "root": "ring-(--ui-primary)"
+        "root": "ring-primary"
       }
     },
     {
       "highlightColor": "secondary" as typeof highlightColor[number],
       "highlight": true,
       "class": {
-        "root": "ring-(--ui-secondary)"
+        "root": "ring-secondary"
       }
     },
     {
       "highlightColor": "success" as typeof highlightColor[number],
       "highlight": true,
       "class": {
-        "root": "ring-(--ui-success)"
+        "root": "ring-success"
       }
     },
     {
       "highlightColor": "info" as typeof highlightColor[number],
       "highlight": true,
       "class": {
-        "root": "ring-(--ui-info)"
+        "root": "ring-info"
       }
     },
     {
       "highlightColor": "warning" as typeof highlightColor[number],
       "highlight": true,
       "class": {
-        "root": "ring-(--ui-warning)"
+        "root": "ring-warning"
       }
     },
     {
       "highlightColor": "error" as typeof highlightColor[number],
       "highlight": true,
       "class": {
-        "root": "ring-(--ui-error)"
+        "root": "ring-error"
       }
     },
     {
       "highlightColor": "neutral" as typeof highlightColor[number],
       "highlight": true,
       "class": {
-        "root": "ring-(--ui-border-inverted)"
+        "root": "ring-inverted"
       }
     },
     {
@@ -276,3 +295,5 @@ export default {
     "spotlightColor": "primary" as typeof spotlightColor[number]
   }
 }
+
+export default result as typeof theme

@@ -1,125 +1,53 @@
-<!-- eslint-disable vue/block-tag-newline -->
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import type { ButtonProps, FormProps, FormFieldProps, FormSchema, FormSubmitEvent, SeparatorProps } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/auth-form'
-import { tv } from '../utils/tv'
-import type { InferSchemaType } from '../types/form'
-
-const appConfig = _appConfig as AppConfig & { uiPro: { authForm: Partial<typeof theme> } }
-
-const authForm = tv({ extend: tv(theme), ...(appConfig.uiPro?.authForm || {}) })
-
-type AuthFormField = FormFieldProps & {
-  name: string
-  type?: 'checkbox' | 'select' | 'password' | 'text'
-  defaultValue?: any
-}
-
-export interface AuthFormProps<T extends FormSchema<object>, F extends AuthFormField> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * The icon displayed above the title.
-   * @IconifyIcon
-   */
-  icon?: string
-  title?: string
-  description?: string
-  fields?: F[]
-  /**
-   * Display a list of Button under the description.
-   * `{ color: 'neutral', variant: 'subtle', block: true }`{lang="ts-type"}
-   */
-  providers?: ButtonProps[]
-  /**
-   * The text displayed in the separator.
-   * @defaultValue 'or'
-   */
-  separator?: string | SeparatorProps
-  /**
-   * Display a submit button at the bottom of the form.
-   * `{ label: 'Continue', block: true }`{lang="ts-type"}
-   */
-  submit?: ButtonProps
-  schema?: T
-  validate?: FormProps<object>['validate']
-  validateOn?: FormProps<object>['validateOn']
-  validateOnInputDelay?: FormProps<object>['validateOnInputDelay']
-  disabled?: FormProps<object>['disabled']
-  loading?: ButtonProps['loading']
-  class?: any
-  ui?: Partial<typeof authForm.slots>
-}
-
-export type AuthFormEmits<T extends object> = {
-  submit: [payload: FormSubmitEvent<T>]
-}
-
-type DynamicFieldSlots<T, F, SlotProps = { field: F, state: T }> = Record<string, (props: SlotProps) => any> & Record<`${keyof T extends string ? keyof T : never}-field`, (props: SlotProps) => any>
-
-type DynamicFormFieldSlots<T> = Record<string, (props?: {}) => any> & Record<`${keyof T extends string ? keyof T : never}-${'label' | 'description' | 'hint' | 'help' | 'error'}`, (props?: {}) => any>
-
-export type AuthFormSlots<T extends object, F extends AuthFormField> = {
-  header(props?: {}): any
-  leading(props?: {}): any
-  title(props?: {}): any
-  description(props?: {}): any
-  validation(props?: {}): any
-  footer(props?: {}): any
-} & DynamicFieldSlots<T, F> & DynamicFormFieldSlots<T>
-
+<script>
+import theme from "#build/ui-pro/auth-form";
 </script>
 
-<script setup lang="ts" generic="T extends FormSchema<any>, F extends AuthFormField">
-import { reactive, ref, useTemplateRef } from 'vue'
-import { Primitive } from 'reka-ui'
-import { omit } from '@nuxt/ui/utils/index'
-import { useAppConfig } from '#imports'
-import { useLocalePro } from '../composables/useLocalePro'
-
-const props = withDefaults(defineProps<AuthFormProps<T, F>>(), {
-  separator: 'or'
-})
-
-type FormStateType = InferSchemaType<T>
-
-type TypedAuthFormField = AuthFormField & {
-  name: keyof FormStateType
-  defaultValue?: FormStateType[keyof FormStateType]
-}
-
-const state = reactive<FormStateType>((props.fields as TypedAuthFormField[] || []).reduce<FormStateType>((acc, field) => {
+<script setup>
+import { reactive, ref, computed, useTemplateRef } from "vue";
+import { Primitive } from "reka-ui";
+import { omit } from "@nuxt/ui/utils";
+import { useAppConfig } from "#imports";
+import { useLocalePro } from "../composables/useLocalePro";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false },
+  icon: { type: String, required: false },
+  title: { type: String, required: false },
+  description: { type: String, required: false },
+  fields: { type: Array, required: false },
+  providers: { type: Array, required: false },
+  separator: { type: null, required: false, default: "or" },
+  submit: { type: null, required: false },
+  schema: { type: null, required: false },
+  validate: { type: null, required: false },
+  validateOn: { type: null, required: false },
+  validateOnInputDelay: { type: null, required: false },
+  disabled: { type: null, required: false },
+  loading: { type: null, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const state = reactive((props.fields || []).reduce((acc, field) => {
   if (field.name) {
-    acc[field.name] = field.defaultValue
+    acc[field.name] = field.defaultValue;
   }
-  return acc
-}, {} as FormStateType))
-
-const emits = defineEmits<AuthFormEmits<typeof state>>()
-const slots = defineSlots<AuthFormSlots<typeof state, F>>()
-
-const appConfig = useAppConfig()
-const { t } = useLocalePro()
-
-const formRef = useTemplateRef('formRef')
-const passwordVisibility = ref(false)
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = authForm()
-
+  return acc;
+}, {}));
+const emits = defineEmits(["submit"]);
+const slots = defineSlots();
+const { t } = useLocalePro();
+const appConfig = useAppConfig();
+const formRef = useTemplateRef("formRef");
+const passwordVisibility = ref(false);
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.authForm || {} })());
 defineExpose({
   formRef
-})
+});
 </script>
 
 <template>
   <Primitive :as="as" :class="ui.root({ class: [props.class, props.ui?.root] })">
-    <div v-if="(icon || !!slots.icon) || (title || !!slots.title) || (description || !!slots.description) || !!slots.header" :class="ui.header({ class: props.ui?.header })">
+    <div v-if="icon || !!slots.icon || (title || !!slots.title) || (description || !!slots.description) || !!slots.header" :class="ui.header({ class: props.ui?.header })">
       <slot name="header">
         <div v-if="icon || !!slots.leading" :class="ui.leading({ class: props.ui?.leading })">
           <slot name="leading">

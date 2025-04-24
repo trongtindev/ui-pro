@@ -1,22 +1,18 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/table'
-import { tv } from '../../utils/tv'
-
-const appConfigProseTable = _appConfig as AppConfig & { uiPro: { prose: { table: Partial<typeof theme> } } }
-
-const proseTable = tv({ extend: tv(theme), ...(appConfigProseTable.uiPro?.prose?.table || {}) })
+<script>
+import theme from "#build/ui-pro/prose/table";
 </script>
 
-<script setup lang="ts">
-const props = defineProps<{
-  class?: string
-  ui?: Partial<typeof proseTable.slots>
-}>()
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = proseTable()
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.table || {} })());
 </script>
 
 <template>

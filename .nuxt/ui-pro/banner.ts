@@ -1,3 +1,5 @@
+import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/banner"
+
 const color = [
   "primary",
   "secondary",
@@ -8,7 +10,24 @@ const color = [
   "neutral"
 ] as const
 
-export default {
+const result = typeof template === 'function' ? (template as Function)({
+  "prefix": "U",
+  "fonts": true,
+  "colorMode": true,
+  "theme": {
+    "colors": [
+      "primary",
+      "secondary",
+      "success",
+      "info",
+      "warning",
+      "error"
+    ],
+    "transitions": true
+  }
+}) : template
+
+const theme = {
   "slots": {
     "root": [
       "relative z-50 w-full",
@@ -18,33 +37,33 @@ export default {
     "left": "hidden lg:flex-1 lg:flex lg:items-center",
     "center": "flex items-center gap-1.5 min-w-0",
     "right": "lg:flex-1 flex items-center justify-end",
-    "icon": "size-5 shrink-0 text-(--ui-bg) pointer-events-none",
-    "title": "text-sm text-(--ui-bg) font-medium truncate",
+    "icon": "size-5 shrink-0 text-inverted pointer-events-none",
+    "title": "text-sm text-inverted font-medium truncate",
     "actions": "flex gap-1.5 shrink-0 isolate",
-    "close": "text-(--ui-bg) hover:bg-(--ui-bg)/10 focus-visible:bg-(--ui-bg)/10 -me-1.5 lg:me-0"
+    "close": "text-inverted hover:bg-default/10 focus-visible:bg-default/10 -me-1.5 lg:me-0"
   },
   "variants": {
     "color": {
       "primary": {
-        "root": "bg-(--ui-primary)"
+        "root": "bg-primary"
       },
       "secondary": {
-        "root": "bg-(--ui-secondary)"
+        "root": "bg-secondary"
       },
       "success": {
-        "root": "bg-(--ui-success)"
+        "root": "bg-success"
       },
       "info": {
-        "root": "bg-(--ui-info)"
+        "root": "bg-info"
       },
       "warning": {
-        "root": "bg-(--ui-warning)"
+        "root": "bg-warning"
       },
       "error": {
-        "root": "bg-(--ui-error)"
+        "root": "bg-error"
       },
       "neutral": {
-        "root": "bg-(--ui-bg-inverted)"
+        "root": "bg-inverted"
       }
     },
     "to": {
@@ -56,49 +75,49 @@ export default {
       "color": "primary" as typeof color[number],
       "to": true,
       "class": {
-        "root": "hover:bg-(--ui-primary)/90"
+        "root": "hover:bg-primary/90"
       }
     },
     {
       "color": "secondary" as typeof color[number],
       "to": true,
       "class": {
-        "root": "hover:bg-(--ui-secondary)/90"
+        "root": "hover:bg-secondary/90"
       }
     },
     {
       "color": "success" as typeof color[number],
       "to": true,
       "class": {
-        "root": "hover:bg-(--ui-success)/90"
+        "root": "hover:bg-success/90"
       }
     },
     {
       "color": "info" as typeof color[number],
       "to": true,
       "class": {
-        "root": "hover:bg-(--ui-info)/90"
+        "root": "hover:bg-info/90"
       }
     },
     {
       "color": "warning" as typeof color[number],
       "to": true,
       "class": {
-        "root": "hover:bg-(--ui-warning)/90"
+        "root": "hover:bg-warning/90"
       }
     },
     {
       "color": "error" as typeof color[number],
       "to": true,
       "class": {
-        "root": "hover:bg-(--ui-error)/90"
+        "root": "hover:bg-error/90"
       }
     },
     {
       "color": "neutral" as typeof color[number],
       "to": true,
       "class": {
-        "root": "hover:bg-(--ui-bg-inverted)/90"
+        "root": "hover:bg-inverted/90"
       }
     }
   ],
@@ -106,3 +125,5 @@ export default {
     "color": "primary" as typeof color[number]
   }
 }
+
+export default result as typeof theme

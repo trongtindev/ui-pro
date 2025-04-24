@@ -1,36 +1,23 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/page-columns'
-import { tv } from '../utils/tv'
-
-const appConfigPageColumns = _appConfig as AppConfig & { uiPro: { pageColumns: Partial<typeof theme> } }
-
-const pageColumns = tv({ extend: tv(theme), ...(appConfigPageColumns.uiPro?.pageColumns || {}) })
-
-export interface PageColumnsProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  class?: any
-}
-
-export interface PageColumnsSlots {
-  default(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/page-columns";
 </script>
 
-<script setup lang="ts">
-import { Primitive } from 'reka-ui'
-
-const props = defineProps<PageColumnsProps>()
-defineSlots<PageColumnsSlots>()
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { useAppConfig } from "#imports";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false },
+  class: { type: null, required: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.pageColumns || {} }));
 </script>
 
 <template>
-  <Primitive :as="as" :class="pageColumns({ class: props.class })">
+  <Primitive :as="as" :class="ui({ class: props.class })">
     <slot />
   </Primitive>
 </template>

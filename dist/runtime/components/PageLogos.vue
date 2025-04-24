@@ -1,50 +1,25 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/page-logos'
-import { tv } from '../utils/tv'
-import type { PageMarqueeProps } from '../types'
-
-const appConfigPageLogos = _appConfig as AppConfig & { uiPro: { pageLogos: Partial<typeof theme> } }
-
-const pageLogos = tv({ extend: tv(theme), ...(appConfigPageLogos.uiPro?.pageLogos || {}) })
-
-type PageLogosItem = {
-  src: string
-  alt: string
-} | string
-
-export interface PageLogosProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  title?: string
-  items?: PageLogosItem[]
-  marquee?: boolean | PageMarqueeProps
-  class?: any
-  ui?: Partial<typeof pageLogos.slots>
-}
-
-export interface PageLogosSlots {
-  default(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/page-logos";
 </script>
 
-<script setup lang="ts">
-import { Primitive } from 'reka-ui'
-import { createReusableTemplate } from '@vueuse/core'
-
-const [DefineCreateItemTemplate, ReuseCreateItemTemplate] = createReusableTemplate()
-
-const props = withDefaults(defineProps<PageLogosProps>(), {
-  marquee: false
-})
-const slots = defineSlots<PageLogosSlots>()
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = pageLogos()
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { createReusableTemplate } from "@vueuse/core";
+import { useAppConfig } from "#imports";
+import { tv } from "../utils/tv";
+const [DefineCreateItemTemplate, ReuseCreateItemTemplate] = createReusableTemplate();
+const props = defineProps({
+  as: { type: null, required: false },
+  title: { type: String, required: false },
+  items: { type: Array, required: false },
+  marquee: { type: [Boolean, Object], required: false, default: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.pageLogos || {} })());
 </script>
 
 <template>

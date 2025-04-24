@@ -1,38 +1,20 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/dashboard-toolbar'
-import { tv } from '../utils/tv'
-
-const appConfigdashboardToolbar = _appConfig as AppConfig & { uiPro: { dashboardToolbar: Partial<typeof theme> } }
-
-const dashboardToolbar = tv({ extend: tv(theme), ...(appConfigdashboardToolbar.uiPro?.dashboardToolbar || {}) })
-
-export interface DashboardToolbarProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  class?: any
-  ui?: Partial<typeof dashboardToolbar.slots>
-}
-
-export interface DashboardToolbarSlots {
-  default(props?: {}): any
-  left(props?: {}): any
-  right(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/dashboard-toolbar";
 </script>
 
-<script setup lang="ts">
-import { Primitive } from 'reka-ui'
-
-const props = defineProps<DashboardToolbarProps>()
-defineSlots<DashboardToolbarSlots>()
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = dashboardToolbar()
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { useAppConfig } from "#imports";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.dashboardToolbar || {} })());
 </script>
 
 <template>

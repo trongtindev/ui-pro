@@ -1,51 +1,27 @@
-<script lang="ts">
-import type { VariantProps } from 'tailwind-variants'
-import type { AppConfig } from '@nuxt/schema'
-import type { LinkProps, PartialString } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/callout'
-import { tv } from '../../utils/tv'
-
-const appConfigProseCallout = _appConfig as AppConfig & { uiPro: { prose: { callout: Partial<typeof theme> } } }
-
-const callout = tv({ extend: tv(theme), ...(appConfigProseCallout.uiPro?.prose?.callout || {}) })
-
-type CalloutVariants = VariantProps<typeof callout>
-
-interface CalloutProps {
-  to?: LinkProps['to']
-  target?: LinkProps['target']
-  icon?: string
-  /**
-   * @defaultValue 'neutral'
-   */
-  color?: CalloutVariants['color']
-  class?: any
-  ui?: PartialString<typeof callout.slots>
-}
-
-interface CalloutSlots {
-  default(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/prose/callout";
 </script>
 
-<script setup lang="ts">
-import { computed } from 'vue'
-import { useAppConfig } from '#imports'
-
-defineOptions({ inheritAttrs: false })
-
-const props = defineProps<CalloutProps>()
-defineSlots<CalloutSlots>()
-
-const appConfig = useAppConfig()
-
-const ui = computed(() => callout({
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+defineOptions({ inheritAttrs: false });
+const props = defineProps({
+  to: { type: null, required: false },
+  target: { type: null, required: false },
+  icon: { type: String, required: false },
+  color: { type: null, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.callout || {} })({
   color: props.color,
   to: !!props.to
-}))
-
-const target = computed(() => props.target || (!!props.to && typeof props.to === 'string' && props.to.startsWith('http') ? '_blank' : undefined))
+}));
+const target = computed(() => props.target || (!!props.to && typeof props.to === "string" && props.to.startsWith("http") ? "_blank" : void 0));
 </script>
 
 <template>

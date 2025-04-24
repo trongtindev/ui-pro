@@ -1,50 +1,37 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/pre'
-import { tv } from '../../utils/tv'
-
-const appConfigProsePre = _appConfig as AppConfig & { uiPro: { prose: { pre: Partial<typeof theme> } } }
-
-const prosePre = tv({ extend: tv(theme), ...(appConfigProsePre.uiPro?.prose?.pre || {}) })
+<script>
+import theme from "#build/ui-pro/prose/pre";
 </script>
 
-<script setup lang="ts">
-import { ref } from 'vue'
-import { useClipboard } from '@vueuse/core'
-import { useAppConfig } from '#imports'
-import { useLocalePro } from '../../composables/useLocalePro'
-import CodeIcon from './CodeIcon.vue'
-
-const props = defineProps<{
-  icon?: string
-  code?: string
-  language?: string
-  filename?: string
-  highlights?: number[]
-  hideHeader?: boolean
-  meta?: string
-  class?: any
-  ui?: Partial<typeof prosePre.slots>
-}>()
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = prosePre()
-
-const clipboard = useClipboard()
-const appConfig = useAppConfig()
-const { t } = useLocalePro()
-
-const copied = ref(false)
-
+<script setup>
+import { ref, computed } from "vue";
+import { useClipboard } from "@vueuse/core";
+import { useAppConfig } from "#imports";
+import { useLocalePro } from "../../composables/useLocalePro";
+import CodeIcon from "./CodeIcon.vue";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  icon: { type: String, required: false },
+  code: { type: String, required: false },
+  language: { type: String, required: false },
+  filename: { type: String, required: false },
+  highlights: { type: Array, required: false },
+  hideHeader: { type: Boolean, required: false },
+  meta: { type: String, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+defineSlots();
+const { t } = useLocalePro();
+const clipboard = useClipboard();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.pre || {} })());
+const copied = ref(false);
 function copy() {
-  clipboard.copy(props.code || '')
-
-  copied.value = true
-
+  clipboard.copy(props.code || "");
+  copied.value = true;
   setTimeout(() => {
-    copied.value = false
-  }, 2000)
+    copied.value = false;
+  }, 2e3);
 }
 </script>
 

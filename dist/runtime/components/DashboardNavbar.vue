@@ -1,72 +1,28 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import type { ButtonProps } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/dashboard-navbar'
-import { tv } from '../utils/tv'
-import type { DashboardContext } from '../utils/dashboard'
-
-const appConfig = _appConfig as AppConfig & { uiPro: { dashboardNavbar: Partial<typeof theme> } }
-
-const dashboardNavbar = tv({ extend: tv(theme), ...(appConfig.uiPro?.dashboardNavbar || {}) })
-
-export interface DashboardNavbarProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * The icon displayed next to the title.
-   * @IconifyIcon
-   */
-  icon?: string
-  title?: string
-  /**
-   * Customize the toggle button to open the sidebar.
-   * `{ color: 'neutral', variant: 'ghost' }`{lang="ts-type"}
-   * @defaultValue true
-   */
-  toggle?: boolean | Partial<ButtonProps>
-  /**
-   * The side to render the toggle button on.
-   * @defaultValue 'left'
-   */
-  toggleSide?: 'left' | 'right'
-  class?: any
-  ui?: Partial<typeof dashboardNavbar.slots>
-}
-
-type DashboardNavbarSlotsProps = Omit<DashboardContext, 'storage' | 'storageKey' | 'persistent' | 'unit'>
-
-export interface DashboardNavbarSlots {
-  title(props?: {}): any
-  leading(props: DashboardNavbarSlotsProps): any
-  trailing(props: DashboardNavbarSlotsProps): any
-  left(props: DashboardNavbarSlotsProps): any
-  default(props: DashboardNavbarSlotsProps): any
-  right(props: DashboardNavbarSlotsProps): any
-  toggle(props: DashboardNavbarSlotsProps): any
-}
+<script>
+import theme from "#build/ui-pro/dashboard-navbar";
 </script>
 
-<script setup lang="ts">
-import { Primitive } from 'reka-ui'
-import { createReusableTemplate } from '@vueuse/core'
-import { useDashboard } from '../utils/dashboard'
-
-const props = withDefaults(defineProps<DashboardNavbarProps>(), {
-  toggle: true,
-  toggleSide: 'left'
-})
-const slots = defineSlots<DashboardNavbarSlots>()
-
-const [DefineToggleTemplate, ReuseToggleTemplate] = createReusableTemplate()
-
-const dashboardContext = useDashboard({})
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = dashboardNavbar()
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { createReusableTemplate } from "@vueuse/core";
+import { useAppConfig } from "#imports";
+import { useDashboard } from "../utils/dashboard";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false },
+  icon: { type: String, required: false },
+  title: { type: String, required: false },
+  toggle: { type: [Boolean, Object], required: false, default: true },
+  toggleSide: { type: String, required: false, default: "left" },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const appConfig = useAppConfig();
+const dashboardContext = useDashboard({});
+const [DefineToggleTemplate, ReuseToggleTemplate] = createReusableTemplate();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.dashboardNavbar || {} })());
 </script>
 
 <template>
@@ -74,7 +30,7 @@ const ui = dashboardNavbar()
     <slot name="toggle" v-bind="dashboardContext">
       <UDashboardSidebarToggle
         v-if="toggle"
-        v-bind="(typeof toggle === 'object' ? toggle as Partial<ButtonProps> : {})"
+        v-bind="typeof toggle === 'object' ? toggle : {}"
         :side="toggleSide"
         :class="ui.toggle({ class: props.ui?.toggle, toggleSide })"
       />

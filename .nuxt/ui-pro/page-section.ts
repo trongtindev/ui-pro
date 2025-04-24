@@ -1,18 +1,37 @@
+import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/page-section"
+
 const orientation = [
   "horizontal",
   "vertical"
 ] as const
 
-export default {
+const result = typeof template === 'function' ? (template as Function)({
+  "prefix": "U",
+  "fonts": true,
+  "colorMode": true,
+  "theme": {
+    "colors": [
+      "primary",
+      "secondary",
+      "success",
+      "info",
+      "warning",
+      "error"
+    ],
+    "transitions": true
+  }
+}) : template
+
+const theme = {
   "slots": {
     "root": "relative isolate",
     "container": "flex flex-col lg:grid py-16 sm:py-24 lg:py-32 gap-8 sm:gap-16",
     "wrapper": "",
     "headline": "mb-3",
     "leading": "flex items-center mb-6",
-    "leadingIcon": "size-10 shrink-0 text-(--ui-primary)",
-    "title": "text-3xl sm:text-4xl lg:text-5xl text-pretty tracking-tight font-bold text-(--ui-text-highlighted)",
-    "description": "text-base sm:text-lg text-(--ui-text-muted)",
+    "leadingIcon": "size-10 shrink-0 text-primary",
+    "title": "text-3xl sm:text-4xl lg:text-5xl text-pretty tracking-tight font-bold text-highlighted",
+    "description": "text-base sm:text-lg text-muted",
     "links": "mt-8 flex flex-wrap gap-x-6 gap-y-3",
     "features": "mt-8 grid"
   },
@@ -40,7 +59,7 @@ export default {
     },
     "headline": {
       "true": {
-        "headline": "font-semibold text-(--ui-primary) flex items-center gap-1.5"
+        "headline": "font-semibold text-primary flex items-center gap-1.5"
       }
     },
     "title": {
@@ -79,3 +98,5 @@ export default {
     }
   ]
 }
+
+export default result as typeof theme

@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "\u0110\xF3ng"
     },
+    chatPrompt: {
+      placeholder: "Nh\u1EADp tin nh\u1EAFn c\u1EE7a b\u1EA1n \u1EDF \u0111\xE2y..."
+    },
+    chatPromptSubmit: {
+      label: "G\u1EEDi"
+    },
     colorMode: {
       system: "H\u1EC7 th\u1ED1ng",
       light: "S\xE1ng",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "\u0110\xF3ng menu",
       open: "M\u1EDF menu"
+    },
+    pricingTable: {
+      caption: "So s\xE1nh c\xE1c k\u1EBF ho\u1EA1ch gi\xE1"
     },
     prose: {
       pre: {

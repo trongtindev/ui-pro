@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "Chiudi"
     },
+    chatPrompt: {
+      placeholder: "Scrivi il tuo messaggio qui..."
+    },
+    chatPromptSubmit: {
+      label: "Invia"
+    },
     colorMode: {
       system: "Sistema",
       light: "Chiaro",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "Chiudi menu",
       open: "Apri menu"
+    },
+    pricingTable: {
+      caption: "Confronto dei piani di prezzo"
     },
     prose: {
       pre: {

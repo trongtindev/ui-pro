@@ -1,9 +1,28 @@
+import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/pricing-plans"
+
 const orientation = [
   "horizontal",
   "vertical"
 ] as const
 
-export default {
+const result = typeof template === 'function' ? (template as Function)({
+  "prefix": "U",
+  "fonts": true,
+  "colorMode": true,
+  "theme": {
+    "colors": [
+      "primary",
+      "secondary",
+      "success",
+      "info",
+      "warning",
+      "error"
+    ],
+    "transitions": true
+  }
+}) : template
+
+const theme = {
   "base": "flex flex-col gap-y-8",
   "variants": {
     "orientation": {
@@ -25,3 +44,5 @@ export default {
     }
   ]
 }
+
+export default result as typeof theme

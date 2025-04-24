@@ -1,52 +1,30 @@
-<script lang="ts">
-import type { VariantProps } from 'tailwind-variants'
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/page-marquee'
-import { tv } from '../utils/tv'
-
-const appConfigPageMarquee = _appConfig as AppConfig & { uiPro: { pageMarquee: Partial<typeof theme> } }
-
-const pageMarquee = tv({ extend: tv(theme), ...(appConfigPageMarquee.uiPro?.pageMarquee || {}) })
-
-type PageMarqueeVariants = VariantProps<typeof pageMarquee>
-
-export interface PageMarqueeProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  pauseOnHover?: boolean
-  reverse?: boolean
-  orientation?: PageMarqueeVariants['orientation']
-  repeat?: number
-  overlay?: boolean
-  class?: any
-  ui?: Partial<typeof pageMarquee.slots>
-}
-
-export interface PageMarqueeSlots {
-  default(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/page-marquee";
 </script>
 
-<script setup lang="ts">
-import { Primitive } from 'reka-ui'
-import { computed } from 'vue'
-
-const props = withDefaults(defineProps<PageMarqueeProps>(), {
-  orientation: 'horizontal',
-  repeat: 4,
-  overlay: true
-})
-
-const ui = computed(() => pageMarquee({
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { useAppConfig } from "#imports";
+import { tv } from "../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false },
+  pauseOnHover: { type: Boolean, required: false },
+  reverse: { type: Boolean, required: false },
+  orientation: { type: null, required: false, default: "horizontal" },
+  repeat: { type: Number, required: false, default: 4 },
+  overlay: { type: Boolean, required: false, default: true },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.pageMarquee || {} })({
   pauseOnHover: props.pauseOnHover,
   orientation: props.orientation,
   reverse: props.reverse,
   overlay: props.overlay
-}))
+}));
 </script>
 
 <template>

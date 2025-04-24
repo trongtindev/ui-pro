@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "Schlie\xDFen"
     },
+    chatPrompt: {
+      placeholder: "Hier schreiben Sie Ihre Nachricht..."
+    },
+    chatPromptSubmit: {
+      label: "Senden"
+    },
     colorMode: {
       system: "System",
       light: "Hell",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "Men\xFC schlie\xDFen",
       open: "Men\xFC \xF6ffnen"
+    },
+    pricingTable: {
+      caption: "Preisplanvergleich"
     },
     prose: {
       pre: {

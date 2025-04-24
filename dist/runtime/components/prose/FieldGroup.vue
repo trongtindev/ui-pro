@@ -1,36 +1,23 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/field-group'
-import { tv } from '../../utils/tv'
-
-const appConfigFieldGroup = _appConfig as AppConfig & { uiPro: { prose: { fieldGroup: Partial<typeof theme> } } }
-
-const fieldGroup = tv({ extend: tv(theme), ...(appConfigFieldGroup.uiPro?.prose?.fieldGroup || {}) })
-
-export interface FieldGroupProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  class?: any
-}
-
-export interface FieldGroupSlots {
-  default(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/prose/field-group";
 </script>
 
-<script setup lang="ts">
-import { Primitive } from 'reka-ui'
-
-const props = defineProps<FieldGroupProps>()
-defineSlots<FieldGroupSlots>()
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false },
+  class: { type: null, required: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.fieldGroup || {} }));
 </script>
 
 <template>
-  <Primitive :as="as" :class="fieldGroup({ class: props.class })">
+  <Primitive :as="as" :class="ui({ class: props.class })">
     <slot />
   </Primitive>
 </template>

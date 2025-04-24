@@ -1,4 +1,23 @@
-export default {
+import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/page"
+
+const result = typeof template === 'function' ? (template as Function)({
+  "prefix": "U",
+  "fonts": true,
+  "colorMode": true,
+  "theme": {
+    "colors": [
+      "primary",
+      "secondary",
+      "success",
+      "info",
+      "warning",
+      "error"
+    ],
+    "transitions": true
+  }
+}) : template
+
+const theme = {
   "slots": {
     "root": "flex flex-col lg:grid lg:grid-cols-10 lg:gap-10",
     "left": "lg:col-span-2",
@@ -30,3 +49,5 @@ export default {
     }
   ]
 }
+
+export default result as typeof theme

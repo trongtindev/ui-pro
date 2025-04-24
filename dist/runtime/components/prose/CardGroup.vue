@@ -1,22 +1,21 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/card-group'
-import { tv } from '../../utils/tv'
-
-const appConfigProseCardGroup = _appConfig as AppConfig & { uiPro: { prose: { cardGroup: Partial<typeof theme> } } }
-
-const cardGroup = tv({ extend: tv(theme), ...(appConfigProseCardGroup.uiPro?.prose?.cardGroup || {}) })
+<script>
+import theme from "#build/ui-pro/prose/card-group";
 </script>
 
-<script setup lang="ts">
-const props = defineProps<{
-  class?: string
-}>()
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  class: { type: null, required: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.cardGroup || {} }));
 </script>
 
 <template>
-  <div :class="cardGroup({ class: props.class })">
+  <div :class="ui({ class: props.class })">
     <slot />
   </div>
 </template>

@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "Bez\xE1r\xE1s"
     },
+    chatPrompt: {
+      placeholder: "\xCDrd be a k\xE9rd\xE9sedet itt..."
+    },
+    chatPromptSubmit: {
+      label: "K\xFCld\xE9s"
+    },
     colorMode: {
       system: "Rendszer",
       light: "Vil\xE1gos",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "Men\xFC bez\xE1r\xE1sa",
       open: "Men\xFC megnyit\xE1sa"
+    },
+    pricingTable: {
+      caption: "\xC1rlista \xF6sszehasonl\xEDt\xE1sa"
     },
     prose: {
       pre: {

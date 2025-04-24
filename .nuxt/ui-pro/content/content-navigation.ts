@@ -1,3 +1,5 @@
+import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/content/content-navigation"
+
 const color = [
   "primary",
   "secondary",
@@ -23,53 +25,70 @@ const variant = [
   "link"
 ] as const
 
-export default {
+const result = typeof template === 'function' ? (template as Function)({
+  "prefix": "U",
+  "fonts": true,
+  "colorMode": true,
+  "theme": {
+    "colors": [
+      "primary",
+      "secondary",
+      "success",
+      "info",
+      "warning",
+      "error"
+    ],
+    "transitions": true
+  }
+}) : template
+
+const theme = {
   "slots": {
     "root": "",
     "content": "data-[state=open]:animate-[accordion-down_200ms_ease-out] data-[state=closed]:animate-[accordion-up_200ms_ease-out] overflow-hidden focus:outline-none",
     "list": "isolate -mx-2.5 -mt-1.5",
     "item": "",
-    "listWithChildren": "ms-5 border-s border-(--ui-border)",
+    "listWithChildren": "ms-5 border-s border-default",
     "itemWithChildren": "flex flex-col data-[state=open]:mb-1.5",
     "trigger": "font-semibold",
-    "link": "group relative w-full px-2.5 py-1.5 before:inset-y-px before:inset-x-0 flex items-center gap-1.5 text-sm before:absolute before:z-[-1] before:rounded-[calc(var(--ui-radius)*1.5)] focus:outline-none focus-visible:outline-none focus-visible:before:ring-inset focus-visible:before:ring-2",
+    "link": "group relative w-full px-2.5 py-1.5 before:inset-y-px before:inset-x-0 flex items-center gap-1.5 text-sm before:absolute before:z-[-1] before:rounded-md focus:outline-none focus-visible:outline-none focus-visible:before:ring-inset focus-visible:before:ring-2",
     "linkLeadingIcon": "shrink-0 size-5",
     "linkTrailing": "ms-auto inline-flex gap-1.5 items-center",
     "linkTrailingBadge": "shrink-0",
     "linkTrailingBadgeSize": "sm",
     "linkTrailingIcon": "size-5 transform transition-transform duration-200 shrink-0 group-data-[state=open]:rotate-180",
     "linkTitle": "truncate",
-    "linkTitleExternalIcon": "size-3 align-top text-(--ui-text-dimmed)"
+    "linkTitleExternalIcon": "size-3 align-top text-dimmed"
   },
   "variants": {
     "color": {
       "primary": {
-        "trigger": "focus-visible:ring-(--ui-primary)",
-        "link": "focus-visible:before:ring-(--ui-primary)"
+        "trigger": "focus-visible:ring-primary",
+        "link": "focus-visible:before:ring-primary"
       },
       "secondary": {
-        "trigger": "focus-visible:ring-(--ui-secondary)",
-        "link": "focus-visible:before:ring-(--ui-secondary)"
+        "trigger": "focus-visible:ring-secondary",
+        "link": "focus-visible:before:ring-secondary"
       },
       "success": {
-        "trigger": "focus-visible:ring-(--ui-success)",
-        "link": "focus-visible:before:ring-(--ui-success)"
+        "trigger": "focus-visible:ring-success",
+        "link": "focus-visible:before:ring-success"
       },
       "info": {
-        "trigger": "focus-visible:ring-(--ui-info)",
-        "link": "focus-visible:before:ring-(--ui-info)"
+        "trigger": "focus-visible:ring-info",
+        "link": "focus-visible:before:ring-info"
       },
       "warning": {
-        "trigger": "focus-visible:ring-(--ui-warning)",
-        "link": "focus-visible:before:ring-(--ui-warning)"
+        "trigger": "focus-visible:ring-warning",
+        "link": "focus-visible:before:ring-warning"
       },
       "error": {
-        "trigger": "focus-visible:ring-(--ui-error)",
-        "link": "focus-visible:before:ring-(--ui-error)"
+        "trigger": "focus-visible:ring-error",
+        "link": "focus-visible:before:ring-error"
       },
       "neutral": {
-        "trigger": "focus-visible:ring-(--ui-border-inverted)",
-        "link": "focus-visible:before:ring-(--ui-border-inverted)"
+        "trigger": "focus-visible:ring-inverted",
+        "link": "focus-visible:before:ring-inverted"
       }
     },
     "highlightColor": {
@@ -90,8 +109,8 @@ export default {
         "link": "font-medium"
       },
       "false": {
-        "link": "text-(--ui-text-muted)",
-        "linkLeadingIcon": "text-(--ui-text-dimmed)"
+        "link": "text-muted",
+        "linkLeadingIcon": "text-dimmed"
       }
     },
     "disabled": {
@@ -126,11 +145,11 @@ export default {
       "variant": "pill" as typeof variant[number],
       "class": {
         "link": [
-          "hover:text-(--ui-text-highlighted) hover:before:bg-(--ui-bg-elevated)/50 data-[state=open]:text-(--ui-text-highlighted)",
+          "hover:text-highlighted hover:before:bg-elevated/50 data-[state=open]:text-highlighted",
           "transition-colors before:transition-colors"
         ],
         "linkLeadingIcon": [
-          "group-hover:text-(--ui-text) group-data-[state=open]:text-(--ui-text)",
+          "group-hover:text-default group-data-[state=open]:text-default",
           "transition-colors"
         ]
       }
@@ -140,8 +159,8 @@ export default {
       "variant": "pill" as typeof variant[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-primary)",
-        "linkLeadingIcon": "text-(--ui-primary) group-data-[state=open]:text-(--ui-primary)"
+        "link": "text-primary",
+        "linkLeadingIcon": "text-primary group-data-[state=open]:text-primary"
       }
     },
     {
@@ -149,8 +168,8 @@ export default {
       "variant": "pill" as typeof variant[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-secondary)",
-        "linkLeadingIcon": "text-(--ui-secondary) group-data-[state=open]:text-(--ui-secondary)"
+        "link": "text-secondary",
+        "linkLeadingIcon": "text-secondary group-data-[state=open]:text-secondary"
       }
     },
     {
@@ -158,8 +177,8 @@ export default {
       "variant": "pill" as typeof variant[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-success)",
-        "linkLeadingIcon": "text-(--ui-success) group-data-[state=open]:text-(--ui-success)"
+        "link": "text-success",
+        "linkLeadingIcon": "text-success group-data-[state=open]:text-success"
       }
     },
     {
@@ -167,8 +186,8 @@ export default {
       "variant": "pill" as typeof variant[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-info)",
-        "linkLeadingIcon": "text-(--ui-info) group-data-[state=open]:text-(--ui-info)"
+        "link": "text-info",
+        "linkLeadingIcon": "text-info group-data-[state=open]:text-info"
       }
     },
     {
@@ -176,8 +195,8 @@ export default {
       "variant": "pill" as typeof variant[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-warning)",
-        "linkLeadingIcon": "text-(--ui-warning) group-data-[state=open]:text-(--ui-warning)"
+        "link": "text-warning",
+        "linkLeadingIcon": "text-warning group-data-[state=open]:text-warning"
       }
     },
     {
@@ -185,8 +204,8 @@ export default {
       "variant": "pill" as typeof variant[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-error)",
-        "linkLeadingIcon": "text-(--ui-error) group-data-[state=open]:text-(--ui-error)"
+        "link": "text-error",
+        "linkLeadingIcon": "text-error group-data-[state=open]:text-error"
       }
     },
     {
@@ -194,8 +213,8 @@ export default {
       "variant": "pill" as typeof variant[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-text-highlighted)",
-        "linkLeadingIcon": "text-(--ui-text-highlighted) group-data-[state=open]:text-(--ui-text-highlighted)"
+        "link": "text-highlighted",
+        "linkLeadingIcon": "text-highlighted group-data-[state=open]:text-highlighted"
       }
     },
     {
@@ -203,7 +222,7 @@ export default {
       "active": true,
       "highlight": false,
       "class": {
-        "link": "before:bg-(--ui-bg-elevated)"
+        "link": "before:bg-elevated"
       }
     },
     {
@@ -212,7 +231,7 @@ export default {
       "highlight": true,
       "class": {
         "link": [
-          "hover:before:bg-(--ui-bg-elevated)/50",
+          "hover:before:bg-elevated/50",
           "before:transition-colors"
         ]
       }
@@ -223,11 +242,11 @@ export default {
       "variant": "link" as typeof variant[number],
       "class": {
         "link": [
-          "hover:text-(--ui-text-highlighted) data-[state=open]:text-(--ui-text-highlighted)",
+          "hover:text-highlighted data-[state=open]:text-highlighted",
           "transition-colors"
         ],
         "linkLeadingIcon": [
-          "group-hover:text-(--ui-text) group-data-[state=open]:text-(--ui-text)",
+          "group-hover:text-default group-data-[state=open]:text-default",
           "transition-colors"
         ]
       }
@@ -237,8 +256,8 @@ export default {
       "variant": "link" as typeof variant[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-primary)",
-        "linkLeadingIcon": "text-(--ui-primary) group-data-[state=open]:text-(--ui-primary)"
+        "link": "text-primary",
+        "linkLeadingIcon": "text-primary group-data-[state=open]:text-primary"
       }
     },
     {
@@ -246,8 +265,8 @@ export default {
       "variant": "link" as typeof variant[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-secondary)",
-        "linkLeadingIcon": "text-(--ui-secondary) group-data-[state=open]:text-(--ui-secondary)"
+        "link": "text-secondary",
+        "linkLeadingIcon": "text-secondary group-data-[state=open]:text-secondary"
       }
     },
     {
@@ -255,8 +274,8 @@ export default {
       "variant": "link" as typeof variant[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-success)",
-        "linkLeadingIcon": "text-(--ui-success) group-data-[state=open]:text-(--ui-success)"
+        "link": "text-success",
+        "linkLeadingIcon": "text-success group-data-[state=open]:text-success"
       }
     },
     {
@@ -264,8 +283,8 @@ export default {
       "variant": "link" as typeof variant[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-info)",
-        "linkLeadingIcon": "text-(--ui-info) group-data-[state=open]:text-(--ui-info)"
+        "link": "text-info",
+        "linkLeadingIcon": "text-info group-data-[state=open]:text-info"
       }
     },
     {
@@ -273,8 +292,8 @@ export default {
       "variant": "link" as typeof variant[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-warning)",
-        "linkLeadingIcon": "text-(--ui-warning) group-data-[state=open]:text-(--ui-warning)"
+        "link": "text-warning",
+        "linkLeadingIcon": "text-warning group-data-[state=open]:text-warning"
       }
     },
     {
@@ -282,8 +301,8 @@ export default {
       "variant": "link" as typeof variant[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-error)",
-        "linkLeadingIcon": "text-(--ui-error) group-data-[state=open]:text-(--ui-error)"
+        "link": "text-error",
+        "linkLeadingIcon": "text-error group-data-[state=open]:text-error"
       }
     },
     {
@@ -291,8 +310,8 @@ export default {
       "variant": "link" as typeof variant[number],
       "active": true,
       "class": {
-        "link": "text-(--ui-text-highlighted)",
-        "linkLeadingIcon": "text-(--ui-text-highlighted) group-data-[state=open]:text-(--ui-text-highlighted)"
+        "link": "text-highlighted",
+        "linkLeadingIcon": "text-highlighted group-data-[state=open]:text-highlighted"
       }
     },
     {
@@ -301,7 +320,7 @@ export default {
       "level": true,
       "active": true,
       "class": {
-        "link": "after:bg-(--ui-primary)"
+        "link": "after:bg-primary"
       }
     },
     {
@@ -310,7 +329,7 @@ export default {
       "level": true,
       "active": true,
       "class": {
-        "link": "after:bg-(--ui-secondary)"
+        "link": "after:bg-secondary"
       }
     },
     {
@@ -319,7 +338,7 @@ export default {
       "level": true,
       "active": true,
       "class": {
-        "link": "after:bg-(--ui-success)"
+        "link": "after:bg-success"
       }
     },
     {
@@ -328,7 +347,7 @@ export default {
       "level": true,
       "active": true,
       "class": {
-        "link": "after:bg-(--ui-info)"
+        "link": "after:bg-info"
       }
     },
     {
@@ -337,7 +356,7 @@ export default {
       "level": true,
       "active": true,
       "class": {
-        "link": "after:bg-(--ui-warning)"
+        "link": "after:bg-warning"
       }
     },
     {
@@ -346,7 +365,7 @@ export default {
       "level": true,
       "active": true,
       "class": {
-        "link": "after:bg-(--ui-error)"
+        "link": "after:bg-error"
       }
     },
     {
@@ -355,7 +374,7 @@ export default {
       "level": true,
       "active": true,
       "class": {
-        "link": "after:bg-(--ui-bg-inverted)"
+        "link": "after:bg-inverted"
       }
     }
   ],
@@ -365,3 +384,5 @@ export default {
     "variant": "pill" as typeof variant[number]
   }
 }
+
+export default result as typeof theme

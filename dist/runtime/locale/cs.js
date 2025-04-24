@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "Zav\u0159\xEDt"
     },
+    chatPrompt: {
+      placeholder: "Zde napi\u0161te sv\u016Fj text..."
+    },
+    chatPromptSubmit: {
+      label: "Odeslat"
+    },
     colorMode: {
       system: "Syst\xE9mov\xFD",
       light: "Sv\u011Btl\xFD",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "Zav\u0159\xEDt menu",
       open: "Otev\u0159\xEDt menu"
+    },
+    pricingTable: {
+      caption: "Porovn\xE1n\xED cenov\xFDch pl\xE1n\u016F"
     },
     prose: {
       pre: {

@@ -1,97 +1,51 @@
-<script lang="ts">
-import type { ContentNavigationItem } from '@nuxt/content'
-import type { AppConfig } from '@nuxt/schema'
-import type { PartialString } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/content/content-surround'
-import { tv } from '../../utils/tv'
-
-const appConfigContentSurround = _appConfig as AppConfig & { uiPro: { contentSurround: Partial<typeof theme> } }
-
-const contentSurround = tv({ extend: tv(theme), ...(appConfigContentSurround.uiPro?.contentSurround || {}) })
-
-export interface ContentSurroundLink extends ContentNavigationItem {
-  description?: string
-  /**
-   * @IconifyIcon
-   */
-  icon?: string
-  class?: any
-}
-
-export interface ContentSurroundProps<T> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * The icon displayed in the prev link.
-   * @defaultValue appConfig.ui.icons.arrowLeft
-   * @IconifyIcon
-   */
-  prevIcon?: string
-  /**
-   * The icon displayed in the next link.
-   * @defaultValue appConfig.ui.icons.arrowRight
-   * @IconifyIcon
-   */
-  nextIcon?: string
-  surround?: T[]
-  class?: any
-  ui?: PartialString<typeof contentSurround.slots>
-}
-
-type SlotProps<T> = (props: { link: T }) => any
-
-export interface ContentSurroundSlots<T> {
-  'link': SlotProps<T>
-  'link-leading': SlotProps<T>
-  'link-title': SlotProps<T>
-  'link-description': SlotProps<T>
-}
+<script>
+import theme from "#build/ui-pro/content/content-surround";
 </script>
 
-<script setup lang="ts" generic="T extends ContentSurroundLink">
-import type { PropType } from 'vue'
-import { Primitive } from 'reka-ui'
-import { createReusableTemplate } from '@vueuse/core'
-import { useAppConfig } from '#imports'
-
-const props = defineProps<ContentSurroundProps<T>>()
-defineSlots<ContentSurroundSlots<T>>()
-
-const appConfig = useAppConfig()
-const [DefineLinkTemplate, ReuseLinkTemplate] = createReusableTemplate<{ link?: ContentSurroundLink, icon: string, direction: 'left' | 'right' }>({
+<script setup>
+import { computed } from "vue";
+import { Primitive } from "reka-ui";
+import { createReusableTemplate } from "@vueuse/core";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false },
+  prevIcon: { type: String, required: false },
+  nextIcon: { type: String, required: false },
+  surround: { type: Array, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const [DefineLinkTemplate, ReuseLinkTemplate] = createReusableTemplate({
   props: {
     link: Object,
     icon: String,
-    direction: String as PropType<'left' | 'right'>
+    direction: String
   }
-})
-
-// eslint-disable-next-line vue/no-dupe-keys
-const ui = contentSurround()
+});
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.contentSurround || {} })());
 </script>
 
 <template>
   <DefineLinkTemplate v-slot="{ link, icon, direction }">
     <ULink v-if="link" :to="link.path" raw :class="ui.link({ class: [props.ui?.link, link.class], direction })">
-      <slot name="link" :link="(link as T)">
+      <slot name="link" :link="link">
         <div :class="ui.linkLeading({ class: props.ui?.linkLeading })">
-          <slot name="link-leading" :link="(link as T)">
+          <slot name="link-leading" :link="link">
             <UIcon :name="link.icon || icon" :class="ui.linkLeadingIcon({ class: props.ui?.linkLeadingIcon, direction })" />
           </slot>
         </div>
 
         <p :class="ui.linkTitle({ class: props.ui?.linkTitle })">
-          <slot name="link-title" :link="(link as T)">
+          <slot name="link-title" :link="link">
             {{ link.title }}
           </slot>
         </p>
 
         <p :class="ui.linkDescription({ class: props.ui?.linkDescription })">
-          <slot name="link-description" :link="(link as T)">
+          <slot name="link-description" :link="link">
             {{ link.description }}
           </slot>
         </p>

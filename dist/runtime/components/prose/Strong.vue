@@ -1,22 +1,21 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/strong'
-import { tv } from '../../utils/tv'
-
-const appConfigProseStrong = _appConfig as AppConfig & { uiPro: { prose: { strong: Partial<typeof theme> } } }
-
-const proseStrong = tv({ extend: tv(theme), ...(appConfigProseStrong.uiPro?.prose?.strong || {}) })
+<script>
+import theme from "#build/ui-pro/prose/strong";
 </script>
 
-<script setup lang="ts">
-const props = defineProps<{
-  class?: string
-}>()
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  class: { type: null, required: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.strong || {} }));
 </script>
 
 <template>
-  <strong :class="proseStrong({ class: props.class })">
+  <strong :class="ui({ class: props.class })">
     <slot />
   </strong>
 </template>

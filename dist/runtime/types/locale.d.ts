@@ -8,6 +8,12 @@ export type Messages = UIMessages & {
     banner: {
         close: string;
     };
+    chatPrompt: {
+        placeholder: string;
+    };
+    chatPromptSubmit: {
+        label: string;
+    };
     colorMode: {
         system: string;
         light: string;
@@ -45,6 +51,9 @@ export type Messages = UIMessages & {
     header: {
         close: string;
         open: string;
+    };
+    pricingTable: {
+        caption: string;
     };
     prose: {
         pre: {

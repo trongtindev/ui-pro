@@ -1,23 +1,22 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/accordion-item'
-import { tv } from '../../utils/tv'
-
-const appConfigProseAccordionItem = _appConfig as AppConfig & { uiPro: { prose: { accordionItem: Partial<typeof theme> } } }
-
-const accordionItem = tv({ extend: tv(theme), ...(appConfigProseAccordionItem.uiPro?.prose?.accordionItem || {}) })
+<script>
+import theme from "#build/ui-pro/prose/accordion-item";
 </script>
 
-<script setup lang="ts">
-const props = defineProps<{
-  label: string
-  class?: any
-}>()
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  label: { type: String, required: true },
+  class: { type: null, required: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.accordionItem || {} }));
 </script>
 
 <template>
-  <p :class="accordionItem({ class: props.class })">
+  <p :class="ui({ class: props.class })">
     <slot mdc-unwrap="p" />
   </p>
 </template>

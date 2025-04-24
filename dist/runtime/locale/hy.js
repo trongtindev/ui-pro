@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "\u0553\u0561\u056F\u0565\u056C"
     },
+    chatPrompt: {
+      placeholder: "\u0547\u0561\u0580\u0578\u0582\u0576\u0561\u056F\u0565\u056C"
+    },
+    chatPromptSubmit: {
+      label: "\u0547\u0561\u0580\u0578\u0582\u0576\u0561\u056F\u0565\u056C"
+    },
     colorMode: {
       system: "\u0540\u0561\u0574\u0561\u056F\u0561\u0580\u0563\u0561\u0575\u056B\u0576",
       light: "\u053C\u0578\u0582\u057D\u0561\u057E\u0578\u0580",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "\u0553\u0561\u056F\u0565\u056C \u0568\u0576\u057F\u0580\u0561\u0581\u0561\u0576\u056F\u0568",
       open: "\u0532\u0561\u0581\u0565\u056C \u0568\u0576\u057F\u0580\u0561\u0581\u0561\u0576\u056F\u0568"
+    },
+    pricingTable: {
+      caption: "\u0533\u0576\u0578\u0582\u0574\u0576\u0565\u0580\u056B \u0570\u0561\u0574\u0565\u0574\u0561\u057F\u0578\u0582\u0569\u0575\u0578\u0582\u0576"
     },
     prose: {
       pre: {

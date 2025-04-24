@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "\uB2EB\uAE30"
     },
+    chatPrompt: {
+      placeholder: "\uC5EC\uAE30\uC5D0 \uBA54\uC2DC\uC9C0\uB97C \uC785\uB825\uD558\uC138\uC694..."
+    },
+    chatPromptSubmit: {
+      label: "\uC804\uC1A1"
+    },
     colorMode: {
       system: "\uC2DC\uC2A4\uD15C",
       light: "\uB77C\uC774\uD2B8",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "\uBA54\uB274 \uB2EB\uAE30",
       open: "\uBA54\uB274 \uC5F4\uAE30"
+    },
+    pricingTable: {
+      caption: "\uAC00\uACA9 \uD50C\uB79C \uBE44\uAD50"
     },
     prose: {
       pre: {

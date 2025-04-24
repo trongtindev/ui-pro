@@ -1,146 +1,77 @@
-<script lang="ts">
-import type { VariantProps } from 'tailwind-variants'
-import type { CollapsibleRootProps, CollapsibleRootEmits } from 'reka-ui'
-import type { TocLink } from '@nuxt/content'
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/content/content-toc'
-import { tv } from '../../utils/tv'
-
-const appConfigContentToc = _appConfig as AppConfig & { uiPro: { contentToc: Partial<typeof theme> } }
-
-const contentToc = tv({ extend: tv(theme), ...(appConfigContentToc.uiPro?.contentToc || {}) })
-
-export type ContentTocLink = TocLink & {
-  class?: any
-}
-
-type ContentTocVariants = VariantProps<typeof contentToc>
-
-export interface ContentTocProps<T> extends Pick<CollapsibleRootProps, 'defaultOpen' | 'open'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'nav'
-   */
-  as?: any
-  /**
-   * The icon displayed to collapse the content.
-   * @defaultValue appConfig.ui.icons.chevronDown
-   * @IconifyIcon
-   */
-  trailingIcon?: string
-  /**
-   * The title of the table of contents.
-   * @defaultValue t('contentToc.title')
-   */
-  title?: string
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: ContentTocVariants['color']
-  /**
-   * Display a line next to the active link.
-   * @defaultValue false
-   */
-  highlight?: boolean
-  /**
-   * @defaultValue 'primary'
-   */
-  highlightColor?: ContentTocVariants['highlightColor']
-  links?: T[]
-  class?: any
-  ui?: Partial<typeof contentToc.slots>
-}
-
-export type ContentTocEmits = CollapsibleRootEmits & {
-  move: [id: string]
-}
-
-type SlotProps<T> = (props: { link: T }) => any
-
-export interface ContentTocSlots<T> {
-  leading(props: { open: boolean }): any
-  default(props: { open: boolean }): any
-  trailing(props: { open: boolean }): any
-  content(props: { links: T[] }): any
-  link: SlotProps<T>
-  top(props: { links?: T[] }): any
-  bottom(props: { links?: T[] }): any
-}
+<script>
+import theme from "#build/ui-pro/content/content-toc";
 </script>
 
-<script setup lang="ts" generic="T extends ContentTocLink">
-import { computed } from 'vue'
-import { CollapsibleRoot, CollapsibleTrigger, CollapsibleContent, useForwardPropsEmits } from 'reka-ui'
-import { reactivePick, createReusableTemplate } from '@vueuse/core'
-import { useRouter, useNuxtApp, useAppConfig } from '#imports'
-import { useScrollspy } from '../../composables/useScrollspy'
-import { useLocalePro } from '../../composables/useLocalePro'
-
-const props = withDefaults(defineProps<ContentTocProps<T>>(), {
-  as: 'nav'
-})
-const emits = defineEmits<ContentTocEmits>()
-const slots = defineSlots<ContentTocSlots<T>>()
-
-const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'open', 'defaultOpen'), emits)
-
-const router = useRouter()
-const appConfig = useAppConfig()
-const { activeHeadings, updateHeadings } = useScrollspy()
-const { t } = useLocalePro()
-
-const [DefineListTemplate, ReuseListTemplate] = createReusableTemplate<{ links: T[], level: number }>({
+<script setup>
+import { computed } from "vue";
+import { CollapsibleRoot, CollapsibleTrigger, CollapsibleContent, useForwardPropsEmits } from "reka-ui";
+import { reactivePick, createReusableTemplate } from "@vueuse/core";
+import { useRouter, useNuxtApp, useAppConfig } from "#imports";
+import { useScrollspy } from "../../composables/useScrollspy";
+import { useLocalePro } from "../../composables/useLocalePro";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  as: { type: null, required: false, default: "nav" },
+  trailingIcon: { type: String, required: false },
+  title: { type: String, required: false },
+  color: { type: null, required: false },
+  highlight: { type: Boolean, required: false },
+  highlightColor: { type: null, required: false },
+  links: { type: Array, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false },
+  defaultOpen: { type: Boolean, required: false },
+  open: { type: Boolean, required: false }
+});
+const emits = defineEmits(["update:open", "move"]);
+const slots = defineSlots();
+const rootProps = useForwardPropsEmits(reactivePick(props, "as", "open", "defaultOpen"), emits);
+const { t } = useLocalePro();
+const router = useRouter();
+const appConfig = useAppConfig();
+const { activeHeadings, updateHeadings } = useScrollspy();
+const [DefineListTemplate, ReuseListTemplate] = createReusableTemplate({
   props: {
     links: Array,
     level: Number
   }
-})
-const [DefineTriggerTemplate, ReuseTriggerTemplate] = createReusableTemplate<{ open: boolean }>()
-
-const ui = computed(() => contentToc({
+});
+const [DefineTriggerTemplate, ReuseTriggerTemplate] = createReusableTemplate();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.contentToc || {} })({
   color: props.color,
   highlight: props.highlight,
   highlightColor: props.highlightColor || props.color
-}))
-
-function scrollToHeading(id: string) {
-  const encodedId = encodeURIComponent(id)
-  router.push(`#${encodedId}`)
-  emits('move', id)
+}));
+function scrollToHeading(id) {
+  const encodedId = encodeURIComponent(id);
+  router.push(`#${encodedId}`);
+  emits("move", id);
 }
-
-// FIXME: TypeError: 'set' on proxy: trap returned falsish for property 'nuxtApp'
 if (!import.meta.test) {
-  const nuxtApp = useNuxtApp()
-
-  nuxtApp.hooks.hookOnce('page:finish', () => {
+  const nuxtApp = useNuxtApp();
+  nuxtApp.hooks.hookOnce("page:finish", () => {
     updateHeadings([
-      ...document.querySelectorAll('h2'),
-      ...document.querySelectorAll('h3')
-    ])
-  })
+      ...document.querySelectorAll("h2"),
+      ...document.querySelectorAll("h3")
+    ]);
+  });
 }
-
-function flattenLinks(links: T[]): T[] {
-  return links.flatMap(link => [link, ...(link.children ? flattenLinks(link.children as T[]) : [])])
+function flattenLinks(links) {
+  return links.flatMap((link) => [link, ...link.children ? flattenLinks(link.children) : []]);
 }
-
 const indicatorStyle = computed(() => {
   if (!activeHeadings.value?.length) {
-    return
+    return;
   }
-
-  const flatLinks = flattenLinks(props.links || [])
-  const activeIndex = flatLinks.findIndex(link => activeHeadings.value.includes(link.id))
-  const linkHeight = 28
-  const gapSize = 0
-
+  const flatLinks = flattenLinks(props.links || []);
+  const activeIndex = flatLinks.findIndex((link) => activeHeadings.value.includes(link.id));
+  const linkHeight = 28;
+  const gapSize = 0;
   return {
-    '--indicator-size': `${(linkHeight * activeHeadings.value.length) + (gapSize * (activeHeadings.value.length - 1))}px`,
-    '--indicator-position': activeIndex >= 0 ? `${activeIndex * (linkHeight + gapSize)}px` : '0px'
-  }
-})
+    "--indicator-size": `${linkHeight * activeHeadings.value.length + gapSize * (activeHeadings.value.length - 1)}px`,
+    "--indicator-position": activeIndex >= 0 ? `${activeIndex * (linkHeight + gapSize)}px` : "0px"
+  };
+});
 </script>
 
 <template>
@@ -156,7 +87,7 @@ const indicatorStyle = computed(() => {
           </slot>
         </a>
 
-        <ReuseListTemplate v-if="link.children?.length" :links="(link.children as T[])" :level="level + 1" />
+        <ReuseListTemplate v-if="link.children?.length" :links="link.children" :level="level + 1" />
       </li>
     </ul>
   </DefineListTemplate>

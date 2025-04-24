@@ -12,6 +12,12 @@ export default defineLocale({
     banner: {
       close: "Yopish"
     },
+    chatPrompt: {
+      placeholder: "Bu yerda savolingizni yozing..."
+    },
+    chatPromptSubmit: {
+      label: "Jo'natish"
+    },
     colorMode: {
       system: "Tizim",
       light: "Yorug'",
@@ -49,6 +55,9 @@ export default defineLocale({
     header: {
       close: "Menyuni yopish",
       open: "Menyuni ochish"
+    },
+    pricingTable: {
+      caption: "Narx planlarini taqqoslash"
     },
     prose: {
       pre: {

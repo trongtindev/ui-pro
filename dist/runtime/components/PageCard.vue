@@ -1,109 +1,49 @@
-<script lang="ts">
-import type { VariantProps } from 'tailwind-variants'
-import type { AppConfig } from '@nuxt/schema'
-import type { LinkProps } from '@nuxt/ui'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/page-card'
-import { tv } from '../utils/tv'
-
-const appConfigPageCard = _appConfig as AppConfig & { uiPro: { pageCard: Partial<typeof theme> } }
-
-const pageCard = tv({ extend: tv(theme), ...(appConfigPageCard.uiPro?.pageCard || {}) })
-
-type PageCardVariants = VariantProps<typeof pageCard>
-
-export interface PageCardProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * The icon displayed above the title.
-   * @IconifyIcon
-   */
-  icon?: string
-  title?: string
-  description?: string
-  /**
-   * The orientation of the page card.
-   * @defaultValue 'vertical'
-   */
-  orientation?: PageCardVariants['orientation']
-  /**
-   * Reverse the order of the default slot.
-   * @defaultValue false
-   */
-  reverse?: boolean
-  /**
-   * Display a line around the page card.
-   */
-  highlight?: boolean
-  /**
-   * @defaultValue 'primary'
-   */
-  highlightColor?: PageCardVariants['highlightColor']
-  /**
-   * Display a spotlight effect that follows your mouse cursor and highlights borders on hover.
-   */
-  spotlight?: boolean
-  /**
-   * @defaultValue 'primary'
-   */
-  spotlightColor?: PageCardVariants['spotlightColor']
-  /**
-   * @defaultValue 'outline'
-   */
-  variant?: PageCardVariants['variant']
-  to?: LinkProps['to']
-  target?: LinkProps['target']
-  onClick?: (event: MouseEvent) => void | Promise<void>
-  class?: any
-  ui?: Partial<typeof pageCard.slots>
-}
-
-export interface PageCardSlots {
-  header(props?: {}): any
-  body(props?: {}): any
-  leading(props?: {}): any
-  title(props?: {}): any
-  description(props?: {}): any
-  footer(props?: {}): any
-  default(props?: {}): any
-}
+<script>
+import theme from "#build/ui-pro/page-card";
 </script>
 
-<script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { Primitive } from 'reka-ui'
-import { useMouseInElement, pausableFilter } from '@vueuse/core'
-import { getSlotChildrenText } from '../utils'
-
-defineOptions({ inheritAttrs: false })
-
-const props = withDefaults(defineProps<PageCardProps>(), {
-  orientation: 'vertical'
-})
-const slots = defineSlots<PageCardSlots>()
-
-const cardRef = ref<HTMLElement>()
-const motionControl = pausableFilter()
-
+<script setup>
+import { computed, ref, watch } from "vue";
+import { Primitive } from "reka-ui";
+import { useMouseInElement, pausableFilter } from "@vueuse/core";
+import { useAppConfig } from "#imports";
+import { getSlotChildrenText } from "../utils";
+import { tv } from "../utils/tv";
+defineOptions({ inheritAttrs: false });
+const props = defineProps({
+  as: { type: null, required: false },
+  icon: { type: String, required: false },
+  title: { type: String, required: false },
+  description: { type: String, required: false },
+  orientation: { type: null, required: false, default: "vertical" },
+  reverse: { type: Boolean, required: false },
+  highlight: { type: Boolean, required: false },
+  highlightColor: { type: null, required: false },
+  spotlight: { type: Boolean, required: false },
+  spotlightColor: { type: null, required: false },
+  variant: { type: null, required: false },
+  to: { type: null, required: false },
+  target: { type: null, required: false },
+  onClick: { type: Function, required: false },
+  class: { type: null, required: false },
+  ui: { type: null, required: false }
+});
+const slots = defineSlots();
+const cardRef = ref();
+const motionControl = pausableFilter();
+const appConfig = useAppConfig();
 const { elementX, elementY } = useMouseInElement(cardRef, {
   eventFilter: motionControl.eventFilter
-})
-
-const spotlight = computed(() => props.spotlight && (elementX.value > 0 || elementY.value > 0))
-
+});
+const spotlight = computed(() => props.spotlight && (elementX.value > 0 || elementY.value > 0));
 watch(() => props.spotlight, (value) => {
   if (value) {
-    motionControl.resume()
+    motionControl.resume();
   } else {
-    motionControl.pause()
+    motionControl.pause();
   }
-}, { immediate: true })
-
-const ui = computed(() => pageCard({
+}, { immediate: true });
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.pageCard || {} })({
   orientation: props.orientation,
   reverse: props.reverse,
   variant: props.variant,
@@ -113,9 +53,11 @@ const ui = computed(() => pageCard({
   highlightColor: props.highlightColor,
   spotlight: spotlight.value,
   spotlightColor: props.spotlightColor
-}))
-
-const ariaLabel = computed(() => (props.title || (slots.title && getSlotChildrenText(slots.title())) || 'Card link').trim())
+}));
+const ariaLabel = computed(() => {
+  const slotText = slots.title && getSlotChildrenText(slots.title());
+  return (slotText || props.title || "Card link").trim();
+});
 </script>
 
 <template>

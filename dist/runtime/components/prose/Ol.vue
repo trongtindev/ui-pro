@@ -1,22 +1,21 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import _appConfig from '#build/app.config'
-import theme from '#build/ui-pro/prose/ol'
-import { tv } from '../../utils/tv'
-
-const appConfigProseOl = _appConfig as AppConfig & { uiPro: { prose: { ol: Partial<typeof theme> } } }
-
-const proseOl = tv({ extend: tv(theme), ...(appConfigProseOl.uiPro?.prose?.ol || {}) })
+<script>
+import theme from "#build/ui-pro/prose/ol";
 </script>
 
-<script setup lang="ts">
-const props = defineProps<{
-  class?: string
-}>()
+<script setup>
+import { computed } from "vue";
+import { useAppConfig } from "#imports";
+import { tv } from "../../utils/tv";
+const props = defineProps({
+  class: { type: null, required: false }
+});
+defineSlots();
+const appConfig = useAppConfig();
+const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.ol || {} }));
 </script>
 
 <template>
-  <ol :class="proseOl({ class: props.class })">
+  <ol :class="ui({ class: props.class })">
     <slot />
   </ol>
 </template>

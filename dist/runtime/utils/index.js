@@ -5,10 +5,10 @@ export function getSlotChildrenText(children) {
     else if (node.children.default) return getSlotChildrenText(node.children.default());
   }).join("");
 }
-export function transformUI(ui) {
+export function transformUI(ui, uiProp) {
   return Object.entries(ui).reduce((acc, [key, value]) => {
-    acc[key] = typeof value === "function" ? value() : value;
+    acc[key] = typeof value === "function" ? value({ class: uiProp?.[key] }) : value;
     return acc;
-  }, {});
+  }, uiProp || {});
 }
 export * from "./content.js";
