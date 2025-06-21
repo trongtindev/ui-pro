@@ -94,7 +94,7 @@ function toggleOpen() {
     </div>
   </DefineRightTemplate>
 
-  <Primitive :as="as" :class="ui.root({ class: [props.class, props.ui?.root] })">
+  <Primitive :as="as" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <slot name="top" />
 
     <UContainer :class="ui.container({ class: props.ui?.container })">

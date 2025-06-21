@@ -29,6 +29,7 @@ function transformSlot(slot, index) {
   return {
     index,
     label: slot.props?.label || `${index}`,
+    description: slot.props?.description,
     icon: slot.props?.icon,
     component: slot
   };

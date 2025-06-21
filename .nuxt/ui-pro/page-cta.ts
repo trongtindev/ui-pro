@@ -1,10 +1,3 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/page-cta"
-
-const orientation = [
-  "horizontal",
-  "vertical"
-] as const
-
 const variant = [
   "solid",
   "outline",
@@ -13,24 +6,7 @@ const variant = [
   "naked"
 ] as const
 
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "slots": {
     "root": "relative isolate rounded-xl overflow-hidden",
     "container": "flex flex-col lg:grid px-6 py-12 sm:px-12 sm:py-24 lg:px-16 lg:py-24 gap-8 sm:gap-16",
@@ -89,5 +65,3 @@ const theme = {
     "variant": "outline" as typeof variant[number]
   }
 }
-
-export default result as typeof theme

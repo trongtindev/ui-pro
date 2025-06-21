@@ -54,7 +54,7 @@ function copy() {
       @click="copy"
     />
 
-    <pre :class="ui.base({ class: [props.class, props.ui?.base] })" v-bind="$attrs"><slot /></pre>
+    <pre :class="ui.base({ class: [props.ui?.base, props.class] })" v-bind="$attrs"><slot /></pre>
   </div>
 </template>
 

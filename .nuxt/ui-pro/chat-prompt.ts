@@ -1,5 +1,3 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/chat-prompt"
-
 const variant = [
   "outline",
   "soft",
@@ -7,24 +5,7 @@ const variant = [
   "naked"
 ] as const
 
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "slots": {
     "root": "relative flex flex-col items-stretch gap-2 px-2.5 py-2 w-full rounded-lg backdrop-blur",
     "header": "flex items-center gap-1.5",
@@ -52,5 +33,3 @@ const theme = {
     "variant": "outline" as typeof variant[number]
   }
 }
-
-export default result as typeof theme

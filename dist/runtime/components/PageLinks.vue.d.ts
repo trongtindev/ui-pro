@@ -8,6 +8,8 @@ export interface PageLink extends Omit<LinkProps, 'custom'> {
      * @IconifyIcon
      */
     icon?: string;
+    class?: any;
+    ui?: Pick<PageLinks['slots'], 'item' | 'link' | 'linkLabel' | 'linkLabelExternalIcon' | 'linkLeadingIcon'>;
 }
 export interface PageLinksProps<T extends PageLink = PageLink> {
     /**
@@ -32,10 +34,10 @@ export interface PageLinksSlots<T extends PageLink = PageLink> {
     'link-trailing': SlotProps<T>;
 }
 declare const _default: <T extends PageLink>(__VLS_props: NonNullable<Awaited<typeof __VLS_setup>>["props"], __VLS_ctx?: __VLS_PrettifyLocal<Pick<NonNullable<Awaited<typeof __VLS_setup>>, "attrs" | "emit" | "slots">>, __VLS_expose?: NonNullable<Awaited<typeof __VLS_setup>>["expose"], __VLS_setup?: Promise<{
-    props: __VLS_PrettifyLocal<Pick<Partial<{}> & Omit<{} & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, never>, never> & PageLinksProps<T> & Partial<{}>> & (import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps);
+    props: __VLS_PrettifyLocal<Pick<Partial<{}> & Omit<{} & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, never>, never> & PageLinksProps<T> & Partial<{}>> & import("vue").PublicProps;
     expose(exposed: import("vue").ShallowUnwrapRef<{}>): void;
     attrs: any;
-    slots: Readonly<PageLinksSlots<T>> & PageLinksSlots<T>;
+    slots: PageLinksSlots<T>;
     emit: {};
 }>) => import("vue").VNode & {
     __ctx?: Awaited<typeof __VLS_setup>;

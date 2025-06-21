@@ -1,5 +1,3 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/content/content-navigation"
-
 const color = [
   "primary",
   "secondary",
@@ -25,24 +23,7 @@ const variant = [
   "link"
 ] as const
 
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "slots": {
     "root": "",
     "content": "data-[state=open]:animate-[accordion-down_200ms_ease-out] data-[state=closed]:animate-[accordion-up_200ms_ease-out] overflow-hidden focus:outline-none",
@@ -384,5 +365,3 @@ const theme = {
     "variant": "pill" as typeof variant[number]
   }
 }
-
-export default result as typeof theme

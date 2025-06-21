@@ -1,28 +1,4 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/dashboard-navbar"
-
-const toggleSide = [
-  "left",
-  "right"
-] as const
-
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "slots": {
     "root": "h-(--ui-header-height) shrink-0 flex items-center justify-between border-b border-default px-4 sm:px-6 gap-1.5",
     "left": "flex items-center gap-1.5 min-w-0",
@@ -43,5 +19,3 @@ const theme = {
     }
   }
 }
-
-export default result as typeof theme

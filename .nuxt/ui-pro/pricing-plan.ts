@@ -1,5 +1,3 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/pricing-plan"
-
 const orientation = [
   "horizontal",
   "vertical"
@@ -12,24 +10,7 @@ const variant = [
   "subtle"
 ] as const
 
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "slots": {
     "root": "relative grid rounded-lg p-6 lg:p-8 xl:p-10 gap-6",
     "header": "",
@@ -118,5 +99,3 @@ const theme = {
     "variant": "outline" as typeof variant[number]
   }
 }
-
-export default result as typeof theme

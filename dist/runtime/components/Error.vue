@@ -26,7 +26,7 @@ function handleError() {
 </script>
 
 <template>
-  <Primitive :as="as" :class="ui.root({ class: [props.class, props.ui?.root] })">
+  <Primitive :as="as" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <p :class="ui.statusCode({ class: props.ui?.statusCode })">
       {{ props.error?.statusCode }}
     </p>

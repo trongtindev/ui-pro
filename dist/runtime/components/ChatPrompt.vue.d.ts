@@ -32,27 +32,18 @@ export interface ChatPromptSlots extends TextareaSlots {
     header(props?: {}): any;
     footer(props?: {}): any;
 }
-declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToOption<{
+declare const _default: __VLS_WithSlots<import("vue").DefineComponent<ChatPromptProps & {
     modelValue?: string;
-} & ChatPromptProps>, {
-    as: string;
-    autofocus: boolean;
-    autoresize: boolean;
-    rows: number;
-}>>, {
+}, {
     textareaRef: any;
 }, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
-    submit: (event: Event) => void;
-    close: (event: Event) => void;
-    "update:modelValue": (value: string) => void;
-}, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToOption<{
+    "update:modelValue": (value: string) => any;
+} & {
+    close: (event: Event) => any;
+    submit: (event: Event) => any;
+}, string, import("vue").PublicProps, Readonly<ChatPromptProps & {
     modelValue?: string;
-} & ChatPromptProps>, {
-    as: string;
-    autofocus: boolean;
-    autoresize: boolean;
-    rows: number;
-}>>> & Readonly<{
+}> & Readonly<{
     onClose?: ((event: Event) => any) | undefined;
     onSubmit?: ((event: Event) => any) | undefined;
     "onUpdate:modelValue"?: ((value: string) => any) | undefined;
@@ -61,27 +52,10 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<im
     autofocus: boolean;
     autoresize: boolean;
     rows: number;
-}, {}, {}, {}, string, import("vue").ComponentProvideOptions, true, {}, any>, Readonly<ChatPromptSlots> & ChatPromptSlots>;
+}, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>, ChatPromptSlots>;
 export default _default;
-type __VLS_WithDefaults<P, D> = {
-    [K in keyof Pick<P, keyof P>]: K extends keyof D ? __VLS_PrettifyLocal<P[K] & {
-        default: D[K];
-    }> : P[K];
-};
-type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;
-type __VLS_TypePropsToOption<T> = {
-    [K in keyof T]-?: {} extends Pick<T, K> ? {
-        type: import('vue').PropType<__VLS_NonUndefinedable<T[K]>>;
-    } : {
-        type: import('vue').PropType<T[K]>;
-        required: true;
-    };
-};
-type __VLS_WithTemplateSlots<T, S> = T & {
+type __VLS_WithSlots<T, S> = T & {
     new (): {
         $slots: S;
     };
 };
-type __VLS_PrettifyLocal<T> = {
-    [K in keyof T]: T[K];
-} & {};

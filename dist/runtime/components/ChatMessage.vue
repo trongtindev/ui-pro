@@ -41,7 +41,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.chatMessag
 </script>
 
 <template>
-  <Primitive :as="as" :data-role="role" :class="ui.root({ class: [props.class, props.ui?.root] })">
+  <Primitive :as="as" :data-role="role" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <div :class="ui.container({ class: props.ui?.container })">
       <div v-if="icon || avatar || !!slots.leading" :class="ui.leading({ class: props.ui?.leading })">
         <slot name="leading" :avatar="avatar">

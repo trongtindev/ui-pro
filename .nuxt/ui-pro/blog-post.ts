@@ -1,5 +1,3 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/blog-post"
-
 const orientation = [
   "horizontal",
   "vertical"
@@ -13,24 +11,7 @@ const variant = [
   "naked"
 ] as const
 
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "slots": {
     "root": "relative group/blog-post flex flex-col rounded-lg overflow-hidden",
     "header": "relative overflow-hidden aspect-[16/9] w-full pointer-events-none",
@@ -159,5 +140,3 @@ const theme = {
     "variant": "outline" as typeof variant[number]
   }
 }
-
-export default result as typeof theme

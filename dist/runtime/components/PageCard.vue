@@ -35,7 +35,7 @@ const appConfig = useAppConfig();
 const { elementX, elementY } = useMouseInElement(cardRef, {
   eventFilter: motionControl.eventFilter
 });
-const spotlight = computed(() => props.spotlight && (elementX.value > 0 || elementY.value > 0));
+const spotlight = computed(() => props.spotlight && (elementX.value !== 0 || elementY.value !== 0));
 watch(() => props.spotlight, (value) => {
   if (value) {
     motionControl.resume();
@@ -65,7 +65,7 @@ const ariaLabel = computed(() => {
     ref="cardRef"
     :as="as"
     :data-orientation="orientation"
-    :class="ui.root({ class: [props.class, props.ui?.root] })"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
     :style="spotlight && { '--spotlight-x': `${elementX}px`, '--spotlight-y': `${elementY}px` }"
     @click="onClick"
   >

@@ -129,7 +129,7 @@ onBeforeUpdate(() => rerenderCount.value++);
     </li>
   </DefineTreeTemplate>
 
-  <div :class="ui.root({ class: [props.class, props.ui?.root] })">
+  <div :class="ui.root({ class: [props.ui?.root, props.class] })">
     <TreeRoot
       v-model="model"
       :class="ui.list({ class: props.ui?.list })"

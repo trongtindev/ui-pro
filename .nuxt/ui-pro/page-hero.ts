@@ -1,28 +1,4 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/page-hero"
-
-const orientation = [
-  "horizontal",
-  "vertical"
-] as const
-
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "slots": {
     "root": "relative isolate",
     "container": "flex flex-col lg:grid py-24 sm:py-32 lg:py-40 gap-16 sm:gap-y-24",
@@ -63,5 +39,3 @@ const theme = {
     }
   }
 }
-
-export default result as typeof theme

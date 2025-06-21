@@ -60,33 +60,12 @@ export interface PageCardSlots {
     footer(props?: {}): any;
     default(props?: {}): any;
 }
-declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToOption<PageCardProps>, {
-    orientation: string;
-}>>, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToOption<PageCardProps>, {
-    orientation: string;
-}>>> & Readonly<{}>, {
+declare const _default: __VLS_WithSlots<import("vue").DefineComponent<PageCardProps, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<PageCardProps> & Readonly<{}>, {
     orientation: PageCard["variants"]["orientation"];
-}, {}, {}, {}, string, import("vue").ComponentProvideOptions, true, {}, any>, Readonly<PageCardSlots> & PageCardSlots>;
+}, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>, PageCardSlots>;
 export default _default;
-type __VLS_WithDefaults<P, D> = {
-    [K in keyof Pick<P, keyof P>]: K extends keyof D ? __VLS_PrettifyLocal<P[K] & {
-        default: D[K];
-    }> : P[K];
-};
-type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;
-type __VLS_TypePropsToOption<T> = {
-    [K in keyof T]-?: {} extends Pick<T, K> ? {
-        type: import('vue').PropType<__VLS_NonUndefinedable<T[K]>>;
-    } : {
-        type: import('vue').PropType<T[K]>;
-        required: true;
-    };
-};
-type __VLS_WithTemplateSlots<T, S> = T & {
+type __VLS_WithSlots<T, S> = T & {
     new (): {
         $slots: S;
     };
 };
-type __VLS_PrettifyLocal<T> = {
-    [K in keyof T]: T[K];
-} & {};

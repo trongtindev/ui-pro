@@ -1,28 +1,4 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/header"
-
-const toggleSide = [
-  "left",
-  "right"
-] as const
-
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "slots": {
     "root": "bg-default/75 backdrop-blur border-b border-default h-(--ui-header-height) sticky top-0 z-50",
     "container": "flex items-center justify-between gap-3 h-full",
@@ -47,5 +23,3 @@ const theme = {
     }
   }
 }
-
-export default result as typeof theme

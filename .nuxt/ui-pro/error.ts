@@ -1,23 +1,4 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/error"
-
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "slots": {
     "root": "min-h-[calc(100vh-var(--ui-header-height))] flex flex-col items-center justify-center text-center",
     "statusCode": "text-base font-semibold text-primary",
@@ -26,5 +7,3 @@ const theme = {
     "links": "mt-8 flex items-center justify-center gap-6"
   }
 }
-
-export default result as typeof theme

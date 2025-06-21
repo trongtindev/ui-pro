@@ -1,10 +1,3 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/user"
-
-const orientation = [
-  "horizontal",
-  "vertical"
-] as const
-
 const size = [
   "3xs",
   "2xs",
@@ -17,24 +10,7 @@ const size = [
   "3xl"
 ] as const
 
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "slots": {
     "root": "relative group/user",
     "wrapper": "",
@@ -123,5 +99,3 @@ const theme = {
     "size": "md" as typeof size[number]
   }
 }
-
-export default result as typeof theme

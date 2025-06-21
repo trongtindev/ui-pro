@@ -1,19 +1,25 @@
 import type { AppConfig } from '@nuxt/schema';
-import type { CommandPaletteProps, CommandPaletteSlots, CommandPaletteGroup, CommandPaletteItem, ComponentConfig } from '@nuxt/ui';
+import type { ButtonProps, InputProps, CommandPaletteProps, CommandPaletteSlots, CommandPaletteGroup, CommandPaletteItem, ComponentConfig } from '@nuxt/ui';
 import type { UseFuseOptions } from '@vueuse/integrations/useFuse';
 import theme from '#build/ui-pro/dashboard-search';
 type DashboardSearch = ComponentConfig<typeof theme, AppConfig, 'dashboardSearch', 'uiPro'>;
 export interface DashboardSearchProps<T extends CommandPaletteItem = CommandPaletteItem> {
     /**
-     * The icon displayed in the search input.
+     * The icon displayed in the input.
      * @defaultValue appConfig.ui.icons.search
      * @IconifyIcon
      */
     icon?: string;
     /**
-     * Placeholder for the command palette search input.
+     * The placeholder text for the input.
+     * @defaultValue t('commandPalette.placeholder')
      */
-    placeholder?: string;
+    placeholder?: InputProps['placeholder'];
+    /**
+     * Automatically focus the input when component is mounted.
+     * @defaultValue true
+     */
+    autofocus?: boolean;
     /** When `true`, the loading icon will be displayed. */
     loading?: boolean;
     /**
@@ -22,6 +28,19 @@ export interface DashboardSearchProps<T extends CommandPaletteItem = CommandPale
      * @IconifyIcon
      */
     loadingIcon?: string;
+    /**
+     * Display a close button in the input (useful when inside a Modal for example).
+     * `{ size: 'md', color: 'neutral', variant: 'ghost' }`{lang="ts-type"}
+     * @emits 'update:open'
+     * @defaultValue true
+     */
+    close?: boolean | Partial<ButtonProps>;
+    /**
+     * The icon displayed in the close button.
+     * @defaultValue appConfig.ui.icons.close
+     * @IconifyIcon
+     */
+    closeIcon?: string;
     /**
      * Keyboard shortcut to open the search (used by [`defineShortcuts`](https://ui.nuxt.com/composables/define-shortcuts))
      * @defaultValue 'meta_k'
@@ -44,160 +63,28 @@ export interface DashboardSearchProps<T extends CommandPaletteItem = CommandPale
 export type DashboardSearchSlots = CommandPaletteSlots<CommandPaletteGroup<CommandPaletteItem>, CommandPaletteItem> & {
     content(props?: {}): any;
 };
-declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToOption<{
+declare const _default: __VLS_WithSlots<import("vue").DefineComponent<DashboardSearchProps<CommandPaletteItem> & {
     open?: boolean;
     searchTerm?: string;
-} & DashboardSearchProps<CommandPaletteItem>>, {
-    shortcut: string;
-    colorMode: boolean;
-}>>, {
-    commandPaletteRef: Readonly<import("vue").ShallowRef<unknown>>;
+}, {
+    commandPaletteRef: Readonly<import("vue").ShallowRef<any>>;
 }, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
-    "update:open": (value: boolean) => void;
-    "update:searchTerm": (value: string) => void;
-}, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToOption<{
+    "update:open": (value: boolean) => any;
+    "update:searchTerm": (value: string) => any;
+}, string, import("vue").PublicProps, Readonly<DashboardSearchProps<CommandPaletteItem> & {
     open?: boolean;
     searchTerm?: string;
-} & DashboardSearchProps<CommandPaletteItem>>, {
-    shortcut: string;
-    colorMode: boolean;
-}>>> & Readonly<{
+}> & Readonly<{
     "onUpdate:open"?: ((value: boolean) => any) | undefined;
     "onUpdate:searchTerm"?: ((value: string) => any) | undefined;
 }>, {
+    close: boolean | Partial<ButtonProps>;
     colorMode: boolean;
     shortcut: string;
-}, {}, {}, {}, string, import("vue").ComponentProvideOptions, true, {}, any>, Readonly<{
-    empty(props: {
-        searchTerm?: string;
-    }): any;
-    close(props: {
-        ui: { [K in keyof Required<{
-            root?: import("tailwind-variants").ClassValue;
-            input?: import("tailwind-variants").ClassValue;
-            close?: import("tailwind-variants").ClassValue;
-            content?: import("tailwind-variants").ClassValue;
-            viewport?: import("tailwind-variants").ClassValue;
-            group?: import("tailwind-variants").ClassValue;
-            empty?: import("tailwind-variants").ClassValue;
-            label?: import("tailwind-variants").ClassValue;
-            item?: import("tailwind-variants").ClassValue;
-            itemLeadingIcon?: import("tailwind-variants").ClassValue;
-            itemLeadingAvatar?: import("tailwind-variants").ClassValue;
-            itemLeadingAvatarSize?: import("tailwind-variants").ClassValue;
-            itemLeadingChip?: import("tailwind-variants").ClassValue;
-            itemLeadingChipSize?: import("tailwind-variants").ClassValue;
-            itemTrailing?: import("tailwind-variants").ClassValue;
-            itemTrailingIcon?: import("tailwind-variants").ClassValue;
-            itemTrailingHighlightedIcon?: import("tailwind-variants").ClassValue;
-            itemTrailingKbds?: import("tailwind-variants").ClassValue;
-            itemTrailingKbdsSize?: import("tailwind-variants").ClassValue;
-            itemLabel?: import("tailwind-variants").ClassValue;
-            itemLabelBase?: import("tailwind-variants").ClassValue;
-            itemLabelPrefix?: import("tailwind-variants").ClassValue;
-            itemLabelSuffix?: import("tailwind-variants").ClassValue;
-        }>]: (props?: Record<string, any>) => string; };
-    }): any;
-    item: (props: {
-        item: CommandPaletteItem;
-        index: number;
-    }) => any;
-    'item-leading': (props: {
-        item: CommandPaletteItem;
-        index: number;
-    }) => any;
-    'item-label': (props: {
-        item: CommandPaletteItem;
-        index: number;
-    }) => any;
-    'item-trailing': (props: {
-        item: CommandPaletteItem;
-        index: number;
-    }) => any;
-} & Record<string, (props: {
-    item: CommandPaletteGroup<CommandPaletteItem>;
-    index: number;
-}) => any> & Record<string, (props: {
-    item: CommandPaletteItem;
-    index: number;
-}) => any> & {
-    content(props?: {}): any;
-}> & {
-    empty(props: {
-        searchTerm?: string;
-    }): any;
-    close(props: {
-        ui: { [K in keyof Required<{
-            root?: import("tailwind-variants").ClassValue;
-            input?: import("tailwind-variants").ClassValue;
-            close?: import("tailwind-variants").ClassValue;
-            content?: import("tailwind-variants").ClassValue;
-            viewport?: import("tailwind-variants").ClassValue;
-            group?: import("tailwind-variants").ClassValue;
-            empty?: import("tailwind-variants").ClassValue;
-            label?: import("tailwind-variants").ClassValue;
-            item?: import("tailwind-variants").ClassValue;
-            itemLeadingIcon?: import("tailwind-variants").ClassValue;
-            itemLeadingAvatar?: import("tailwind-variants").ClassValue;
-            itemLeadingAvatarSize?: import("tailwind-variants").ClassValue;
-            itemLeadingChip?: import("tailwind-variants").ClassValue;
-            itemLeadingChipSize?: import("tailwind-variants").ClassValue;
-            itemTrailing?: import("tailwind-variants").ClassValue;
-            itemTrailingIcon?: import("tailwind-variants").ClassValue;
-            itemTrailingHighlightedIcon?: import("tailwind-variants").ClassValue;
-            itemTrailingKbds?: import("tailwind-variants").ClassValue;
-            itemTrailingKbdsSize?: import("tailwind-variants").ClassValue;
-            itemLabel?: import("tailwind-variants").ClassValue;
-            itemLabelBase?: import("tailwind-variants").ClassValue;
-            itemLabelPrefix?: import("tailwind-variants").ClassValue;
-            itemLabelSuffix?: import("tailwind-variants").ClassValue;
-        }>]: (props?: Record<string, any>) => string; };
-    }): any;
-    item: (props: {
-        item: CommandPaletteItem;
-        index: number;
-    }) => any;
-    'item-leading': (props: {
-        item: CommandPaletteItem;
-        index: number;
-    }) => any;
-    'item-label': (props: {
-        item: CommandPaletteItem;
-        index: number;
-    }) => any;
-    'item-trailing': (props: {
-        item: CommandPaletteItem;
-        index: number;
-    }) => any;
-} & Record<string, (props: {
-    item: CommandPaletteGroup<CommandPaletteItem>;
-    index: number;
-}) => any> & Record<string, (props: {
-    item: CommandPaletteItem;
-    index: number;
-}) => any> & {
-    content(props?: {}): any;
-}>;
+}, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>, DashboardSearchSlots>;
 export default _default;
-type __VLS_WithDefaults<P, D> = {
-    [K in keyof Pick<P, keyof P>]: K extends keyof D ? __VLS_PrettifyLocal<P[K] & {
-        default: D[K];
-    }> : P[K];
-};
-type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;
-type __VLS_TypePropsToOption<T> = {
-    [K in keyof T]-?: {} extends Pick<T, K> ? {
-        type: import('vue').PropType<__VLS_NonUndefinedable<T[K]>>;
-    } : {
-        type: import('vue').PropType<T[K]>;
-        required: true;
-    };
-};
-type __VLS_WithTemplateSlots<T, S> = T & {
+type __VLS_WithSlots<T, S> = T & {
     new (): {
         $slots: S;
     };
 };
-type __VLS_PrettifyLocal<T> = {
-    [K in keyof T]: T[K];
-} & {};

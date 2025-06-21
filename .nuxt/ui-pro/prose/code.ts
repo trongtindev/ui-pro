@@ -1,5 +1,3 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/prose/code"
-
 const color = [
   "primary",
   "secondary",
@@ -10,24 +8,7 @@ const color = [
   "neutral"
 ] as const
 
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "base": "px-1.5 py-0.5 text-sm font-mono font-medium rounded-md inline-block",
   "variants": {
     "color": {
@@ -44,5 +25,3 @@ const theme = {
     "color": "neutral" as typeof color[number]
   }
 }
-
-export default result as typeof theme

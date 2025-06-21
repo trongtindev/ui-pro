@@ -12,6 +12,7 @@ const props = defineProps({
   target: { type: null, required: false },
   icon: { type: String, required: false },
   title: { type: String, required: false },
+  description: { type: String, required: false },
   color: { type: null, required: false },
   class: { type: null, required: false },
   ui: { type: null, required: false }
@@ -43,12 +44,16 @@ const ariaLabel = computed(() => (props.title || "Card link").trim());
     <UIcon v-if="icon" :name="icon" :class="ui.icon({ class: props.ui?.icon })" />
     <UIcon v-if="!!to && target === '_blank'" :name="appConfig.ui.icons.external" :class="ui.externalIcon({ class: props.ui?.externalIcon })" />
 
-    <p :class="ui.title({ class: props.ui?.title })">
-      {{ title }}
+    <p v-if="title || !!slots.title" :class="ui.title({ class: props.ui?.title })">
+      <slot name="title" mdc-unwrap="p">
+        {{ title }}
+      </slot>
     </p>
 
-    <p v-if="!!slots.default" :class="ui.description({ class: props.ui?.description })">
-      <slot mdc-unwrap="p" />
-    </p>
+    <div v-if="!!slots.default" :class="ui.description({ class: props.ui?.description })">
+      <slot>
+        {{ description }}
+      </slot>
+    </div>
   </div>
 </template>

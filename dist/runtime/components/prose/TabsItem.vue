@@ -8,6 +8,7 @@ import { useAppConfig } from "#imports";
 import { tv } from "../../utils/tv";
 const props = defineProps({
   label: { type: String, required: true },
+  description: { type: String, required: false },
   class: { type: null, required: false }
 });
 defineSlots();
@@ -17,6 +18,8 @@ const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.tab
 
 <template>
   <div :class="ui({ class: props.class })">
-    <slot mdc-unwrap="p" />
+    <slot>
+      {{ description }}
+    </slot>
   </div>
 </template>

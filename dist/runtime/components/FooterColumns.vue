@@ -20,7 +20,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.footerColu
 </script>
 
 <template>
-  <Primitive :as="as" :class="ui.root({ class: [props.class, props.ui?.root] })">
+  <Primitive :as="as" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <div v-if="!!slots.left" :class="ui.left({ class: props.ui?.left })">
       <slot name="left" />
     </div>
@@ -33,20 +33,20 @@ const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.footerColu
           </h3>
 
           <ul :class="ui.list({ class: props.ui?.list })">
-            <li v-for="(link, linkIndex) in column.children" :key="linkIndex" :class="ui.item({ class: props.ui?.item })">
+            <li v-for="(link, linkIndex) in column.children" :key="linkIndex" :class="ui.item({ class: [props.ui?.item, link.ui?.item] })">
               <ULink v-slot="{ active, ...slotProps }" v-bind="pickLinkProps(link)" custom>
-                <ULinkBase v-bind="slotProps" :class="ui.link({ class: [props.ui?.link, link.class], active })">
+                <ULinkBase v-bind="slotProps" :class="ui.link({ class: [props.ui?.link, link.ui?.link, link.class], active })">
                   <slot name="link" :link="link" :active="active">
                     <slot name="link-leading" :link="link" :active="active">
-                      <UIcon v-if="link.icon" :name="link.icon" :class="ui.linkLeadingIcon({ class: props.ui?.linkLeadingIcon, active })" />
+                      <UIcon v-if="link.icon" :name="link.icon" :class="ui.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, link.ui?.linkLeadingIcon], active })" />
                     </slot>
 
-                    <span v-if="link.label || !!slots['link-label']" :class="ui.linkLabel({ class: props.ui?.linkLabel, active })">
+                    <span v-if="link.label || !!slots['link-label']" :class="ui.linkLabel({ class: [props.ui?.linkLabel, link.ui?.linkLabel], active })">
                       <slot name="link-label" :link="link" :active="active">
                         {{ link.label }}
                       </slot>
 
-                      <UIcon v-if="link.target === '_blank'" :name="appConfig.ui.icons.external" :class="ui.linkLabelExternalIcon({ class: props.ui?.linkLabelExternalIcon, active })" />
+                      <UIcon v-if="link.target === '_blank'" :name="appConfig.ui.icons.external" :class="ui.linkLabelExternalIcon({ class: [props.ui?.linkLabelExternalIcon, link.ui?.linkLabelExternalIcon], active })" />
                     </span>
 
                     <slot name="link-trailing" :link="link" :active="active" />

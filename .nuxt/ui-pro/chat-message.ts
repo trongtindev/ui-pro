@@ -1,5 +1,3 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/chat-message"
-
 const variant = [
   "solid",
   "outline",
@@ -13,24 +11,7 @@ const side = [
   "right"
 ] as const
 
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "slots": {
     "root": "group/message relative w-full",
     "container": "relative flex items-start group-data-[role=user]/message:max-w-[75%]",
@@ -146,5 +127,3 @@ const theme = {
     "variant": "naked" as typeof variant[number]
   }
 }
-
-export default result as typeof theme

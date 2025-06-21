@@ -10,17 +10,17 @@ export interface ProseCollapsibleProps {
     icon?: string;
     /**
      * The name displayed in the trigger label.
-     * @defaultValue 'properties'
+     * @defaultValue t('prose.collapsible.name')
      */
     name?: string;
     /**
      * The text displayed when the collapsible is open.
-     * @defaultValue 'Show'
+     * @defaultValue t('prose.collapsible.openText')
      */
     openText?: string;
     /**
      * The text displayed when the collapsible is closed.
-     * @defaultValue 'Hide'
+     * @defaultValue t('prose.collapsible.closeText')
      */
     closeText?: string;
     class?: any;
@@ -29,39 +29,10 @@ export interface ProseCollapsibleProps {
 export interface ProseCollapsibleSlots {
     default(props?: {}): any;
 }
-declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToOption<ProseCollapsibleProps>, {
-    name: string;
-    openText: string;
-    closeText: string;
-}>>, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToOption<ProseCollapsibleProps>, {
-    name: string;
-    openText: string;
-    closeText: string;
-}>>> & Readonly<{}>, {
-    name: string;
-    openText: string;
-    closeText: string;
-}, {}, {}, {}, string, import("vue").ComponentProvideOptions, true, {}, any>, Readonly<ProseCollapsibleSlots> & ProseCollapsibleSlots>;
+declare const _default: __VLS_WithSlots<import("vue").DefineComponent<ProseCollapsibleProps, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<ProseCollapsibleProps> & Readonly<{}>, {}, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>, ProseCollapsibleSlots>;
 export default _default;
-type __VLS_WithDefaults<P, D> = {
-    [K in keyof Pick<P, keyof P>]: K extends keyof D ? __VLS_PrettifyLocal<P[K] & {
-        default: D[K];
-    }> : P[K];
-};
-type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;
-type __VLS_TypePropsToOption<T> = {
-    [K in keyof T]-?: {} extends Pick<T, K> ? {
-        type: import('vue').PropType<__VLS_NonUndefinedable<T[K]>>;
-    } : {
-        type: import('vue').PropType<T[K]>;
-        required: true;
-    };
-};
-type __VLS_WithTemplateSlots<T, S> = T & {
+type __VLS_WithSlots<T, S> = T & {
     new (): {
         $slots: S;
     };
 };
-type __VLS_PrettifyLocal<T> = {
-    [K in keyof T]: T[K];
-} & {};

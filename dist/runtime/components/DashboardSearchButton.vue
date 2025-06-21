@@ -46,7 +46,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.dashboardS
     'aria-label': label || t('dashboardSearchButton.label')
   } : {}
 }"
-    :class="ui.base({ class: [props.class, props.ui?.base] })"
+    :class="ui.base({ class: [props.ui?.base, props.class] })"
     :ui="transformUI(ui, props.ui)"
     @click="toggleSearch"
   >

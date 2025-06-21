@@ -56,7 +56,7 @@ function onClose() {
 </script>
 
 <template>
-  <Primitive :as="as" class="banner" :class="ui.root({ class: [props.class, props.ui?.root] })">
+  <Primitive :as="as" class="banner" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <ULink
       v-if="to"
       :aria-label="title"

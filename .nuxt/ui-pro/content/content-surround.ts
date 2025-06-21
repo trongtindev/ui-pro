@@ -1,28 +1,4 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/content/content-surround"
-
-const direction = [
-  "left",
-  "right"
-] as const
-
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "slots": {
     "root": "grid grid-cols-1 sm:grid-cols-2 gap-8",
     "link": [
@@ -56,5 +32,3 @@ const theme = {
     }
   }
 }
-
-export default result as typeof theme

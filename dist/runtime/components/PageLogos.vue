@@ -42,7 +42,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.pageLogos 
     </template>
   </DefineCreateItemTemplate>
 
-  <Primitive :as="as" :class="ui.root({ class: [props.class, props.ui?.root] })">
+  <Primitive :as="as" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <h2 v-if="title" :class="ui.title({ class: props.ui?.title })">
       {{ title }}
     </h2>

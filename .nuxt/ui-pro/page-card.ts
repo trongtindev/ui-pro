@@ -1,10 +1,3 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/page-card"
-
-const orientation = [
-  "horizontal",
-  "vertical"
-] as const
-
 const variant = [
   "solid",
   "outline",
@@ -34,29 +27,12 @@ const spotlightColor = [
   "neutral"
 ] as const
 
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "slots": {
     "root": "relative flex rounded-lg",
     "spotlight": "absolute inset-0 rounded-[inherit] pointer-events-none bg-default/90",
     "container": "relative flex flex-col flex-1 lg:grid gap-x-8 gap-y-4 p-4 sm:p-6",
-    "wrapper": "flex flex-col flex-1",
+    "wrapper": "flex flex-col flex-1 items-start",
     "header": "mb-4",
     "body": "flex-1",
     "footer": "pt-4 mt-auto",
@@ -295,5 +271,3 @@ const theme = {
     "spotlightColor": "primary" as typeof spotlightColor[number]
   }
 }
-
-export default result as typeof theme

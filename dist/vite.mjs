@@ -5,12 +5,9 @@ import 'tinyglobby';
 import 'defu';
 import 'unplugin';
 import '@nuxt/ui/vite';
-import './shared/ui-pro.CjN6508I.mjs';
+import './shared/ui-pro.B6uD94pG.mjs';
 import 'scule';
 import '@nuxt/kit';
-import 'dotenv';
-import 'consola';
-import 'consola/utils';
 
 const vite = NuxtUIProPlugin.vite;
 

@@ -154,7 +154,7 @@ onMounted(() => {
   <div
     ref="el"
     :data-status="status"
-    :class="ui.root({ class: [props.class, props.ui?.root] })"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
     :style="{ '--last-message-height': `${lastMessageHeight}px` }"
   >
     <slot>

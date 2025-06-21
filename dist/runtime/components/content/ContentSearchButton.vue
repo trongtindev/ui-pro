@@ -45,7 +45,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.contentSea
     'aria-label': label || t('contentSearchButton.label')
   } : {}
 }"
-    :class="ui.base({ class: [props.class, props.ui?.base] })"
+    :class="ui.base({ class: [props.ui?.base, props.class] })"
     :ui="transformUI(ui, props.ui)"
     @click="open = true"
   >

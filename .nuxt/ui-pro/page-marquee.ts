@@ -1,28 +1,9 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/page-marquee"
-
 const orientation = [
   "horizontal",
   "vertical"
 ] as const
 
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "slots": {
     "root": "group relative flex items-center overflow-hidden gap-(--gap) [--gap:--spacing(16)] [--duration:20s]",
     "content": "flex items-center shrink-0 justify-around gap-(--gap) min-w-max"
@@ -83,5 +64,3 @@ const theme = {
     }
   ]
 }
-
-export default result as typeof theme

@@ -104,7 +104,7 @@ function toggleOpen() {
     ref="el"
     :data-collapsed="isCollapsed"
     :data-dragging="isDragging"
-    :class="ui.root({ class: [props.class, props.ui?.root] })"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
     :style="{ '--width': `${size || 0}${dashboardContext.unit}` }"
   >
     <div v-if="!!slots.header" :class="ui.header({ class: props.ui?.header })">

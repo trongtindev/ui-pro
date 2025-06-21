@@ -24,8 +24,9 @@ export interface ContentNavigationLink extends ContentNavigationItem {
     defaultOpen?: boolean;
     active?: boolean;
     class?: any;
+    ui?: Pick<ContentNavigation['slots'], 'link' | 'linkLeadingIcon' | 'linkTitle' | 'linkTrailing' | 'linkTrailingIcon' | 'linkTrailingBadge' | 'linkTrailingBadgeSize' | 'linkTrailingIcon' | 'linkTitleExternalIcon' | 'trigger' | 'content' | 'item' | 'itemWithChildren'>;
 }
-export interface ContentNavigationProps<T extends ContentNavigationLink = ContentNavigationLink> extends Pick<AccordionRootProps, 'disabled' | 'type'> {
+export interface ContentNavigationProps<T extends ContentNavigationLink = ContentNavigationLink> extends Pick<AccordionRootProps, 'disabled' | 'type' | 'unmountOnHide'> {
     /**
      * The element or component this component should render as.
      * @defaultValue 'nav'
@@ -86,10 +87,10 @@ export interface ContentNavigationSlots<T extends ContentNavigationLink = Conten
 declare const _default: <T extends ContentNavigationLink>(__VLS_props: NonNullable<Awaited<typeof __VLS_setup>>["props"], __VLS_ctx?: __VLS_PrettifyLocal<Pick<NonNullable<Awaited<typeof __VLS_setup>>, "attrs" | "emit" | "slots">>, __VLS_expose?: NonNullable<Awaited<typeof __VLS_setup>>["expose"], __VLS_setup?: Promise<{
     props: __VLS_PrettifyLocal<Pick<Partial<{}> & Omit<{
         readonly "onUpdate:modelValue"?: ((value: string | string[] | undefined) => any) | undefined;
-    } & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, never>, "onUpdate:modelValue"> & ContentNavigationProps<T> & Partial<{}>> & (import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps);
+    } & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, never>, "onUpdate:modelValue"> & ContentNavigationProps<T> & Partial<{}>> & import("vue").PublicProps;
     expose(exposed: import("vue").ShallowUnwrapRef<{}>): void;
     attrs: any;
-    slots: Readonly<ContentNavigationSlots<T>> & ContentNavigationSlots<T>;
+    slots: ContentNavigationSlots<T>;
     emit: (evt: "update:modelValue", value: string | string[] | undefined) => void;
 }>) => import("vue").VNode & {
     __ctx?: Awaited<typeof __VLS_setup>;

@@ -41,12 +41,13 @@ const formRef = useTemplateRef("formRef");
 const passwordVisibility = ref(false);
 const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.authForm || {} })());
 defineExpose({
-  formRef
+  formRef,
+  state
 });
 </script>
 
 <template>
-  <Primitive :as="as" :class="ui.root({ class: [props.class, props.ui?.root] })">
+  <Primitive :as="as" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <div v-if="icon || !!slots.icon || (title || !!slots.title) || (description || !!slots.description) || !!slots.header" :class="ui.header({ class: props.ui?.header })">
       <slot name="header">
         <div v-if="icon || !!slots.leading" :class="ui.leading({ class: props.ui?.leading })">
@@ -110,11 +111,22 @@ defineExpose({
           :required="field.required"
         >
           <slot :name="`${field.name}-field`" v-bind="{ state, field }">
-            <UCheckbox v-if="field.type === 'checkbox'" v-model="state[field.name]" v-bind="omit(field, ['description', 'help', 'hint', 'size'])" />
-            <USelectMenu v-else-if="field.type === 'select'" v-model="state[field.name]" v-bind="omit(field, ['description', 'help', 'hint', 'size'])" />
+            <UCheckbox
+              v-if="field.type === 'checkbox'"
+              v-model="state[field.name]"
+              :class="ui.checkbox({ class: props.ui?.checkbox })"
+              v-bind="omit(field, ['description', 'help', 'hint', 'size'])"
+            />
+            <USelectMenu
+              v-else-if="field.type === 'select'"
+              v-model="state[field.name]"
+              :class="ui.select({ class: props.ui?.select })"
+              v-bind="omit(field, ['description', 'help', 'hint', 'size'])"
+            />
             <UInput
               v-else-if="field.type === 'password'"
               v-model="state[field.name]"
+              :class="ui.password({ class: props.ui?.password })"
               :type="passwordVisibility ? 'text' : 'password'"
               v-bind="omit(field, ['label', 'description', 'help', 'hint', 'size', 'type', 'required', 'defaultValue'])"
               :ui="{ root: 'w-full' }"
@@ -132,11 +144,19 @@ defineExpose({
                 />
               </template>
             </UInput>
+            <UPinInput
+              v-else-if="field.type === 'otp'"
+              :id="field.name"
+              v-model="state[field.name]"
+              :class="ui.otp({ class: props.ui?.otp })"
+              otp
+              v-bind="field.otp"
+            />
             <UInput
               v-else
               v-model="state[field.name]"
+              :class="ui.input({ class: props.ui?.input })"
               v-bind="omit(field, ['label', 'description', 'help', 'hint', 'size', 'required', 'defaultValue'])"
-              :ui="{ root: 'w-full' }"
             />
           </slot>
 

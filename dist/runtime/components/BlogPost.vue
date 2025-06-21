@@ -64,7 +64,7 @@ const ariaLabel = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="as" :data-orientation="orientation" :class="ui.root({ class: [props.class, props.ui?.root] })" @click="onClick">
+  <Primitive :as="as" :data-orientation="orientation" :class="ui.root({ class: [props.ui?.root, props.class] })" @click="onClick">
     <div v-if="image || !!slots.header" :class="ui.header({ class: props.ui?.header })">
       <slot name="header">
         <component

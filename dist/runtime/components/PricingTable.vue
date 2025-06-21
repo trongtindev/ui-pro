@@ -80,7 +80,7 @@ const [DefineFeatureTemplate, ReuseFeatureTemplate] = createReusableTemplate();
             <slot :name="`${tier.id}-billing`" :tier="tier">
               <slot name="tier-billing" :tier="tier">
                 <span :class="ui.tierBillingPeriod({ class: props.ui?.tierBillingPeriod })">
-                  {{ tier.billingPeriod || '\xA0' }}
+                  {{ tier.billingPeriod || "\xA0" }}
                 </span>
 
                 <span v-if="tier.billingCycle" :class="ui.tierBillingCycle({ class: props.ui?.tierBillingCycle })">
@@ -113,11 +113,11 @@ const [DefineFeatureTemplate, ReuseFeatureTemplate] = createReusableTemplate();
     <UIcon v-else :name="appConfig.ui.icons.minus" :class="ui.tierFeatureIcon({ class: props.ui?.tierFeatureIcon })" />
   </DefineFeatureTemplate>
 
-  <Primitive :as="as" :class="ui.root({ class: [props.class, props.ui?.root] })">
+  <Primitive :as="as" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <table :class="ui.table({ class: props.ui?.table })">
       <caption v-if="caption || !!slots.caption" :class="ui.caption({ class: [props.ui?.caption] })">
         <slot name="caption">
-          {{ caption || t('pricingTable.caption') }}
+          {{ caption || t("pricingTable.caption") }}
         </slot>
       </caption>
 

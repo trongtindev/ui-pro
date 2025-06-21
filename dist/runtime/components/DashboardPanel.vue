@@ -32,7 +32,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.dashboardP
     :id="id"
     ref="el"
     :data-dragging="isDragging"
-    :class="ui.root({ class: [props.class, props.ui?.root] })"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
     :style="[size ? { '--width': `${size}${dashboardContext.unit}` } : void 0]"
   >
     <slot>

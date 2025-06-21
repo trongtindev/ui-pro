@@ -1,5 +1,3 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/prose/card"
-
 const color = [
   "primary",
   "secondary",
@@ -10,32 +8,15 @@ const color = [
   "neutral"
 ] as const
 
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "slots": {
     "base": [
-      "group relative block p-4 sm:p-6 border border-default rounded-md bg-default",
+      "group relative block my-5 p-4 sm:p-6 border border-default rounded-md bg-default",
       "transition-colors"
     ],
     "icon": "size-6 mb-2 block",
     "title": "text-highlighted font-semibold",
-    "description": "text-[15px] text-muted",
+    "description": "text-[15px] text-muted *:first:mt-0 *:last:mb-0 *:my-1",
     "externalIcon": [
       "size-4 align-top absolute right-2 top-2 text-dimmed pointer-events-none",
       "transition-colors"
@@ -136,5 +117,3 @@ const theme = {
     "color": "primary" as typeof color[number]
   }
 }
-
-export default result as typeof theme

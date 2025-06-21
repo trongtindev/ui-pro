@@ -9,8 +9,8 @@ import { useAppConfig } from "#imports";
 import { tv } from "../../utils/tv";
 const props = defineProps({
   as: { type: null, required: false },
-  name: { type: String, required: true },
-  type: { type: String, required: true },
+  name: { type: String, required: false },
+  type: { type: String, required: false },
   description: { type: String, required: false },
   required: { type: Boolean, required: false },
   class: { type: null, required: false },
@@ -22,13 +22,13 @@ const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.fie
 </script>
 
 <template>
-  <Primitive :as="as" :class="ui.root({ class: [props.class, props.ui?.root] })">
+  <Primitive :as="as" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <div :class="ui.container({ class: props.ui?.container })">
       <span v-if="name" :class="ui.name({ class: props.ui?.name })">
         {{ name }}
       </span>
 
-      <div :class="ui.wrapper({ class: props.ui?.wrapper })">
+      <div v-if="type || required" :class="ui.wrapper({ class: props.ui?.wrapper })">
         <span v-if="type" :class="ui.type({ class: props.ui?.type })">
           {{ type }}
         </span>
@@ -39,10 +39,10 @@ const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.prose?.fie
       </div>
     </div>
 
-    <p v-if="!!slots.default || description" :class="ui.description({ class: props.ui?.description })">
+    <div v-if="!!slots.default || description" :class="ui.description({ class: props.ui?.description })">
       <slot mdc-unwrap="p">
         {{ description }}
       </slot>
-    </p>
+    </div>
   </Primitive>
 </template>

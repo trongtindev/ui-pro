@@ -10,6 +10,7 @@ export interface ContentSurroundLink extends ContentNavigationItem {
      */
     icon?: string;
     class?: any;
+    ui?: Pick<ContentSurround['slots'], 'link' | 'linkLeading' | 'linkLeadingIcon' | 'linkTitle' | 'linkDescription'>;
 }
 export interface ContentSurroundProps<T extends ContentSurroundLink = ContentSurroundLink> {
     /**
@@ -43,10 +44,10 @@ export interface ContentSurroundSlots<T extends ContentSurroundLink = ContentSur
     'link-description': SlotProps<T>;
 }
 declare const _default: <T extends ContentSurroundLink>(__VLS_props: NonNullable<Awaited<typeof __VLS_setup>>["props"], __VLS_ctx?: __VLS_PrettifyLocal<Pick<NonNullable<Awaited<typeof __VLS_setup>>, "attrs" | "emit" | "slots">>, __VLS_expose?: NonNullable<Awaited<typeof __VLS_setup>>["expose"], __VLS_setup?: Promise<{
-    props: __VLS_PrettifyLocal<Pick<Partial<{}> & Omit<{} & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, never>, never> & ContentSurroundProps<T> & Partial<{}>> & (import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps);
+    props: __VLS_PrettifyLocal<Pick<Partial<{}> & Omit<{} & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, never>, never> & ContentSurroundProps<T> & Partial<{}>> & import("vue").PublicProps;
     expose(exposed: import("vue").ShallowUnwrapRef<{}>): void;
     attrs: any;
-    slots: Readonly<ContentSurroundSlots<T>> & ContentSurroundSlots<T>;
+    slots: ContentSurroundSlots<T>;
     emit: {};
 }>) => import("vue").VNode & {
     __ctx?: Awaited<typeof __VLS_setup>;

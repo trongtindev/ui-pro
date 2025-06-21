@@ -6,6 +6,7 @@ import theme from '#build/ui-pro/content/content-toc';
 type ContentToc = ComponentConfig<typeof theme, AppConfig, 'contentToc', 'uiPro'>;
 export type ContentTocLink = TocLink & {
     class?: any;
+    ui?: Pick<ContentToc['slots'], 'item' | 'itemWithChildren' | 'link' | 'linkText'>;
 };
 export interface ContentTocProps<T extends ContentTocLink = ContentTocLink> extends Pick<CollapsibleRootProps, 'defaultOpen' | 'open'> {
     /**
@@ -72,10 +73,10 @@ declare const _default: <T extends ContentTocLink>(__VLS_props: NonNullable<Awai
     props: __VLS_PrettifyLocal<Pick<Partial<{}> & Omit<{
         readonly "onUpdate:open"?: ((value: boolean) => any) | undefined;
         readonly onMove?: ((id: string) => any) | undefined;
-    } & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, never>, "onUpdate:open" | "onMove"> & ContentTocProps<T> & Partial<{}>> & (import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps);
+    } & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, never>, "onUpdate:open" | "onMove"> & ContentTocProps<T> & Partial<{}>> & import("vue").PublicProps;
     expose(exposed: import("vue").ShallowUnwrapRef<{}>): void;
     attrs: any;
-    slots: Readonly<ContentTocSlots<T>> & ContentTocSlots<T>;
+    slots: ContentTocSlots<T>;
     emit: ((evt: "update:open", value: boolean) => void) & ((evt: "move", id: string) => void);
 }>) => import("vue").VNode & {
     __ctx?: Awaited<typeof __VLS_setup>;

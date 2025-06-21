@@ -1,6 +1,6 @@
 import type { ContentNavigationItem } from '@nuxt/content';
 import type { AppConfig } from '@nuxt/schema';
-import type { LinkProps, CommandPaletteProps, CommandPaletteSlots, CommandPaletteGroup, CommandPaletteItem, ComponentConfig } from '@nuxt/ui';
+import type { ButtonProps, InputProps, LinkProps, CommandPaletteProps, CommandPaletteSlots, CommandPaletteGroup, CommandPaletteItem, ComponentConfig } from '@nuxt/ui';
 import type { UseFuseOptions } from '@vueuse/integrations/useFuse';
 import theme from '#build/ui-pro/content/content-search';
 type ContentSearch = ComponentConfig<typeof theme, AppConfig, 'contentSearch', 'uiPro'>;
@@ -29,15 +29,21 @@ export interface ContentSearchItem extends Omit<LinkProps, 'custom'>, CommandPal
 }
 export interface ContentSearchProps<T extends ContentSearchLink = ContentSearchLink> {
     /**
-     * The icon displayed in the search input.
+     * The icon displayed in the input.
      * @defaultValue appConfig.ui.icons.search
      * @IconifyIcon
      */
     icon?: string;
     /**
-     * Placeholder for the command palette search input.
+     * The placeholder text for the input.
+     * @defaultValue t('commandPalette.placeholder')
      */
-    placeholder?: string;
+    placeholder?: InputProps['placeholder'];
+    /**
+     * Automatically focus the input when component is mounted.
+     * @defaultValue true
+     */
+    autofocus?: boolean;
     /** When `true`, the loading icon will be displayed. */
     loading?: boolean;
     /**
@@ -46,6 +52,19 @@ export interface ContentSearchProps<T extends ContentSearchLink = ContentSearchL
      * @IconifyIcon
      */
     loadingIcon?: string;
+    /**
+     * Display a close button in the input (useful when inside a Modal for example).
+     * `{ size: 'md', color: 'neutral', variant: 'ghost' }`{lang="ts-type"}
+     * @emits 'update:open'
+     * @defaultValue true
+     */
+    close?: boolean | Partial<ButtonProps>;
+    /**
+     * The icon displayed in the close button.
+     * @defaultValue appConfig.ui.icons.close
+     * @IconifyIcon
+     */
+    closeIcon?: string;
     /**
      * Keyboard shortcut to open the search (used by [`defineShortcuts`](https://ui.nuxt.com/composables/define-shortcuts))
      * @defaultValue 'meta_k'
@@ -76,124 +95,14 @@ export type ContentSearchSlots = CommandPaletteSlots<CommandPaletteGroup<Content
 declare const _default: <T extends ContentSearchLink>(__VLS_props: NonNullable<Awaited<typeof __VLS_setup>>["props"], __VLS_ctx?: __VLS_PrettifyLocal<Pick<NonNullable<Awaited<typeof __VLS_setup>>, "attrs" | "emit" | "slots">>, __VLS_expose?: NonNullable<Awaited<typeof __VLS_setup>>["expose"], __VLS_setup?: Promise<{
     props: __VLS_PrettifyLocal<Pick<Partial<{}> & Omit<{
         readonly "onUpdate:searchTerm"?: ((value: string) => any) | undefined;
-    } & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, never>, "onUpdate:searchTerm"> & ({
+    } & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, never>, "onUpdate:searchTerm"> & (ContentSearchProps<T> & {
         searchTerm?: string;
-    } & ContentSearchProps<T>) & Partial<{}>> & (import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps);
+    }) & Partial<{}>> & import("vue").PublicProps;
     expose(exposed: import("vue").ShallowUnwrapRef<{
-        commandPaletteRef: Readonly<import("vue").ShallowRef<unknown>>;
+        commandPaletteRef: Readonly<import("vue").ShallowRef<any>>;
     }>): void;
     attrs: any;
-    slots: Readonly<{
-        empty(props: {
-            searchTerm?: string;
-        }): any;
-        close(props: {
-            ui: { [K in keyof Required<{
-                root?: import("tailwind-variants").ClassValue;
-                input?: import("tailwind-variants").ClassValue;
-                close?: import("tailwind-variants").ClassValue;
-                content?: import("tailwind-variants").ClassValue;
-                viewport?: import("tailwind-variants").ClassValue;
-                group?: import("tailwind-variants").ClassValue;
-                empty?: import("tailwind-variants").ClassValue;
-                label?: import("tailwind-variants").ClassValue;
-                item?: import("tailwind-variants").ClassValue;
-                itemLeadingIcon?: import("tailwind-variants").ClassValue;
-                itemLeadingAvatar?: import("tailwind-variants").ClassValue;
-                itemLeadingAvatarSize?: import("tailwind-variants").ClassValue;
-                itemLeadingChip?: import("tailwind-variants").ClassValue;
-                itemLeadingChipSize?: import("tailwind-variants").ClassValue;
-                itemTrailing?: import("tailwind-variants").ClassValue;
-                itemTrailingIcon?: import("tailwind-variants").ClassValue;
-                itemTrailingHighlightedIcon?: import("tailwind-variants").ClassValue;
-                itemTrailingKbds?: import("tailwind-variants").ClassValue;
-                itemTrailingKbdsSize?: import("tailwind-variants").ClassValue;
-                itemLabel?: import("tailwind-variants").ClassValue;
-                itemLabelBase?: import("tailwind-variants").ClassValue;
-                itemLabelPrefix?: import("tailwind-variants").ClassValue;
-                itemLabelSuffix?: import("tailwind-variants").ClassValue;
-            }>]: (props?: Record<string, any>) => string; };
-        }): any;
-        item: (props: {
-            item: ContentSearchItem;
-            index: number;
-        }) => any;
-        'item-leading': (props: {
-            item: ContentSearchItem;
-            index: number;
-        }) => any;
-        'item-label': (props: {
-            item: ContentSearchItem;
-            index: number;
-        }) => any;
-        'item-trailing': (props: {
-            item: ContentSearchItem;
-            index: number;
-        }) => any;
-    } & Record<string, (props: {
-        item: CommandPaletteGroup<ContentSearchItem>;
-        index: number;
-    }) => any> & Record<string, (props: {
-        item: ContentSearchItem;
-        index: number;
-    }) => any> & {
-        content(props?: {}): any;
-    }> & {
-        empty(props: {
-            searchTerm?: string;
-        }): any;
-        close(props: {
-            ui: { [K in keyof Required<{
-                root?: import("tailwind-variants").ClassValue;
-                input?: import("tailwind-variants").ClassValue;
-                close?: import("tailwind-variants").ClassValue;
-                content?: import("tailwind-variants").ClassValue;
-                viewport?: import("tailwind-variants").ClassValue;
-                group?: import("tailwind-variants").ClassValue;
-                empty?: import("tailwind-variants").ClassValue;
-                label?: import("tailwind-variants").ClassValue;
-                item?: import("tailwind-variants").ClassValue;
-                itemLeadingIcon?: import("tailwind-variants").ClassValue;
-                itemLeadingAvatar?: import("tailwind-variants").ClassValue;
-                itemLeadingAvatarSize?: import("tailwind-variants").ClassValue;
-                itemLeadingChip?: import("tailwind-variants").ClassValue;
-                itemLeadingChipSize?: import("tailwind-variants").ClassValue;
-                itemTrailing?: import("tailwind-variants").ClassValue;
-                itemTrailingIcon?: import("tailwind-variants").ClassValue;
-                itemTrailingHighlightedIcon?: import("tailwind-variants").ClassValue;
-                itemTrailingKbds?: import("tailwind-variants").ClassValue;
-                itemTrailingKbdsSize?: import("tailwind-variants").ClassValue;
-                itemLabel?: import("tailwind-variants").ClassValue;
-                itemLabelBase?: import("tailwind-variants").ClassValue;
-                itemLabelPrefix?: import("tailwind-variants").ClassValue;
-                itemLabelSuffix?: import("tailwind-variants").ClassValue;
-            }>]: (props?: Record<string, any>) => string; };
-        }): any;
-        item: (props: {
-            item: ContentSearchItem;
-            index: number;
-        }) => any;
-        'item-leading': (props: {
-            item: ContentSearchItem;
-            index: number;
-        }) => any;
-        'item-label': (props: {
-            item: ContentSearchItem;
-            index: number;
-        }) => any;
-        'item-trailing': (props: {
-            item: ContentSearchItem;
-            index: number;
-        }) => any;
-    } & Record<string, (props: {
-        item: CommandPaletteGroup<ContentSearchItem>;
-        index: number;
-    }) => any> & Record<string, (props: {
-        item: ContentSearchItem;
-        index: number;
-    }) => any> & {
-        content(props?: {}): any;
-    };
+    slots: ContentSearchSlots;
     emit: (evt: "update:searchTerm", value: string) => void;
 }>) => import("vue").VNode & {
     __ctx?: Awaited<typeof __VLS_setup>;

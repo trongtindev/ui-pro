@@ -1,28 +1,9 @@
-import template from "/Users/benjamincanac/GitHub/nuxt/ui-pro/src/theme/page-section"
-
 const orientation = [
   "horizontal",
   "vertical"
 ] as const
 
-const result = typeof template === 'function' ? (template as Function)({
-  "prefix": "U",
-  "fonts": true,
-  "colorMode": true,
-  "theme": {
-    "colors": [
-      "primary",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error"
-    ],
-    "transitions": true
-  }
-}) : template
-
-const theme = {
+export default {
   "slots": {
     "root": "relative isolate",
     "container": "flex flex-col lg:grid py-16 sm:py-24 lg:py-32 gap-8 sm:gap-16",
@@ -98,5 +79,3 @@ const theme = {
     }
   ]
 }
-
-export default result as typeof theme

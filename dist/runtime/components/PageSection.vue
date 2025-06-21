@@ -32,7 +32,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.pageSectio
 </script>
 
 <template>
-  <Primitive :as="as" :data-orientation="orientation" :class="ui.root({ class: [props.class, props.ui?.root] })">
+  <Primitive :as="as" :data-orientation="orientation" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <slot name="top" />
 
     <UContainer :class="ui.container({ class: props.ui?.container })">

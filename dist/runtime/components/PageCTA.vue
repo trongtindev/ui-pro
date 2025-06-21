@@ -29,7 +29,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...appConfig.uiPro?.pageCTA ||
 </script>
 
 <template>
-  <Primitive :as="as" :data-orientation="orientation" :class="ui.root({ class: [props.class, props.ui?.root] })">
+  <Primitive :as="as" :data-orientation="orientation" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <UContainer :class="ui.container({ class: props.ui?.container })">
       <div :class="ui.wrapper({ class: props.ui?.wrapper })">
         <h2 v-if="title || !!slots.title" :class="ui.title({ class: props.ui?.title })">

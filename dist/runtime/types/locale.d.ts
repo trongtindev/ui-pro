@@ -56,6 +56,16 @@ export type Messages = UIMessages & {
         caption: string;
     };
     prose: {
+        codeCollapse: {
+            name: string;
+            openText: string;
+            closeText: string;
+        };
+        collapsible: {
+            name: string;
+            openText: string;
+            closeText: string;
+        };
         pre: {
             copy: string;
         };

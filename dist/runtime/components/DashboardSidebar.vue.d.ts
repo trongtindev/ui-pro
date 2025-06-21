@@ -56,13 +56,13 @@ declare const _default: <T extends DashboardSidebarMode>(__VLS_props: NonNullabl
     props: __VLS_PrettifyLocal<Pick<Partial<{}> & Omit<{
         readonly "onUpdate:open"?: ((value: boolean) => any) | undefined;
         readonly "onUpdate:collapsed"?: ((value: boolean) => any) | undefined;
-    } & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, never>, "onUpdate:open" | "onUpdate:collapsed"> & ({
+    } & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, never>, "onUpdate:open" | "onUpdate:collapsed"> & (DashboardSidebarProps<T> & {
         open?: boolean;
         collapsed?: boolean;
-    } & DashboardSidebarProps<T>) & Partial<{}>> & (import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps);
+    }) & Partial<{}>> & import("vue").PublicProps;
     expose(exposed: import("vue").ShallowUnwrapRef<{}>): void;
     attrs: any;
-    slots: Readonly<DashboardSidebarSlots> & DashboardSidebarSlots;
+    slots: DashboardSidebarSlots;
     emit: ((evt: "update:open", value: boolean) => void) & ((evt: "update:collapsed", value: boolean) => void);
 }>) => import("vue").VNode & {
     __ctx?: Awaited<typeof __VLS_setup>;

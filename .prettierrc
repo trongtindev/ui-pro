@@ -1,0 +1,13 @@
+{
+  "plugins": [
+    "@trivago/prettier-plugin-sort-imports"
+  ],
+  "endOfLine": "lf",
+  "quoteProps": "as-needed",
+  "singleQuote": true,
+  "trailingComma": "all",
+  "importOrderParserPlugins": [
+    "typescript",
+    "decorators-legacy"
+  ]
+}

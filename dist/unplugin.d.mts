@@ -1,9 +1,9 @@
 import * as unplugin from 'unplugin';
 import { NuxtUIOptions } from '@nuxt/ui/unplugin';
 import * as uiPro from '#build/ui-pro';
-import { DeepPartial } from '@nuxt/ui';
+import { TVConfig } from '@nuxt/ui';
 
-type AppConfigUIPro = DeepPartial<typeof uiPro>;
+type AppConfigUIPro = TVConfig<typeof uiPro>;
 interface NuxtUIProOptions extends NuxtUIOptions {
     uiPro?: AppConfigUIPro;
     license?: string;

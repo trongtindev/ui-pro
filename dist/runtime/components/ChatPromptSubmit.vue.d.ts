@@ -76,26 +76,10 @@ export interface ChatPromptSubmitEmits {
     (e: 'stop'): void;
     (e: 'reload'): void;
 }
-declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToOption<ChatPromptSubmitProps>, {
-    status: string;
-    streamingColor: string;
-    streamingVariant: string;
-    submittedColor: string;
-    submittedVariant: string;
-    errorColor: string;
-    errorVariant: string;
-}>>, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
-    stop: () => void;
-    reload: () => void;
-}, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToOption<ChatPromptSubmitProps>, {
-    status: string;
-    streamingColor: string;
-    streamingVariant: string;
-    submittedColor: string;
-    submittedVariant: string;
-    errorColor: string;
-    errorVariant: string;
-}>>> & Readonly<{
+declare const _default: __VLS_WithSlots<import("vue").DefineComponent<ChatPromptSubmitProps, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {} & {
+    stop: () => any;
+    reload: () => any;
+}, string, import("vue").PublicProps, Readonly<ChatPromptSubmitProps> & Readonly<{
     onStop?: (() => any) | undefined;
     onReload?: (() => any) | undefined;
 }>, {
@@ -106,27 +90,10 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<im
     submittedVariant: "link" | "solid" | "outline" | "soft" | "subtle" | "ghost";
     errorColor: "error" | "info" | "primary" | "secondary" | "success" | "warning" | "neutral";
     errorVariant: "link" | "solid" | "outline" | "soft" | "subtle" | "ghost";
-}, {}, {}, {}, string, import("vue").ComponentProvideOptions, true, {}, any>, Readonly<ButtonSlots> & ButtonSlots>;
+}, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>, ButtonSlots>;
 export default _default;
-type __VLS_WithDefaults<P, D> = {
-    [K in keyof Pick<P, keyof P>]: K extends keyof D ? __VLS_PrettifyLocal<P[K] & {
-        default: D[K];
-    }> : P[K];
-};
-type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;
-type __VLS_TypePropsToOption<T> = {
-    [K in keyof T]-?: {} extends Pick<T, K> ? {
-        type: import('vue').PropType<__VLS_NonUndefinedable<T[K]>>;
-    } : {
-        type: import('vue').PropType<T[K]>;
-        required: true;
-    };
-};
-type __VLS_WithTemplateSlots<T, S> = T & {
+type __VLS_WithSlots<T, S> = T & {
     new (): {
         $slots: S;
     };
 };
-type __VLS_PrettifyLocal<T> = {
-    [K in keyof T]: T[K];
-} & {};

@@ -58,7 +58,7 @@ const features = computed(() => props.features?.map((feature) => typeof feature 
       <div v-if="billingCycle || billingPeriod || !!slots.billing" :class="ui.billing({ class: props.ui?.billing })">
         <slot name="billing">
           <span :class="ui.billingPeriod({ class: props.ui?.billingPeriod })">
-            {{ billingPeriod || '\xA0' }}
+            {{ billingPeriod || "\xA0" }}
           </span>
 
           <span v-if="billingCycle" :class="ui.billingCycle({ class: props.ui?.billingCycle })">
@@ -69,41 +69,43 @@ const features = computed(() => props.features?.map((feature) => typeof feature 
     </div>
   </DefinePriceTemplate>
 
-  <Primitive :as="as" :data-orientation="orientation" :class="ui.root({ class: [props.class, props.ui?.root] })">
+  <Primitive :as="as" :data-orientation="orientation" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <div v-if="!!slots.header && orientation === 'vertical'" :class="ui.header({ class: props.ui?.header })">
       <slot name="header" />
     </div>
 
     <div :class="ui.body({ class: props.ui?.body })">
-      <div :class="ui.titleWrapper({ class: props.ui?.titleWrapper })">
-        <div v-if="title || !!slots.title" :class="ui.title({ class: props.ui?.title })">
-          <slot name="title">
-            {{ title }}
+      <slot name="body">
+        <div :class="ui.titleWrapper({ class: props.ui?.titleWrapper })">
+          <div v-if="title || !!slots.title" :class="ui.title({ class: props.ui?.title })">
+            <slot name="title">
+              {{ title }}
+            </slot>
+          </div>
+
+          <slot name="badge">
+            <UBadge v-if="badge" color="primary" variant="subtle" v-bind="typeof badge === 'string' ? { label: badge } : badge" :class="ui.badge({ class: props.ui?.badge })" />
           </slot>
         </div>
 
-        <slot name="badge">
-          <UBadge v-if="badge" color="primary" variant="subtle" v-bind="typeof badge === 'string' ? { label: badge } : badge" :class="ui.badge({ class: props.ui?.badge })" />
-        </slot>
-      </div>
+        <div v-if="description || !!slots.description" :class="ui.description({ class: props.ui?.description })">
+          <slot name="description">
+            {{ description }}
+          </slot>
+        </div>
 
-      <div v-if="description || !!slots.description" :class="ui.description({ class: props.ui?.description })">
-        <slot name="description">
-          {{ description }}
-        </slot>
-      </div>
+        <ReusePriceTemplate v-if="orientation === 'vertical'" />
 
-      <ReusePriceTemplate v-if="orientation === 'vertical'" />
+        <ul v-if="features?.length || !!slots.features" :class="ui.features({ class: props.ui?.features })">
+          <slot name="features">
+            <li v-for="(feature, index) in features" :key="index" :class="ui.feature({ class: props.ui?.feature })">
+              <UIcon :name="feature.icon || appConfig.ui.icons.success" :class="ui.featureIcon({ class: props.ui?.featureIcon })" />
 
-      <ul v-if="features?.length || !!slots.features" :class="ui.features({ class: props.ui?.features })">
-        <slot name="features">
-          <li v-for="(feature, index) in features" :key="index" :class="ui.feature({ class: props.ui?.feature })">
-            <UIcon :name="feature.icon || appConfig.ui.icons.success" :class="ui.featureIcon({ class: props.ui?.featureIcon })" />
-
-            <span :class="ui.featureTitle({ class: props.ui?.featureTitle })">{{ feature.title }}</span>
-          </li>
-        </slot>
-      </ul>
+              <span :class="ui.featureTitle({ class: props.ui?.featureTitle })">{{ feature.title }}</span>
+            </li>
+          </slot>
+        </ul>
+      </slot>
     </div>
 
     <div v-if="terms || (button || !!slots.button) || orientation === 'horizontal' || tagline || !!slots.footer" :class="ui.footer({ class: props.ui?.footer })">
